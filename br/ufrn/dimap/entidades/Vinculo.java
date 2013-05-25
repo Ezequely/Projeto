@@ -29,8 +29,8 @@ public class Vinculo {
 	    public void setDataDeMatricula(Date dataDeMatricula) {this.dataDeMatricula = dataDeMatricula;}
 
 	    //linha de pesquisa
-	    public LinhaDePesquisa 	getlinhaDePesquisa() {return linhaDePesquisa;}
-	    public void 			setlinhaDePesquisa(LinhaDePesquisa linhaDePesquisa) {this.linhaDePesquisa = linhaDePesquisa;}
+	    public LinhaDePesquisa 	getLinhaDePesquisa() {return linhaDePesquisa;}
+	    public void 			setLinhaDePesquisa(LinhaDePesquisa linhaDePesquisa) {this.linhaDePesquisa = linhaDePesquisa;}
 
 	    //Pessoa
 	    public Pessoa getPessoa() {return pessoa;}

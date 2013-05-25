@@ -16,6 +16,13 @@ public class Docente extends Vinculo{
     	super(pessoa,matricula);
     	turmasAtivas = new ArrayList<Turma>();
     }
+    public Docente(Vinculo vinculo){//copia dados do vinculo em docente
+        this.setAtivo(vinculo.getAtivo());
+        this.setDataDeMatricula(vinculo.getDataDeMatricula());
+        this.setMatricula(vinculo.getMatricula());
+        this.setPessoa(vinculo.getPessoa());
+        this.setLinhaDePesquisa(vinculo.getLinhaDePesquisa());        
+    }
 
     public String getTitulacao() {
         return titulacao;

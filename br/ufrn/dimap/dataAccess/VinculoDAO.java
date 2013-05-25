@@ -15,19 +15,26 @@ import java.sql.SQLException;
  * @author leobrizolara
  */
 public class VinculoDAO extends SqlDAO{
+    @Override
+    protected String createSelectCmd() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    static void read(Vinculo vinculo, ResultSet rs) throws SQLException {
-        Pessoa p = new Pessoa();
-        PessoaDAO.read(p, rs);
+    @Override
+    protected Object read(ResultSet rs) throws SQLException {
+        Vinculo vinculo = new Vinculo();
+        
+        Pessoa p = (Pessoa)new PessoaDAO().read(rs);
         vinculo.setPessoa(p);
         
-        LinhaDePesquisa lp = new LinhaDePesquisa();
-        LinhaDePesquisaDAO.read(lp, rs);
-        vinculo.setlinhaDePesquisa(lp);
+        LinhaDePesquisa lp = (LinhaDePesquisa) (new LinhaDePesquisaDAO()).read(rs);
+        vinculo.setLinhaDePesquisa(lp);
         
         vinculo.setMatricula(rs.getString("Matricula"));
         vinculo.setDataDeMatricula(rs.getDate("DataDeMatricula"));
         vinculo.setAtivo(rs.getBoolean("Ativo"));
+        
+        return vinculo;
     }
     
 }

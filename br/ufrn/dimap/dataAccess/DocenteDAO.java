@@ -15,46 +15,27 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class DocenteDAO implements DatabaseAccessObject{   
-    DatabaseController dataController;
+public class DocenteDAO extends SqlDAO{  
     public DocenteDAO(DatabaseController dbControl){
-        dataController = dbControl;
+        super(dbControl);
     }
     
+    @Override
     public void update(Object obj) {
         //this.connection.
     }
 
+    @Override
     public void insert(Object obj) {
     }
 
+    @Override
     public Object search(Object obj) {
         return null;
     }
 
+    @Override
     public void remove(Object obj) {
-    }
-
-    public Collection<Object> listAll() {
-        try {
-            Connection connection = this.dataController.CreateConnection();
-
-            String sql = this.createSelectCmd();
-            Statement sqlStatement = connection.createStatement();
-            ResultSet rs = sqlStatement.executeQuery(sql);
-            Collection<Object> docentes = new ArrayList<Object>();
-            while (rs.next()){
-                Docente docente = new Docente();
-                this.readDocente(docente, rs);
-
-                docentes.add(docente);
-            }
-            connection.close();
-            return docentes;
-        } catch(SQLException e){
-            e.printStackTrace();
-        } 
-        return null;
     }
     
     /*select * from 
@@ -78,11 +59,14 @@ public class DocenteDAO implements DatabaseAccessObject{
         return cmd;
     }
 
-    private void readDocente(Docente docente, ResultSet rs) throws SQLException {
-        VinculoDAO.read((Vinculo)docente, rs);
+    @Override
+    protected Object read(ResultSet rs) throws SQLException {
+        Docente docente = new Docente((Vinculo)(new VinculoDAO()).read(rs));
         
         docente.setCargo(rs.getString("Cargo"));
         docente.setTitulacao(rs.getString("Titulacao"));
+        
+        return docente;
     }
     
 }

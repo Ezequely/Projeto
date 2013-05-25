@@ -13,7 +13,15 @@ import java.sql.SQLException;
  * @author leobrizolara
  */
 public class PessoaDAO extends SqlDAO{
-    public static void read(Pessoa p, ResultSet rs) throws SQLException{
+
+    @Override
+    protected String createSelectCmd() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected Object read(ResultSet rs) throws SQLException {
+        Pessoa p = new Pessoa();
         p.setCpf(rs.getString("CPF"));
         p.setNome(rs.getString("Nome"));
         p.setCidade(rs.getString("Cidade"));
@@ -25,7 +33,6 @@ public class PessoaDAO extends SqlDAO{
         p.setTelefone(rs.getString("Telefone"));
         p.setUf(rs.getString("uf"));
         
-        return;
-        
+        return p;
     }
 }

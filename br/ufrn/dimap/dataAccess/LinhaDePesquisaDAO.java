@@ -12,12 +12,21 @@ import java.sql.SQLException;
  *
  * @author leobrizolara
  */
-public class LinhaDePesquisaDAO {
+public class LinhaDePesquisaDAO extends SqlDAO{
+    @Override
+    protected String createSelectCmd() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    static void read(LinhaDePesquisa lp, ResultSet rs) throws SQLException {
+    @Override
+    protected Object read(ResultSet rs) throws SQLException{
+        LinhaDePesquisa lp = new LinhaDePesquisa();
+        
         lp.setCodigo(rs.getString("CodigoLinhaDePesquisa"));
         lp.setDescricao(rs.getString("Descricao"));
         lp.setTema(rs.getString("Tema"));
+        
+        return lp;
     }
     
 }
