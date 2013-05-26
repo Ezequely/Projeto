@@ -38,6 +38,9 @@ public class TurmaDAO extends SqlDAO{
     }
     @Override
     public Collection<? extends Object> listAll(String selectCommand){
+        System.out.println(selectCommand);//DEBUG
+        
+        
         Collection<? extends Object> turmas = super.listAll(selectCommand);
         
         DocenteDAO docenteDAO = new DocenteDAO(this.dataController);
@@ -79,6 +82,7 @@ public class TurmaDAO extends SqlDAO{
         return builder.toString();
     }
     
+    
     /*select * from 
         TURMA t 
         join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina
@@ -91,7 +95,6 @@ public class TurmaDAO extends SqlDAO{
         builder.append(" natural join LINHADEPESQUISA");
         
         String cmd = builder.toString();
-        System.out.println(cmd);
         
         return cmd;
     }

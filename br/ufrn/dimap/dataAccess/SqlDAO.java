@@ -41,12 +41,13 @@ public abstract class SqlDAO implements DatabaseAccessObject{
     
     /**Permite as classes na hierarquia executar comandos de busca especificos*/
     protected Collection<? extends Object> listAll(String selectCmd){
+        System.out.println(selectCmd);//DEBUG
+        
         try {
             Connection connection = this.dataController.CreateConnection();
 
-            String sql = this.createSelectCmd();
             Statement sqlStatement = connection.createStatement();
-            ResultSet rs = sqlStatement.executeQuery(sql);
+            ResultSet rs = sqlStatement.executeQuery(selectCmd);
             Collection<Object> objects = new ArrayList<Object>();
             
             while (rs.next()){

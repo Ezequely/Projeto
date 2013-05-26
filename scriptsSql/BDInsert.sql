@@ -87,4 +87,43 @@ insert into TURMA (NumeroTurma, PeriodoLetivo, CodigoDisciplina, Status, CodHora
 insert into TURMA (NumeroTurma, PeriodoLetivo, CodigoDisciplina, Status, CodHorarioDeAula,LocalDeAula) values 
 	(1, '2010.2', 'DIM0805', 'Consolidada', '35T34','3E2');
 
+-- -- -- -- -- -- -- -- -- TURMA_DOCENTE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+-- Insere John Smith como professor de todas as turmas de "SEMANTICA LING DE PROGRAMAÇÃO"
+insert into TURMA_DOCENTE (CodigoTurma, MatriculaDocente) 
+select T.CodigoTurma, D.MatriculaDocente from
+		-- Relaciona cada turma de "SEMANTICA LING DE PROGRAMAÇÃO" c/ a matricula de John Smith
+		(select CodigoTurma from 
+			TURMA t join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina
+			where Nome = "SEMANTICA LING DE PROGRAMAÇÃO"
+		) as T
+		join
+		(select MatriculaDocente from 
+			DOCENTE join VINCULO on MatriculaDocente = Matricula natural join PESSOA
+			where Nome like 'John%Smith'
+		) as D
+;
+
+-- -- -- -- -- -- -- -- -- PUBLICACAO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
+	values("Aplicando Bancos de dados na vida real", "Bancos de Dados", 
+			"Revista de Bancos", '2001-01-01', "Artigo", "0077-5533", NULL, NULL);
+insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
+	values("Banco de dados hardcore", "Bancos de Dados", 
+			NULL, '2006-06-06', "Livro", "0006-6006", "Resumo", "http://www.editora.com/livros/0006_6006");
+insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
+	values("Introdução a compiladores", "Compiladores", 
+			NULL, '2013-12-12', "Livro", "1234-5678", "Esse é um resumo muito longo...", 
+			"http://www.editora.com/livros/Intro_a_compiladores");
+insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
+	values("Investigando a semantica das linguagens de montagem", "Linguagens de programação", 
+			"ACM unknown journal", '2013-09-28', "Artigo", "9993-8883", "Este não tem resumo", "http://www.john.smith.com/sem_ling_mont.pdf");
+
+-- -- -- -- -- -- -- -- -- PESSOA_PUBLICACAO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('123456789', '9993-8883');
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('123456789', '1234-5678');
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('3334455555', '0077-5533');
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('3334455555', '0006-6006');
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('6767884444', '0006-6006');
+INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('453453453', '0006-6006');
 

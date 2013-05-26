@@ -31,7 +31,6 @@ public class DisciplinaDAO extends SqlDAO{
         builder.append("join LINHADEPESQUISA lp on lp.CodigoLinhaDePesquisa = d.CodigoLinhaDePesquisa");
         
         String cmd = builder.toString();
-        System.out.println(cmd);
         
         return cmd;
     }

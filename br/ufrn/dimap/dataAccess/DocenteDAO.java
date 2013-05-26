@@ -79,8 +79,6 @@ public class DocenteDAO extends SqlDAO{
         builder.append("natural left join LINHADEPESQUISA");
         
         String cmd = builder.toString();
-        System.out.println(cmd);
-        
         
         return cmd;
     }
