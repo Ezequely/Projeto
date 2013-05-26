@@ -32,14 +32,15 @@ public abstract class SqlDAO implements DatabaseAccessObject{
     public void insert(Object obj) {
     }
 
-    public Object search(Object obj) {
-        return null;
-    }
-
     public void remove(Object obj) {
     }
 
-    public Collection<Object> listAll() {
+    public Collection<? extends Object> listAll() {
+        return this.listAll(this.createSelectCmd());
+    }
+    
+    /**Permite as classes na hierarquia executar comandos de busca especificos*/
+    protected Collection<? extends Object> listAll(String selectCmd){
         try {
             Connection connection = this.dataController.CreateConnection();
 
@@ -57,10 +58,18 @@ public abstract class SqlDAO implements DatabaseAccessObject{
             e.printStackTrace();
         } 
         return null;
+        
     }
     
     protected abstract String createSelectCmd();
 
     protected abstract Object read(ResultSet rs) throws SQLException;
+
+    /**
+     *  @return por padrao retorna uma colecao vazia.
+     */
+    public Collection<? extends Object> search(Object obj) {
+        return new ArrayList<Object>();
+    }
     
 }

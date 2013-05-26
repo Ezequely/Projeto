@@ -5,8 +5,8 @@
 package br.ufrn.dimap.dataAccess;
 
 import br.ufrn.dimap.entidades.Docente;
+import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.entidades.Vinculo;
-import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,12 +30,38 @@ public class DocenteDAO extends SqlDAO{
     }
 
     @Override
-    public Object search(Object obj) {
-        return null;
-    }
-
-    @Override
     public void remove(Object obj) {
+    }
+    
+    public Collection<? extends Object> search(Object obj){
+        if(obj instanceof Turma){//buscar docentes de uma turma
+            String cmdSelectDocentesDaTurma = this.createSelectTurmaDocenteCmd((Turma)obj);
+            return this.listAll(cmdSelectDocentesDaTurma);
+        }
+        
+        //else: retorna lista vazia
+        return new ArrayList<Docente>();
+    }
+    
+    /* selectiona todos os professores de uma turma
+     select * from 
+	PESSOA natural join
+	VINCULO natural join
+	(Select Titulacao, MatriculaDocente as Matricula, Cargo from DOCENTE) as D 
+		natural left join
+	LINHADEPESQUISA
+	where Matricula 
+                in (select MatriculaDocente from TURMA_DOCENTE where CodigoTurma = ?)
+     */
+    private String createSelectTurmaDocenteCmd(Turma t) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.createSelectCmd());
+        builder.append(" where Matricula in ");
+        builder.append(" (select MatriculaDocente from TURMA_DOCENTE where CodigoTurma = ");
+        builder.append(Integer.toString(t.getCodigoTurma()));
+        builder.append( " )");
+        
+        return builder.toString();
     }
     
     /*select * from 
@@ -68,5 +94,6 @@ public class DocenteDAO extends SqlDAO{
         
         return docente;
     }
+
     
 }

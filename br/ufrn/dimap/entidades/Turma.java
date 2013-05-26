@@ -19,7 +19,13 @@ public class Turma {
         this.numeroTurma = numeroTurma;
         this.disciplina = disc;
     }
- 
+
+    public Iterable<Docente> getDocentes() {
+        return docentes;
+    }
+    public void setDocentes(Collection<Docente> docentes) {
+        this.docentes = docentes;
+    }
     
     public int getCodigoTurma() {
         return codigoTurma;
@@ -74,7 +80,7 @@ public class Turma {
     public boolean equals(Object object) {
         if (object instanceof Turma) {
             Turma other = (Turma) object;
-            return this.codigoTurma  > 0 && this.codigoTurma == other.getCodigoTurma();
+            return this.getCodigoTurma()  > 0 && this.getCodigoTurma() == other.getCodigoTurma();
         }
         return false;
     }

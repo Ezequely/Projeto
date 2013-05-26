@@ -13,7 +13,12 @@ import java.util.Collection;
 public interface DatabaseAccessObject {
 	 public void update(Object obj);
 	 public void insert(Object obj);
-	 public Object search(Object obj);
 	 public void remove(Object obj);
-	 public Collection<Object> listAll();
+         /** 
+          * @param obj um objeto contendo a partir do qual podem ser obtidos os parâmetros
+          * de busca da tabela relacionada
+          * @return retorna uma colecao de objetos da tabela referenciada obtidos na busca
+          */
+	 public Collection<? extends Object> search(Object obj);
+	 public Collection<? extends Object> listAll();
 }
