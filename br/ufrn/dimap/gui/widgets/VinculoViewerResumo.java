@@ -13,10 +13,6 @@ import br.ufrn.dimap.entidades.Vinculo;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -28,15 +24,15 @@ import javax.swing.UIManager;
  *
  * @author leobrizolara
  */
-public class ViewVinculoResumo extends javax.swing.JPanel implements ObjectViewer{
+public class VinculoViewerResumo extends javax.swing.JPanel implements ObjectViewer{
     private Vinculo vinculo;
     /**
      * Creates new form pnlPessoaResumo
      */
-    public ViewVinculoResumo() {
+    public VinculoViewerResumo() {
         initComponents();
     }
-    public ViewVinculoResumo(Vinculo vinculo) {
+    public VinculoViewerResumo(Vinculo vinculo) {
         this();
         this.setVinculo(vinculo);
     }
@@ -70,6 +66,10 @@ public class ViewVinculoResumo extends javax.swing.JPanel implements ObjectViewe
         }
     }
 
+    public Class getObjectClass() {
+        return Vinculo.class;
+    }
+    
     public Vinculo getVinculo(){
         return vinculo;
     }
@@ -243,5 +243,6 @@ public class ViewVinculoResumo extends javax.swing.JPanel implements ObjectViewe
     private JLabel lblTitulacaoValor;
     private JPanel pnlDados;
     // End of variables declaration//GEN-END:variables
+
 
 }

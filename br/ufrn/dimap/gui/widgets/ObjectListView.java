@@ -94,28 +94,6 @@ public class ObjectListView extends JList<Object>{
     }
 }
 
-/**
- * Uma visão generica para objetos. Utiliza o metodo toString do objeto para
- * exibi-lo na interface.
- */
-class DefaultObjectViewer extends JLabel implements ObjectViewer{
-    private Object obj;
-    
-    public void setObject(Object obj) {
-        this.obj = obj;
-        this.setText(obj.toString());
-    }
-
-    public Object getObject() {
-        return obj;
-    }
-
-    public Component getView() {
-        return this;
-    }
-    
-}
-
 class ListCellObjectRenderer implements ListCellRenderer{
     ObjectViewer viewer;
     
@@ -151,7 +129,7 @@ class ListCellObjectRenderer implements ListCellRenderer{
          } else if (isSelected) {
              //background = Color.RED;
              background = new Color(240, 119, 70);
-             foreground = Color.WHITE;
+             foreground = Color.BLACK;
 
          // unselected, and not the DnD drop location
          } else {

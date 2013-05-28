@@ -33,6 +33,10 @@ public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
         return getTurma();
     }
 
+    public Class getObjectClass() {
+        return Turma.class;
+    }
+    
     public Component getView() {
         return this;
     }

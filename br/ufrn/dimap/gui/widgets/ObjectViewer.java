@@ -12,4 +12,5 @@ public interface ObjectViewer{
     public void setObject(Object obj);
     public Object getObject();
     public Component getView();
+    public Class getObjectClass();
 }

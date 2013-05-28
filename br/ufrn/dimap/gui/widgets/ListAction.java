@@ -93,8 +93,6 @@ public class ListAction  extends AbstractAction implements MouseListener
     }
         
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("fired!");
-        
         //define a source como o objeto que foi selecionado
         ae.setSource(this.list.getModel().getElementAt(this.list.getSelectedIndex()));
         

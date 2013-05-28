@@ -35,6 +35,10 @@ public class ViewDadosPessoais extends javax.swing.JPanel implements ObjectViewe
         return getPessoa();
     }
 
+    public Class getObjectClass() {
+        return Pessoa.class;
+    }
+    
     public Component getView() {
         return this;
     }
@@ -356,5 +360,6 @@ public class ViewDadosPessoais extends javax.swing.JPanel implements ObjectViewe
     private javax.swing.JPanel pnlDadosPessoais;
     private javax.swing.JPanel pnlFoto;
     // End of variables declaration//GEN-END:variables
+
 
 }
