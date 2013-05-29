@@ -16,6 +16,14 @@ delete from PESSOA;
 */
 
 
+-- -- -- -- -- -- -- -- -- LINHAS DE PESQUISA -- -- -- -- -- -- -- -- -- -- -- -- 
+
+insert into LINHADEPESQUISA values ('LP1','ALGORITMOS EXPERIMENTAIS','Texto');
+insert into LINHADEPESQUISA values ('LP2','ENGENHARIA DE SOFTWARE','Texto');
+insert into LINHADEPESQUISA values ('LP3','TEORIA DA COMPUTAÇÃO','Texto');
+insert into LINHADEPESQUISA values ('LP4','SISTEMAS INTEGRADOS E DISTRIBUÍDOS','Texto');
+insert into LINHADEPESQUISA values ('LP5','PROCESSAMENTO GRÁFICO E INTELIGÊNCIA COMPUTACIONAL','Texto');
+insert into LINHADEPESQUISA values ('LP6','LINGUAGENS DE PROGRAMAÇÃO E MÉTODOS FORMAIS','Texto');
 
 -- PESSOA
 insert into PESSOA (CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade, DTNasc, E_mail, Telefone) values
@@ -29,41 +37,41 @@ insert into PESSOA (CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade
 
 
 insert into PESSOA (Nome, CPF, DTNasc, Endereco, Cidade, UF, Telefone, Nacionalidade, E_mail) values
-("Andy C. Vile","222222202","1944-06-21","1967 Jordan", "Milwaukee", "WI", "2222-2200", "estadunidense", "andy@vile.com"),
-("Brad C. Knight","111111103","1968-02-13","176 Main St.", "Atlanta", "GA","1111-1100", "argentina", "brad@knight.com"),
-("Evan E. Wallis","222222200","1958-01-16","134 Pelham", "Milwaukee", "WI","null","brasileira", "evan@ufrn.com.br"),
-("Josh U. Zell","222222201","1954-05-22","266 McGrady", "Milwaukee", "WI","2222-2220", "colombiana", "josh@ufrn.com.br"),
-("Jared D. James","111111100","1966-10-10","123 Peachtree", "Atlanta", "GA","null","brasileira", "jared@ufrn.com.br"),
-("Justin n.Mark","111111102","1966-01-12","2342 May", "Atlanta", "GA","1121-1100","cubana", "justin@ufrn.com.br"),
-("Jon C. Jones","111111101","1967-11-14","111 Allgood", "Atlanta", "GA","1111-1100","brasileira", "jon@ufrn.com.br"),
-("John C James","555555500","1975-06-30","7676 Bloomington", "Sacramento", "CA","null","brasileira", "john@ufrn.com.br"),
-("Alex D Freed","444444400","1950-10-09","4333 Pillsbury", "Milwaukee", "WI","null","brasileira", "alex@ufrn.com.br"),
-("Ahmad V Jabbar","987987987","1959-03-29","980 Dallas", "Houston", "TX","8765-4321","estadunidense", "ahmad@ufrn.com.br"),
-("Alicia J Zelaya","999887777","1958-07-19","3321 Castle", "Spring", "TX","9876-4321","brasileira", "alcia@ufrn.com.br");
+('Andy C. Vile','222222202','1944-06-21','1967 Jordan', 'Milwaukee', 'WI', '2222-2200', 'estadunidense', 'andy@vile.com'),
+('Brad C. Knight','111111103','1968-02-13','176 Main St.', 'Atlanta', 'GA','1111-1100', 'argentina', 'brad@knight.com'),
+('Evan E. Wallis','222222200','1958-01-16','134 Pelham', 'Milwaukee', 'WI',NULL,'brasileira', 'evan@ufrn.com.br'),
+('Josh U. Zell','222222201','1954-05-22','266 McGrady', 'Milwaukee', 'WI','2222-2220', 'colombiana', 'josh@ufrn.com.br'),
+('Jared D. James','111111100','1966-10-10','123 Peachtree', 'Atlanta', 'GA',NULL,'brasileira', 'jared@ufrn.com.br'),
+('Justin n.Mark','111111102','1966-01-12','2342 May', 'Atlanta', 'GA','1121-1100','cubana', 'justin@ufrn.com.br'),
+('Jon C. Jones','111111101','1967-11-14','111 Allgood', 'Atlanta', 'GA','1111-1100','brasileira', 'jon@ufrn.com.br'),
+('John C James','555555500','1975-06-30','7676 Bloomington', 'Sacramento', 'CA',NULL,'brasileira', 'john@ufrn.com.br'),
+('Alex D Freed','444444400','1950-10-09','4333 Pillsbury', 'Milwaukee', 'WI',NULL,'brasileira', 'alex@ufrn.com.br'),
+('Ahmad V Jabbar','987987987','1959-03-29','980 Dallas', 'Houston', 'TX','8765-4321','estadunidense', 'ahmad@ufrn.com.br'),
+('Alicia J Zelaya','999887777','1958-07-19','3321 Castle', 'Spring', 'TX','9876-4321','brasileira', 'alcia@ufrn.com.br');
 
 
 -- VINCULOS (DOCENTES)
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa)
-    values ('11114', '123456789', 1, '2013-05-14', NULL); -- alterar codigo linha de pesquisa
+    values ('11114', '123456789', 1, '2013-05-14', 'LP6');
 insert into DOCENTE (Titulacao, Cargo, MatriculaDocente)
     values ('Doutorado', NULL, '11114');
 insert into VINCULO (Matricula, CPF, DataDeMatricula, CodigoLinhaDePesquisa)
-    values ('22222', '3334455555', '1987-01-28', NULL); -- alterar codigo linha de pesquisa
+    values ('22222', '3334455555', '1987-01-28', 'LP2');
 insert into DOCENTE (Titulacao, Cargo, MatriculaDocente)
     values ('Doutorado', NULL, '22222');
 
 insert into VINCULO (Matricula, CPF, DataDeMatricula, Ativo, CodigoLinhaDePesquisa) values
-("197508","555555500","1975-06-30","1", "LP5"),
-("201345","444444400","1950-10-09","1", "LP1"),
-("161789","987987987","1959-03-29","0", "LP4"),
-("2233445","999887777","1958-07-19","1", "LP2");
+('197508','555555500','1975-06-30','1', 'LP5'),
+('201345','444444400','1950-10-09','1', 'LP1'),
+('161789','987987987','1959-03-29','0', 'LP4'),
+('2233445','999887777','1958-07-19','1', 'LP2');
 
 
 insert into DOCENTE (MatriculaDocente, Titulacao ) values
-("197508","Doutorado"),
-("201345","Doutorado"),
-("161789","Mestrado"),
-("2233445","Pos-doutorado");
+('197508','Doutorado'),
+('201345','Doutorado'),
+('161789','Mestrado'),
+('2233445','Pos-doutorado');
 
 
 -- -- -- -- -- -- -- -- -- VINCULO (ALUNOS) -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -88,13 +96,13 @@ insert into ALUNO (Grau, MatriculaAluno, MatriculaOrientador)
     values ('Doutorado', '1975123456', '123456789');
 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa) values
-("201012334","222222202","1","2010-20-02", 'LP7'),
-("20097892","111111103","1","2009-11-11", 'LP1'),
-("200912345","222222200","0","2009-16-04",'LP3'),
-("20117766","222222201","1","2011-02-02", 'LP2'),
-("20108877","111111100","0","2010-01-08",'LP1'),
-("20129901","111111102","1","2012-01-11",'LP5'),
-("201212345","111111101","1","2012-11-01",'LP3');
+('201012334','222222202','1','2010-02-20', 'LP6'),
+('20097892','111111103','1','2009-11-11', 'LP1'),
+('200912345','222222200','0','2009-06-04','LP3'),
+('20117766','222222201','1','2011-02-02', 'LP2'),
+('20108877','111111100','0','2010-01-08','LP1'),
+('20129901','111111102','1','2012-01-11','LP5'),
+('201212345','111111101','1','2012-11-01','LP3');
 
 
 insert into ALUNO (MatriculaAluno, MatriculaOrientador, Grau) values
@@ -105,15 +113,6 @@ insert into ALUNO (MatriculaAluno, MatriculaOrientador, Grau) values
 ('20108877','161789','Doutorado'),
 ('20129901','22222','Mestrado'),
 ('201212345','2233445','Doutorado');
-
--- -- -- -- -- -- -- -- -- LINHAS DE PESQUISA -- -- -- -- -- -- -- -- -- -- -- -- 
-
-insert into LINHADEPESQUISA values ('LP1','ALGORITMOS EXPERIMENTAIS','Texto');
-insert into LINHADEPESQUISA values ('LP2','ENGENHARIA DE SOFTWARE','Texto');
-insert into LINHADEPESQUISA values ('LP3','TEORIA DA COMPUTAÇÃO','Texto');
-insert into LINHADEPESQUISA values ('LP4','SISTEMAS INTEGRADOS E DISTRIBUÍDOS','Texto');
-insert into LINHADEPESQUISA values ('LP5','PROCESSAMENTO GRÁFICO E INTELIGÊNCIA COMPUTACIONAL','Texto');
-insert into LINHADEPESQUISA values ('LP6','LINGUAGENS DE PROGRAMAÇÃO E MÉTODOS FORMAIS','Texto');
 
 -- -- -- -- -- -- -- -- -- DISCIPLINAS -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 
@@ -153,13 +152,13 @@ insert into TURMA (CodigoTurma, NumeroTurma, PeriodoLetivo, CodigoDisciplina, St
 
 -- -- -- -- -- -- -- -- -- TURMA_DOCENTE -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
--- Insere John Smith como professor de todas as turmas de "SEMANTICA LING DE PROGRAMAÇÃO"
+-- Insere John Smith como professor de todas as turmas de 'SEMANTICA LING DE PROGRAMAÇÃO'
 insert into TURMA_DOCENTE (CodigoTurma, MatriculaDocente) 
 select T.CodigoTurma, D.MatriculaDocente from
-		-- Relaciona cada turma de "SEMANTICA LING DE PROGRAMAÇÃO" c/ a matricula de John Smith
+		-- Relaciona cada turma de 'SEMANTICA LING DE PROGRAMAÇÃO' c/ a matricula de John Smith
 		(select CodigoTurma from 
 			TURMA t join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina
-			where Nome = "SEMANTICA LING DE PROGRAMAÇÃO"
+			where Nome = 'SEMANTICA LING DE PROGRAMAÇÃO'
 		) as T
 		join
 		(select MatriculaDocente from 
@@ -236,24 +235,24 @@ insert into ALUNO_TURMA (CodigoTurma, MatriculaAluno, Nota1, Nota2, Nota3, Nota4
 
 -- -- -- -- -- -- -- -- -- PUBLICACAO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
-	values("Aplicando Bancos de dados na vida real", "Bancos de Dados", 
-			"Revista de Bancos", '2001-01-01', "Artigo", "0077-5533", NULL, NULL);
+	values('Aplicando Bancos de dados na vida real', 'Bancos de Dados', 
+			'Revista de Bancos', '2001-01-01', 'Artigo', '0077-5533', NULL, NULL);
 insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
-	values("Banco de dados hardcore", "Bancos de Dados", 
-			NULL, '2006-06-06', "Livro", "0006-6006", "Resumo", "http://www.editora.com/livros/0006_6006");
+	values('Banco de dados hardcore', 'Bancos de Dados', 
+			NULL, '2006-06-06', 'Livro', '0006-6006', 'Resumo', 'http://www.editora.com/livros/0006_6006');
 insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
-	values("Introdução a compiladores", "Compiladores", 
-			NULL, '2013-12-12', "Livro", "1234-5678", "Esse é um resumo muito longo...", 
-			"http://www.editora.com/livros/Intro_a_compiladores");
+	values('Introdução a compiladores', 'Compiladores', 
+			NULL, '2013-12-12', 'Livro', '1234-5678', 'Esse é um resumo muito longo...', 
+			'http://www.editora.com/livros/Intro_a_compiladores');
 insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL)
-	values("Investigando a semantica das linguagens de montagem", "Linguagens de programação", 
-			"ACM unknown journal", '2013-09-28', "Artigo", "9993-8883", "Este não tem resumo", "http://www.john.smith.com/sem_ling_mont.pdf");
+	values('Investigando a semantica das linguagens de montagem', 'Linguagens de programação', 
+			'ACM unknown journal', '2013-09-28', 'Artigo', '9993-8883', 'Este não tem resumo', 'http://www.john.smith.com/sem_ling_mont.pdf');
 
 -- -- -- -- -- -- -- -- -- PESSOA_PUBLICACAO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('123456789', '9993-8883');
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('123456789', '1234-5678');
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('3334455555', '0077-5533');
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('3334455555', '0006-6006');
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('6767884444', '0006-6006');
-INSERT INTO PESSOA_PUBLICACAO (CPF, ISSN) VALUES ('453453453', '0006-6006');
+insert into PESSOA_PUBLICACAO (CPF, ISSN) values    ('123456789', '9993-8883'),
+                                                    ('123456789', '1234-5678'),
+                                                    ('3334455555', '0077-5533'),
+                                                    ('3334455555', '0006-6006'),
+                                                    ('6767884444', '0006-6006'),
+                                                    ('453453453', '0006-6006');
 
