@@ -1,7 +1,7 @@
 use dbPosGraduacao;
 
 -- DELETE ALL
-/*
+
 delete from PESSOA_PUBLICACAO;
 delete from PUBLICACAO;
 delete from ALUNO_TURMA;
@@ -13,7 +13,7 @@ delete from ALUNO;
 delete from DOCENTE;
 delete from VINCULO;
 delete from PESSOA;
-*/
+
 
 
 -- -- -- -- -- -- -- -- -- LINHAS DE PESQUISA -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -65,8 +65,6 @@ insert into VINCULO (Matricula, CPF, DataDeMatricula, Ativo, CodigoLinhaDePesqui
 ('201345','444444400','1950-10-09','1', 'LP1'),
 ('161789','987987987','1959-03-29','0', 'LP4'),
 ('2233445','999887777','1958-07-19','1', 'LP2');
-
-
 insert into DOCENTE (MatriculaDocente, Titulacao ) values
 ('197508','Doutorado'),
 ('201345','Doutorado'),
@@ -76,24 +74,24 @@ insert into DOCENTE (MatriculaDocente, Titulacao ) values
 
 -- -- -- -- -- -- -- -- -- VINCULO (ALUNOS) -- -- -- -- -- -- -- -- -- -- -- -- 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa)
-    values ('2000123456', '123456789', 1, '2000-02-10', 'LP1'); -- alterar codigo linha de pesquisa
+    values ('2000123456', '123456789', 1, '2000-02-10', 'LP1'); 
 insert into ALUNO (Grau, MatriculaAluno, MatriculaOrientador)
-    values ('Mestrado', '2000123456', '123456789');
+    values ('Mestrado', '2000123456', '22222');
 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa)
     values ('2011100908', '6767884444', 1, '2011-07-01', 'LP2'); -- alterar codigo linha de pesquisa
 insert into ALUNO (Grau, MatriculaAluno, MatriculaOrientador)
-    values ('Doutorado', '2011100908', '3334455555');
+    values ('Doutorado', '2011100908', '22222');
 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa)
     values ('2012090909', '453453453', 1, '2012-01-01', 'LP4'); -- alterar codigo linha de pesquisa
 insert into ALUNO (Grau, MatriculaAluno, MatriculaOrientador)
-    values ('Mestrado', '2012090909', '3334455555');
+    values ('Mestrado', '2012090909', '22222');
 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa)
     values ('1975123456', '3334455555',0, '1975-07-03', 'LP5'); -- alterar codigo linha de pesquisa
 insert into ALUNO (Grau, MatriculaAluno, MatriculaOrientador)
-    values ('Doutorado', '1975123456', '123456789');
+    values ('Doutorado', '1975123456', '11114');
 
 insert into VINCULO (Matricula, CPF, Ativo, DataDeMatricula, CodigoLinhaDePesquisa) values
 ('201012334','222222202','1','2010-02-20', 'LP6'),
@@ -255,4 +253,3 @@ insert into PESSOA_PUBLICACAO (CPF, ISSN) values    ('123456789', '9993-8883'),
                                                     ('3334455555', '0006-6006'),
                                                     ('6767884444', '0006-6006'),
                                                     ('453453453', '0006-6006');
-
