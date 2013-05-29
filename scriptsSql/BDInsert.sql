@@ -253,3 +253,8 @@ insert into PESSOA_PUBLICACAO (CPF, ISSN) values    ('123456789', '9993-8883'),
                                                     ('3334455555', '0006-6006'),
                                                     ('6767884444', '0006-6006'),
                                                     ('453453453', '0006-6006');
+
+/*Inserir para John Smith Login 'Smith' e senha 12345
+Entrada: 12345 Senha com MD5: 827ccb0eea8a706c4c34a16891f84e7b
+*/
+insert into USUARIO (Login, PasswordHash, CPF) values ('Smith','827ccb0eea8a706c4c34a16891f84e7b', '123456789' );

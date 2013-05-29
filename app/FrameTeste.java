@@ -13,6 +13,7 @@ import br.ufrn.dimap.dataAccess.TurmaDAO;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.telas.Navigable;
+import br.ufrn.dimap.gui.telas.TelaLogin;
 import br.ufrn.dimap.gui.telas.TelaVisualizarAlunos;
 import br.ufrn.dimap.gui.telas.TelaVisualizarDocentes;
 import br.ufrn.dimap.gui.telas.TelaVisualizarDadosDocente;
@@ -127,6 +128,9 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
 //        return new TelaVisualizarAlunos(alunos);
         return new TelaVisualizarAlunos();
     }
+    TelaLogin criarTelaLogin(){
+        return new TelaLogin(dataManager);
+    }
     
     private TelaVisualizarTurmas criarTelaVisualizarTurmas(){
         return new TelaVisualizarTurmas();
@@ -146,6 +150,7 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
         telaVisualizarAlunos1 = criarTelaAlunos();
         telaVisualizarTurmas1 = criarTelaVisualizarTurmas();
         telaVisualizarDadosTurma1 = new br.ufrn.dimap.gui.telas.TelaVisualizarDadosTurma();
+        telaLogin1 = criarTelaLogin();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
@@ -154,6 +159,7 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
         jTabbedPane1.addTab("tab2", telaVisualizarAlunos1);
         jTabbedPane1.addTab("tab4", telaVisualizarTurmas1);
         jTabbedPane1.addTab("tab5", telaVisualizarDadosTurma1);
+        jTabbedPane1.addTab("tab5", telaLogin1);
 
         getContentPane().add(jTabbedPane1);
 
@@ -196,6 +202,7 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane1;
+    private br.ufrn.dimap.gui.telas.TelaLogin telaLogin1;
     private br.ufrn.dimap.gui.telas.TelaVisualizarDocentes telaVisaoDocentes2;
     private br.ufrn.dimap.gui.telas.TelaVisualizarAlunos telaVisualizarAlunos1;
     private br.ufrn.dimap.gui.telas.TelaVisualizarDadosTurma telaVisualizarDadosTurma1;
