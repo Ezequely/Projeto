@@ -198,7 +198,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="br.ufrn.dimap.gui.widgets.ObjectListView" name="objectListView1">
+                    <Component class="br.ufrn.dimap.gui.widgets.ObjectListView" name="lstTurmasMinistradas">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="criarTurmaList()"/>
                       </AuxValues>

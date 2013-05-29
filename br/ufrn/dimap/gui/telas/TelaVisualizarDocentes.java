@@ -6,7 +6,7 @@ package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
-import br.ufrn.dimap.gui.widgets.ViewVinculoResumo;
+import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,10 +56,10 @@ public class TelaVisualizarDocentes extends javax.swing.JPanel implements Action
     
     private ObjectListView  criarListaDeDocentes(){
         if(docentes == null){
-            return new ObjectListView(new ViewVinculoResumo());
+            return new ObjectListView(new VinculoViewerResumo());
         }
         else{
-            return new ObjectListView(new ViewVinculoResumo(),docentes);
+            return new ObjectListView(new VinculoViewerResumo(),docentes);
         }
     }
     
@@ -83,42 +83,16 @@ public class TelaVisualizarDocentes extends javax.swing.JPanel implements Action
 
         scrDocentes = new javax.swing.JScrollPane();
         lstDocentes = criarListaDeDocentes();
-        jSeparator1 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
+        lstDocentes.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         scrDocentes.setViewportView(lstDocentes);
 
         add(scrDocentes);
-        add(jSeparator1);
-
-        jButton1.setText("Visualizar");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jButton1)
-                .addContainerGap(309, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jButton1))
-        );
-
-        add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
     private br.ufrn.dimap.gui.widgets.ObjectListView lstDocentes;
     private javax.swing.JScrollPane scrDocentes;
     // End of variables declaration//GEN-END:variables

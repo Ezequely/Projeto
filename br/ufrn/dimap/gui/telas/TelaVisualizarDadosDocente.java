@@ -4,14 +4,12 @@
  */
 package br.ufrn.dimap.gui.telas;
 
-import br.ufrn.dimap.entidades.Disciplina;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.JList;
 
 /**
  *
@@ -40,7 +38,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         else{
             historicoDeTurmas = TurmasDocente;
         }
-        this.objectListView1.setCollection(historicoDeTurmas);
+        this.lstTurmasMinistradas.setCollection(historicoDeTurmas);
     }
     public Collection<? extends Object> getTurmasDocente(){
         return this.historicoDeTurmas;
@@ -95,7 +93,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         pnlTurmasMinistradas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        objectListView1 = criarTurmaList();
+        lstTurmasMinistradas = criarTurmaList();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -147,7 +145,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+3));
         jLabel2.setText("Turmas Ministradas");
 
-        jScrollPane3.setViewportView(objectListView1);
+        jScrollPane3.setViewportView(lstTurmasMinistradas);
 
         javax.swing.GroupLayout pnlTurmasMinistradasLayout = new javax.swing.GroupLayout(pnlTurmasMinistradas);
         pnlTurmasMinistradas.setLayout(pnlTurmasMinistradasLayout);
@@ -209,7 +207,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private br.ufrn.dimap.gui.widgets.ObjectListView objectListView1;
+    private br.ufrn.dimap.gui.widgets.ObjectListView lstTurmasMinistradas;
     private br.ufrn.dimap.gui.widgets.ObjectListView objectListView2;
     private javax.swing.JPanel pnlMetricas;
     private javax.swing.JPanel pnlPublicacoes;

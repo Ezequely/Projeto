@@ -4,6 +4,7 @@
  */
 package app;
 
+import br.ufrn.dimap.dataAccess.AlunoDAO;
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.DocenteDAO;
 import br.ufrn.dimap.dataAccess.MySqlDatabaseController;
@@ -12,16 +13,14 @@ import br.ufrn.dimap.dataAccess.TurmaDAO;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.telas.Navigable;
+import br.ufrn.dimap.gui.telas.TelaVisualizarAlunos;
 import br.ufrn.dimap.gui.telas.TelaVisualizarDocentes;
 import br.ufrn.dimap.gui.telas.TelaVisualizarDadosDocente;
-import java.awt.Color;
+import br.ufrn.dimap.gui.telas.TelaVisualizarTurmas;
 import java.awt.Container;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 /**
@@ -30,11 +29,20 @@ import javax.swing.UIManager;
  */
 public class FrameTeste extends javax.swing.JFrame implements Navigable {
     DatabaseController dataManager;
-    
+    Collection<? extends Object> alunos;
+    Collection<? extends Object> turmas;
     /**
      * Creates new form appJFfame
      */
     public FrameTeste() {
+        try {
+            UIManager.setLookAndFeel(
+                UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(FrameTeste.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         try{
             dataManager = new MySqlDatabaseController("jdbc:mysql://localhost/dbPosGraduacao", "root","root");        }
         catch(ClassNotFoundException e){
@@ -42,8 +50,27 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
             System.exit(1);
         }
         
+        AlunoDAO alunoDAO = new AlunoDAO(dataManager);
+        this.alunos = alunoDAO.listAll();
+        
+        TurmaDAO turmaDAO = new TurmaDAO(dataManager);
+        this.turmas = turmaDAO.listAll();
+        
+        
+        DocenteDAO docentesDAO = new DocenteDAO(dataManager);
+        Collection<Docente> docentes = (Collection<Docente>) docentesDAO.listAll();
+        
         initComponents();
         this.telaVisaoDocentes2.setNavigableParent(this);
+             
+        this.telaVisualizarAlunos1.setAlunos(alunos);
+        //this.newJPanel1.setAlunos(alunos);
+        
+        this.telaVisualizarTurmas1.setTurmas((Collection<Turma>) turmas);
+        
+        this.telaVisaoDocentes2.setDocentes(docentes);
+        
+        this.telaVisualizarDadosTurma1.setObject(turmas.toArray()[0]);
     }
     
     
@@ -82,12 +109,27 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
             return panel;
         
     }
-    TelaVisualizarDocentes criarTelaDocentes(){
-            DocenteDAO docentesDAO = new DocenteDAO(dataManager);
-            Collection<Docente> docente = (Collection<Docente>) docentesDAO.listAll();
-                        
-            return new TelaVisualizarDocentes(docente);
+//    TelaVisualizarDocentes criarTelaDocentes(){
+//            DocenteDAO docentesDAO = new DocenteDAO(dataManager);
+//            Collection<Docente> docente = (Collection<Docente>) docentesDAO.listAll();
+//                        
+//            return new TelaVisualizarDocentes(docente);
+//        
+//    }
+    TelaVisualizarDocentes criarTelaDocentes(){                        
+            return new TelaVisualizarDocentes();
         
+    }
+    TelaVisualizarAlunos criarTelaAlunos(){
+//        AlunoDAO alunoDAO = new AlunoDAO(dataManager);
+//        Collection<? extends Object> alunos = alunoDAO.listAll();
+//        
+//        return new TelaVisualizarAlunos(alunos);
+        return new TelaVisualizarAlunos();
+    }
+    
+    private TelaVisualizarTurmas criarTelaVisualizarTurmas(){
+        return new TelaVisualizarTurmas();
     }
     
     /**
@@ -99,11 +141,21 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         telaVisaoDocentes2 = criarTelaDocentes();
+        telaVisualizarAlunos1 = criarTelaAlunos();
+        telaVisualizarTurmas1 = criarTelaVisualizarTurmas();
+        telaVisualizarDadosTurma1 = new br.ufrn.dimap.gui.telas.TelaVisualizarDadosTurma();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
-        getContentPane().add(telaVisaoDocentes2);
+
+        jTabbedPane1.addTab("tab1", telaVisaoDocentes2);
+        jTabbedPane1.addTab("tab2", telaVisualizarAlunos1);
+        jTabbedPane1.addTab("tab4", telaVisualizarTurmas1);
+        jTabbedPane1.addTab("tab5", telaVisualizarDadosTurma1);
+
+        getContentPane().add(jTabbedPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -143,8 +195,11 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane jTabbedPane1;
     private br.ufrn.dimap.gui.telas.TelaVisualizarDocentes telaVisaoDocentes2;
+    private br.ufrn.dimap.gui.telas.TelaVisualizarAlunos telaVisualizarAlunos1;
+    private br.ufrn.dimap.gui.telas.TelaVisualizarDadosTurma telaVisualizarDadosTurma1;
+    private br.ufrn.dimap.gui.telas.TelaVisualizarTurmas telaVisualizarTurmas1;
     // End of variables declaration//GEN-END:variables
-
 
 }
