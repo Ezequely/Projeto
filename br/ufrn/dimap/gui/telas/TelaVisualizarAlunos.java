@@ -168,11 +168,6 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
         jToolBar1 = new javax.swing.JToolBar();
         lblTipoAgrupamento = new javax.swing.JLabel();
         cmbTiposAgrupamento = new javax.swing.JComboBox();
-        btnTodos = new javax.swing.JButton();
-        btnAgruparPorAno = new javax.swing.JButton();
-        btnAgruparPorAtividade = new javax.swing.JButton();
-        btnAgruparPorGrau = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableAgrupamentoListViewer1 = new br.ufrn.dimap.gui.widgets.TableAgrupamentoListViewer();
 
@@ -190,82 +185,12 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
         });
         jToolBar1.add(cmbTiposAgrupamento);
 
-        btnTodos.setText("Todos");
-        btnTodos.setToolTipText("Exibir os alunos sem agrupamento");
-        btnTodos.setFocusable(false);
-        btnTodos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnTodos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTodosActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnTodos);
-
-        btnAgruparPorAno.setText("Por Ano");
-        btnAgruparPorAno.setToolTipText("Agrupar alunos por ano de entrada");
-        btnAgruparPorAno.setFocusable(false);
-        btnAgruparPorAno.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAgruparPorAno.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAgruparPorAno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgruparPorAnoActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnAgruparPorAno);
-
-        btnAgruparPorAtividade.setText("Ativos/Inativos");
-        btnAgruparPorAtividade.setToolTipText("Exibir alunos agrupados por estado do vinculo");
-        btnAgruparPorAtividade.setFocusable(false);
-        btnAgruparPorAtividade.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAgruparPorAtividade.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAgruparPorAtividade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgruparPorAtividadeActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnAgruparPorAtividade);
-
-        btnAgruparPorGrau.setText("Grau");
-        btnAgruparPorGrau.setToolTipText("Exibir alunos agrupados por grau.");
-        btnAgruparPorGrau.setFocusable(false);
-        btnAgruparPorGrau.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAgruparPorGrau.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAgruparPorGrau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgruparPorGrauActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnAgruparPorGrau);
-
-        jButton1.setText("Linha De Pesquisa");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
         add(jToolBar1, java.awt.BorderLayout.PAGE_END);
 
         jScrollPane2.setViewportView(tableAgrupamentoListViewer1);
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAgruparPorAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgruparPorAnoActionPerformed
-        this.setTipoAgrupamento(TipoAgrupamento.ANO);
-    }//GEN-LAST:event_btnAgruparPorAnoActionPerformed
-
-    private void btnTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodosActionPerformed
-        this.setTipoAgrupamento(TipoAgrupamento.TODOS);
-    }//GEN-LAST:event_btnTodosActionPerformed
-
-    private void btnAgruparPorAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgruparPorAtividadeActionPerformed
-        this.setTipoAgrupamento(TipoAgrupamento.ATIVO);
-    }//GEN-LAST:event_btnAgruparPorAtividadeActionPerformed
-
-    private void btnAgruparPorGrauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgruparPorGrauActionPerformed
-        this.setTipoAgrupamento(TipoAgrupamento.GRAU);
-    }//GEN-LAST:event_btnAgruparPorGrauActionPerformed
 
     private void cmbTiposAgrupamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTiposAgrupamentoActionPerformed
         JComboBox comboBox = (JComboBox) evt.getSource();
@@ -276,12 +201,7 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbTiposAgrupamentoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgruparPorAno;
-    private javax.swing.JButton btnAgruparPorAtividade;
-    private javax.swing.JButton btnAgruparPorGrau;
-    private javax.swing.JButton btnTodos;
     private javax.swing.JComboBox cmbTiposAgrupamento;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblTipoAgrupamento;
