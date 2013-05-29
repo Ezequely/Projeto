@@ -18,6 +18,13 @@ public class Aluno  extends Vinculo{
     public Aluno(Pessoa pessoa, String matricula) {
     	super(pessoa,matricula);
     }
+    public Aluno(Vinculo vinculo){//copia dados do vinculo para aluno
+        this.setAtivo(vinculo.getAtivo());
+        this.setDataDeMatricula(vinculo.getDataDeMatricula());
+        this.setMatricula(vinculo.getMatricula());
+        this.setPessoa(vinculo.getPessoa());
+        this.setLinhaDePesquisa(vinculo.getLinhaDePesquisa());        
+    }
 
     public String getGrau() {
         return grau;

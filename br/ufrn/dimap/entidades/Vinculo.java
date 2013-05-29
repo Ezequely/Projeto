@@ -48,6 +48,11 @@ public class Vinculo {
 	    
 	    @Override
 	    public String toString(){
-	    	return this.matricula;
+                String str = "";
+                if(this.pessoa != null){
+                    str += pessoa.getNome();
+                }
+                str += " [" + this.getMatricula() + "] ";
+                return str;
 	    }
 }
