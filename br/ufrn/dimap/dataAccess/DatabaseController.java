@@ -5,7 +5,7 @@
 package br.ufrn.dimap.dataAccess;
 
 import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.SQLException;
 
 /**
  *
@@ -13,5 +13,8 @@ import java.sql.Statement;
  */
 public interface DatabaseController {
 
-    public Connection CreateConnection();    
+    public Connection CreateConnection(); 
+    public void beginTransaction(Connection conn) throws SQLException;
+    public void commit(Connection conn) throws Exception;
+    public void cancelTransaction(Connection conn)throws Exception;
 }

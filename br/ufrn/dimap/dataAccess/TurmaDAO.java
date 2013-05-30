@@ -4,6 +4,7 @@
  */
 package br.ufrn.dimap.dataAccess;
 
+import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.Disciplina;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
@@ -60,6 +61,9 @@ public class TurmaDAO extends SqlDAO{
         if(obj instanceof Docente){//buscar turmas de um docente
             return this.listAll(this.createSelectTurmaDocenteCmd((Docente)obj));
         }
+        else if(obj instanceof Aluno){
+            return this.listAll(this.createSelectTurmaAlunoCmd((Aluno)obj));
+        }
         
         return new ArrayList<Object>();
     }
@@ -81,6 +85,9 @@ public class TurmaDAO extends SqlDAO{
         
         return builder.toString();
     }
+    private String createSelectTurmaAlunoCmd(Aluno aluno) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     /*select * from 
@@ -101,6 +108,7 @@ public class TurmaDAO extends SqlDAO{
 
     @Override
     protected Object read(ResultSet rs) {
+        
         Turma turma = new Turma();
         try {
             turma.setCodigoTurma(rs.getInt("CodigoTurma"));
@@ -118,5 +126,6 @@ public class TurmaDAO extends SqlDAO{
 
         return turma;
     }
+
     
 }
