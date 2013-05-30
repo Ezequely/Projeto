@@ -14,19 +14,21 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarDadosTurma extends javax.swing.JPanel implements ObjectViewer {
+public class TelaVisualizarDadosTurma extends Tela implements ObjectViewer {
     Turma turma;
     /**
      * Creates new form TelaVisualizarDadosTurma
      */
     public TelaVisualizarDadosTurma() {
-        initComponents();
-        
-        this.objectListView1.setViewer(new VinculoViewerResumo());
+        this(new Turma());
     }
 
     TelaVisualizarDadosTurma(Turma turma) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
+        
+        this.lstDocentes.setViewer(new VinculoViewerResumo());
+        
+        this.setObject(turma);
     }
 
     /**
@@ -38,19 +40,45 @@ public class TelaVisualizarDadosTurma extends javax.swing.JPanel implements Obje
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         lblDisciplinaValor = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        objectListView1 = new br.ufrn.dimap.gui.widgets.ObjectListView();
+        lblPeriodoValor = new javax.swing.JLabel();
+        lblTurmaNumLabel = new javax.swing.JLabel();
+        lblTurmaNumValor = new javax.swing.JLabel();
+        lblHorarioLabel = new javax.swing.JLabel();
+        lblHorarioValor = new javax.swing.JLabel();
+        lblLocalDeAulaLabel = new javax.swing.JLabel();
+        lblLocalDeAulaValor = new javax.swing.JLabel();
+        lblStatusLabel = new javax.swing.JLabel();
+        lblStatusValor = new javax.swing.JLabel();
+        lblDocentesLabel = new javax.swing.JLabel();
+        scpDocentes = new javax.swing.JScrollPane();
+        lstDocentes = new br.ufrn.dimap.gui.widgets.ObjectListView();
 
-        jLabel1.setText("Disciplina:");
+        lblDisciplinaValor.setFont(lblDisciplinaValor.getFont().deriveFont(lblDisciplinaValor.getFont().getSize()+4f));
+        lblDisciplinaValor.setText("<Disciplina>");
 
-        lblDisciplinaValor.setText("<disciplina>");
+        lblPeriodoValor.setFont(lblPeriodoValor.getFont().deriveFont(lblPeriodoValor.getFont().getSize()+2f));
+        lblPeriodoValor.setText("<período>");
 
-        jLabel3.setText("Docentes:");
+        lblTurmaNumLabel.setText("Turma:");
 
-        jScrollPane1.setViewportView(objectListView1);
+        lblTurmaNumValor.setText("<nº turma>");
+
+        lblHorarioLabel.setText("Horário de aula:");
+
+        lblHorarioValor.setText("<horario>");
+
+        lblLocalDeAulaLabel.setText("Local de aula:");
+
+        lblLocalDeAulaValor.setText("<local de aula>");
+
+        lblStatusLabel.setText("Status:");
+
+        lblStatusValor.setText("<status>");
+
+        lblDocentesLabel.setText("Docentes:");
+
+        scpDocentes.setViewportView(lstDocentes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,14 +87,30 @@ public class TelaVisualizarDadosTurma extends javax.swing.JPanel implements Obje
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(scpDocentes)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lblDisciplinaValor)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblPeriodoValor))
+                            .addComponent(lblDocentesLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblHorarioLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblDisciplinaValor))
-                            .addComponent(jLabel3))
+                                .addComponent(lblHorarioValor)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblLocalDeAulaLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblLocalDeAulaValor))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblStatusLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblStatusValor))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTurmaNumLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTurmaNumValor)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -75,21 +119,43 @@ public class TelaVisualizarDadosTurma extends javax.swing.JPanel implements Obje
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblDisciplinaValor))
+                    .addComponent(lblDisciplinaValor)
+                    .addComponent(lblPeriodoValor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTurmaNumLabel)
+                    .addComponent(lblTurmaNumValor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHorarioLabel)
+                    .addComponent(lblHorarioValor)
+                    .addComponent(lblLocalDeAulaLabel)
+                    .addComponent(lblLocalDeAulaValor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatusLabel)
+                    .addComponent(lblStatusValor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDocentesLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scpDocentes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDisciplinaValor;
-    private br.ufrn.dimap.gui.widgets.ObjectListView objectListView1;
+    private javax.swing.JLabel lblDocentesLabel;
+    private javax.swing.JLabel lblHorarioLabel;
+    private javax.swing.JLabel lblHorarioValor;
+    private javax.swing.JLabel lblLocalDeAulaLabel;
+    private javax.swing.JLabel lblLocalDeAulaValor;
+    private javax.swing.JLabel lblPeriodoValor;
+    private javax.swing.JLabel lblStatusLabel;
+    private javax.swing.JLabel lblStatusValor;
+    private javax.swing.JLabel lblTurmaNumLabel;
+    private javax.swing.JLabel lblTurmaNumValor;
+    private br.ufrn.dimap.gui.widgets.ObjectListView lstDocentes;
+    private javax.swing.JScrollPane scpDocentes;
     // End of variables declaration//GEN-END:variables
 
     public void setObject(Object obj) {
@@ -98,16 +164,17 @@ public class TelaVisualizarDadosTurma extends javax.swing.JPanel implements Obje
             if(turma.getDisciplina() != null){
                 this.lblDisciplinaValor.setText(turma.getDisciplina().getNome());
             }
-            this.objectListView1.setCollection((Collection<? extends Object>) turma.getDocentes());
-//            turma.getCodHorarioDeAula();
-//            turma.getDisciplina();
-//            turma.getDocentes();
-//            turma.getLocalDeAula();
-//            turma.getNumeroTurma();
-//            turma.getPeriodoLetivo();
-//            turma.getStatus();
             
-            //atualizar a IU
+            this.lblPeriodoValor.setText(turma.getPeriodoLetivo());
+            this.lblTurmaNumValor.setText(Integer.toString(turma.getNumeroTurma()));
+            
+            this.lblHorarioValor.setText(turma.getCodHorarioDeAula());
+            this.lblLocalDeAulaValor.setText(turma.getLocalDeAula());
+            
+            this.lblStatusValor.setText(turma.getStatus());
+            if(this.turma.getDocentes() != null){
+                this.lstDocentes.setCollection((Collection<? extends Object>) turma.getDocentes());
+            }
         }
     }
 

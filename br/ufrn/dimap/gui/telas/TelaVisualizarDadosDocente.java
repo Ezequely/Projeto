@@ -5,9 +5,12 @@
 package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Docente;
+import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,10 +18,13 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarDadosDocente extends javax.swing.JPanel {    
+public class TelaVisualizarDadosDocente extends Tela implements ActionListener{    
     Docente docente;
     Collection<? extends Object> historicoDeTurmas;
     Collection<? extends Object> publicacoesDocente;
+    
+    final String turmasActionCommand = "Turmas";
+    final String publicacoesActionCommand = "Publicacoes";
     
     public TelaVisualizarDadosDocente() {
         this(new Docente(), null); //TODO: retirar isso
@@ -26,9 +32,15 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
     
     public TelaVisualizarDadosDocente(Docente docente, Collection<? extends Object> turmasMinistradas){    
         initComponents();
-        this.viewDadosPessoais1.setObject(docente);
+        this.viewDadosPessoais.setObject(docente);
         this.docente = docente;
         this.setTurmasDocente(turmasMinistradas);
+        
+        this.lstTurmasMinistradas.addActionListener(this);
+        this.lstPublicacoes.addActionListener(this);
+        
+        lstTurmasMinistradas.setActionCommand(turmasActionCommand);
+        lstPublicacoes.setActionCommand(publicacoesActionCommand);
     }
 
     public void setTurmasDocente(Collection<? extends Object> TurmasDocente){
@@ -51,7 +63,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         else{
             this.publicacoesDocente = publicacoes;
         }
-        this.objectListView2.setCollection(publicacoesDocente);
+        this.lstPublicacoes.setCollection(publicacoesDocente);
     }
     public Collection<? extends Object> getPublicacoesDocente(){
         return this.publicacoesDocente;
@@ -62,7 +74,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
     }
     public void setDocente(Docente docente){
         this.docente = docente;
-        this.viewDadosPessoais1.setObject(docente);
+        this.viewDadosPessoais.setObject(docente);
     }
 
     private ObjectListView criarTurmaList() {
@@ -71,6 +83,37 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
     private ObjectListView criarListaDePublicacoes(){
         return new ObjectListView();
     }
+    
+    
+    public void actionPerformed(ActionEvent ae) {
+        NavigationEvent naviEvent = new NavigationEvent(this);
+        if(ae.getActionCommand().equals(turmasActionCommand)){
+            naviEvent.addArg("Turma", this.getSelectedTurma());
+            naviEvent.setDestination("TelaVisualizarDadosTurma");
+        }
+        else if(ae.getActionCommand().equals(publicacoesActionCommand)){
+            naviEvent.addArg("Publicacao", this.getSelectedPublicacao());
+            naviEvent.setDestination("TelaVisualizarDadosPublicacao"); //TODO: ainda nao existe
+        }
+        else{
+            return;//acao invalida
+        }
+        this.fireNavigate(naviEvent);
+    }
+    
+    public Turma getSelectedTurma(){
+        if(lstTurmasMinistradas.isSelectionEmpty() == false){
+            return (Turma) this.lstTurmasMinistradas.getSelectedValue();
+        }
+        return null;
+    }
+    public Publicacao getSelectedPublicacao(){
+        if(lstPublicacoes.isSelectionEmpty() == false){
+            return (Publicacao) this.lstPublicacoes.getSelectedValue();
+        }
+        return null;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,24 +126,24 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
 
         scrVisualizarDados = new javax.swing.JScrollPane();
         pnlVisualizarDadosDocente = new javax.swing.JPanel();
-        viewDadosPessoais1 = new br.ufrn.dimap.gui.widgets.ViewDadosPessoais();
+        viewDadosPessoais = new br.ufrn.dimap.gui.widgets.ViewDadosPessoais();
         pnlPublicacoes = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        objectListView2 = criarListaDePublicacoes();
+        lblPublicacoesLabel = new javax.swing.JLabel();
+        scpPublicacoes = new javax.swing.JScrollPane();
+        lstPublicacoes = criarListaDePublicacoes();
         pnlMetricas = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblMetricasLabel = new javax.swing.JLabel();
         pnlTurmasMinistradas = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        lblTurmaMinistradasLabel = new javax.swing.JLabel();
+        scrTurmasMinistradas = new javax.swing.JScrollPane();
         lstTurmasMinistradas = criarTurmaList();
 
         setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, jLabel3.getFont().getSize()+3));
-        jLabel3.setText("Publicações");
+        lblPublicacoesLabel.setFont(lblPublicacoesLabel.getFont().deriveFont(lblPublicacoesLabel.getFont().getStyle() | java.awt.Font.BOLD, lblPublicacoesLabel.getFont().getSize()+3));
+        lblPublicacoesLabel.setText("Publicações");
 
-        jScrollPane1.setViewportView(objectListView2);
+        scpPublicacoes.setViewportView(lstPublicacoes);
 
         javax.swing.GroupLayout pnlPublicacoesLayout = new javax.swing.GroupLayout(pnlPublicacoes);
         pnlPublicacoes.setLayout(pnlPublicacoesLayout);
@@ -108,23 +151,23 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
             pnlPublicacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPublicacoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblPublicacoesLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlPublicacoesLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scpPublicacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 30, Short.MAX_VALUE))
         );
         pnlPublicacoesLayout.setVerticalGroup(
             pnlPublicacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPublicacoesLayout.createSequentialGroup()
-                .addComponent(jLabel3)
+                .addComponent(lblPublicacoesLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .addComponent(scpPublicacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getStyle() | java.awt.Font.BOLD, jLabel4.getFont().getSize()+3));
-        jLabel4.setText("Métricas");
+        lblMetricasLabel.setFont(lblMetricasLabel.getFont().deriveFont(lblMetricasLabel.getFont().getStyle() | java.awt.Font.BOLD, lblMetricasLabel.getFont().getSize()+3));
+        lblMetricasLabel.setText("Métricas");
 
         javax.swing.GroupLayout pnlMetricasLayout = new javax.swing.GroupLayout(pnlMetricas);
         pnlMetricas.setLayout(pnlMetricasLayout);
@@ -132,20 +175,20 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
             pnlMetricasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMetricasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(lblMetricasLabel)
                 .addContainerGap(522, Short.MAX_VALUE))
         );
         pnlMetricasLayout.setVerticalGroup(
             pnlMetricasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMetricasLayout.createSequentialGroup()
-                .addComponent(jLabel4)
+                .addComponent(lblMetricasLabel)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+3));
-        jLabel2.setText("Turmas Ministradas");
+        lblTurmaMinistradasLabel.setFont(lblTurmaMinistradasLabel.getFont().deriveFont(lblTurmaMinistradasLabel.getFont().getStyle() | java.awt.Font.BOLD, lblTurmaMinistradasLabel.getFont().getSize()+3));
+        lblTurmaMinistradasLabel.setText("Turmas Ministradas");
 
-        jScrollPane3.setViewportView(lstTurmasMinistradas);
+        scrTurmasMinistradas.setViewportView(lstTurmasMinistradas);
 
         javax.swing.GroupLayout pnlTurmasMinistradasLayout = new javax.swing.GroupLayout(pnlTurmasMinistradas);
         pnlTurmasMinistradas.setLayout(pnlTurmasMinistradasLayout);
@@ -155,18 +198,18 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlTurmasMinistradasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTurmasMinistradasLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lblTurmaMinistradasLabel)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))
+                    .addComponent(scrTurmasMinistradas, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlTurmasMinistradasLayout.setVerticalGroup(
             pnlTurmasMinistradasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTurmasMinistradasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(lblTurmaMinistradasLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(scrTurmasMinistradas, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -176,7 +219,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
             pnlVisualizarDadosDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlVisualizarDadosDocenteLayout.createSequentialGroup()
                 .addGroup(pnlVisualizarDadosDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewDadosPessoais1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlMetricas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlTurmasMinistradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlVisualizarDadosDocenteLayout.createSequentialGroup()
@@ -187,7 +230,7 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         pnlVisualizarDadosDocenteLayout.setVerticalGroup(
             pnlVisualizarDadosDocenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlVisualizarDadosDocenteLayout.createSequentialGroup()
-                .addComponent(viewDadosPessoais1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(viewDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlMetricas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,20 +245,21 @@ public class TelaVisualizarDadosDocente extends javax.swing.JPanel {
         add(scrVisualizarDados, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblMetricasLabel;
+    private javax.swing.JLabel lblPublicacoesLabel;
+    private javax.swing.JLabel lblTurmaMinistradasLabel;
+    private br.ufrn.dimap.gui.widgets.ObjectListView lstPublicacoes;
     private br.ufrn.dimap.gui.widgets.ObjectListView lstTurmasMinistradas;
-    private br.ufrn.dimap.gui.widgets.ObjectListView objectListView2;
     private javax.swing.JPanel pnlMetricas;
     private javax.swing.JPanel pnlPublicacoes;
     private javax.swing.JPanel pnlTurmasMinistradas;
     private javax.swing.JPanel pnlVisualizarDadosDocente;
+    private javax.swing.JScrollPane scpPublicacoes;
+    private javax.swing.JScrollPane scrTurmasMinistradas;
     private javax.swing.JScrollPane scrVisualizarDados;
-    private br.ufrn.dimap.gui.widgets.ViewDadosPessoais viewDadosPessoais1;
+    private br.ufrn.dimap.gui.widgets.ViewDadosPessoais viewDadosPessoais;
     // End of variables declaration//GEN-END:variables
+
 
 
 }

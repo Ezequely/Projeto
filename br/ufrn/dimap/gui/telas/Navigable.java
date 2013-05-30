@@ -4,12 +4,12 @@
  */
 package br.ufrn.dimap.gui.telas;
 
-import java.awt.Container;
+import java.util.EventListener;
 
 /**
  *
  * @author leobrizolara
  */
-public interface Navigable {
-    void navigate(Object source, Container tela);
+public interface Navigable extends EventListener{
+    void navigate(NavigationEvent event);
 }

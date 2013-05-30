@@ -32,7 +32,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="viewDadosPessoais1" min="-2" max="-2" attributes="0"/>
+                          <Component id="viewDadosPessoais" min="-2" max="-2" attributes="0"/>
                           <Component id="pnlMetricas" min="-2" max="-2" attributes="0"/>
                           <Component id="pnlTurmasMinistradas" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -47,7 +47,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="viewDadosPessoais1" min="-2" max="-2" attributes="0"/>
+                      <Component id="viewDadosPessoais" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pnlMetricas" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -60,7 +60,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="br.ufrn.dimap.gui.widgets.ViewDadosPessoais" name="viewDadosPessoais1">
+            <Component class="br.ufrn.dimap.gui.widgets.ViewDadosPessoais" name="viewDadosPessoais">
             </Component>
             <Container class="javax.swing.JPanel" name="pnlPublicacoes">
 
@@ -69,11 +69,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPublicacoesLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="580" max="-2" attributes="0"/>
+                          <Component id="scpPublicacoes" min="-2" pref="580" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -81,33 +81,33 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPublicacoesLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="226" max="32767" attributes="0"/>
+                          <Component id="scpPublicacoes" pref="226" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel3">
+                <Component class="javax.swing.JLabel" name="lblPublicacoesLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
                       <FontInfo relative="true">
-                        <Font bold="true" component="jLabel3" property="font" relativeSize="true" size="3"/>
+                        <Font bold="true" component="lblPublicacoesLabel" property="font" relativeSize="true" size="3"/>
                       </FontInfo>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Publica&#xe7;&#xf5;es"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                <Container class="javax.swing.JScrollPane" name="scpPublicacoes">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="br.ufrn.dimap.gui.widgets.ObjectListView" name="objectListView2">
+                    <Component class="br.ufrn.dimap.gui.widgets.ObjectListView" name="lstPublicacoes">
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="criarListaDePublicacoes()"/>
                       </AuxValues>
@@ -123,7 +123,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMetricasLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="522" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -131,18 +131,18 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMetricasLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="29" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel4">
+                <Component class="javax.swing.JLabel" name="lblMetricasLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
                       <FontInfo relative="true">
-                        <Font bold="true" component="jLabel4" property="font" relativeSize="true" size="3"/>
+                        <Font bold="true" component="lblMetricasLabel" property="font" relativeSize="true" size="3"/>
                       </FontInfo>
                     </Property>
                     <Property name="text" type="java.lang.String" value="M&#xe9;tricas"/>
@@ -159,10 +159,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblTurmaMinistradasLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane3" pref="579" max="32767" attributes="0"/>
+                              <Component id="scrTurmasMinistradas" pref="579" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -172,26 +172,26 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTurmaMinistradasLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" pref="184" max="32767" attributes="0"/>
+                          <Component id="scrTurmasMinistradas" pref="184" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JLabel" name="lblTurmaMinistradasLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
                       <FontInfo relative="true">
-                        <Font bold="true" component="jLabel2" property="font" relativeSize="true" size="3"/>
+                        <Font bold="true" component="lblTurmaMinistradasLabel" property="font" relativeSize="true" size="3"/>
                       </FontInfo>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Turmas Ministradas"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                <Container class="javax.swing.JScrollPane" name="scrTurmasMinistradas">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>

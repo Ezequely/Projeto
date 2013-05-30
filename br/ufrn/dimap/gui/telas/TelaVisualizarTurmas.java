@@ -7,8 +7,6 @@ package br.ufrn.dimap.gui.telas;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
-import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarTurmas extends javax.swing.JPanel implements ActionListener {
+public class TelaVisualizarTurmas extends Tela implements ActionListener {
 Collection<? extends Object> turmas;
     Navigable parent;
     /**
@@ -42,9 +40,10 @@ Collection<? extends Object> turmas;
     }
 
     private void showTurma(Turma turma) {
-        if(parent != null){
-            parent.navigate(this, (Container)new TelaVisualizarDadosTurma(turma));
-        }
+//        if(parent != null){
+//            parent.navigate(this, (Container)new TelaVisualizarDadosTurma(turma));
+//        }
+        this.fireNavigate("TelaVisualizarDadosTurma");
     }
     public void actionPerformed(ActionEvent ae) {        
         if(ae.getSource() instanceof Turma ){

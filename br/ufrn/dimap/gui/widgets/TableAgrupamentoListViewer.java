@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.util.Collection;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 
@@ -27,9 +26,6 @@ public class TableAgrupamentoListViewer extends JTable implements AgrupamentoVie
         super(new AgrupamentoTableListModel(agrupamento));
         agrupamentoModel = (AgrupamentoTableListModel)this.getModel();
         this.setElementView(elemViewer);
-//        this.elementViewer = elemViewer;
-//        this.setDefaultRenderer(Object.class,  new TableListAgrupamentoRenderer(elementViewer));
-//        this.setDefaultRenderer(Collection.class, new TableListAgrupamentoRenderer(elementViewer));
     }
     
     public void setAgrupamento(Agrupamento agrupamento){
@@ -94,25 +90,10 @@ class AgrupamentoTableListModel extends AbstractTableModel{
         if(agrupamento.numCategorias() > collum){
             categoria = (Collection<Object>) agrupamento.getCategorias().toArray()[collum];
             return categoria;
-//            if(categoria != null && categoria.size() > row){
-//                return categoria.toArray()[row];
-//            }
         }
         
         return null;
     }
-//    public Object getValueAt(int row, int collum) {
-//        Collection<Object> categoria;
-//        if(agrupamento.numCategorias() > collum){
-//            categoria = (Collection<Object>) agrupamento.getCategorias().toArray()[collum];
-//            
-//            if(categoria != null && categoria.size() > row){
-//                return categoria.toArray()[row];
-//            }
-//        }
-//        
-//        return null;
-//    }
     
     
     @Override
@@ -137,9 +118,6 @@ class AgrupamentoTableListModel extends AbstractTableModel{
             if(value instanceof Collection){
                 agrupamento.setCategoria(nomeCategoria, (Collection<? extends Object>) value);
             }
-//            if(categoria != null && categoria.size() > row){
-//                categoria.toArray()[row] = value;
-//            }
         }
         
         fireTableCellUpdated(row, col);
@@ -157,13 +135,11 @@ class AgrupamentoTableListModel extends AbstractTableModel{
     public void setAgrupamento(Agrupamento agrupamento) {
         this.agrupamento = agrupamento;
         this.fireTableStructureChanged();
-        System.out.println("AgrupamentoTableListModel.setAgrupamento() - fireTableStructureChanged()");
     }
     
 }
 
 class TableListAgrupamentoRenderer extends ObjectListView implements TableCellRenderer{
-    
     public TableListAgrupamentoRenderer(ObjectViewer v){
         super(v);
     }
@@ -171,10 +147,9 @@ class TableListAgrupamentoRenderer extends ObjectListView implements TableCellRe
     public Component getTableCellRendererComponent(
                             JTable table, Object obj,
                             boolean isSelected, boolean hasFocus,
-                            int row, int column) {
+                            int row, int column) {        
         if(obj instanceof Collection){
             this.setCollection((Collection<? extends Object>) obj);
-            
             int height = (int)(this.getPreferredSize().getHeight() * 1.1);
             if(table.getRowHeight(row) < height){
                 table.setRowHeight(row, height);

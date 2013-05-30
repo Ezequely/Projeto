@@ -25,6 +25,7 @@ public class ListAction  extends AbstractAction implements MouseListener
     private KeyStroke keyStroke;
     private Collection<ActionListener> actionListeners;
 
+    private String actionCommand;
     /*
      *	Add an Action to the JList bound by the default KeyStroke
      */
@@ -38,23 +39,21 @@ public class ListAction  extends AbstractAction implements MouseListener
      */
     public ListAction(JList list, KeyStroke keyStroke)
     {
+        this.actionCommand = "";
         this.actionListeners = new ArrayList<ActionListener>();
         
-            this.list = list;
-            this.keyStroke = keyStroke;
+        this.list = list;
+        this.keyStroke = keyStroke;
 
-            //  Add the KeyStroke to the InputMap
+        //  Add the KeyStroke to the InputMap
+        InputMap im = list.getInputMap();
+        im.put(keyStroke, keyStroke);
 
-            InputMap im = list.getInputMap();
-            im.put(keyStroke, keyStroke);
+        //  Add the Action to the ActionMap
+        list.getActionMap().put(keyStroke, this);
 
-            //  Add the Action to the ActionMap
-
-            list.getActionMap().put(keyStroke, this);
-
-            //  Handle mouse double click
-
-            list.addMouseListener( this );
+        //  Handle mouse double click
+        list.addMouseListener( this );
     }
 
     //  Implement MouseListener interface
@@ -70,7 +69,7 @@ public class ListAction  extends AbstractAction implements MouseListener
                 ActionEvent event = new ActionEvent(
                         list,
                         ActionEvent.ACTION_PERFORMED,
-                        "");
+                        actionCommand);
                 action.actionPerformed(event);
             }
         }
@@ -97,8 +96,14 @@ public class ListAction  extends AbstractAction implements MouseListener
         ae.setSource(this.list.getModel().getElementAt(this.list.getSelectedIndex()));
         
         for(ActionListener listener : actionListeners){
-            System.out.println("fired listener!");
             listener.actionPerformed(ae);
         }
+    }
+    
+    public String getActionCommand() {
+        return actionCommand;
+    }
+    public void setActionCommand(String actionCommand) {
+        this.actionCommand = actionCommand;
     }
 }

@@ -22,7 +22,7 @@ enum TipoAgrupamento{
  *
  * @author leobrizolara
  */
-public class TelaVisualizarAlunos extends javax.swing.JPanel {
+public class TelaVisualizarAlunos extends Tela {
     Collection<? extends Object> alunos;
     TipoAgrupamento agrupamentoAtual;
     /**
@@ -37,15 +37,12 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.GRAU);
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.LINHADEPESQUISA);
         
-        System.out.println("End Constr");
         //this.lstAlunos.setViewer(new VinculoViewerResumo());
         //this.tableAgrupamentoListViewer1.setElementView(new VinculoViewerResumo());
     }
     public TelaVisualizarAlunos(Collection<? extends Object> alunos) {
         this();//chama construtor sem parametros
         this.setAlunos(alunos);
-        
-        System.out.println("End Constr alunos");
     }
 
     public void setAlunos(Collection<? extends Object> alunos){
@@ -72,8 +69,6 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
         return this.agrupamentoAtual;
     }
     private void agrupar() {
-        System.out.print("Agrupar!");
-        
         Agrupamento agrupamento;
         switch(agrupamentoAtual){
             case TODOS:
@@ -195,7 +190,6 @@ public class TelaVisualizarAlunos extends javax.swing.JPanel {
     private void cmbTiposAgrupamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTiposAgrupamentoActionPerformed
         JComboBox comboBox = (JComboBox) evt.getSource();
         if(comboBox.getSelectedItem() instanceof TipoAgrupamento){
-            System.out.println("Select: " + comboBox.getSelectedItem());
             this.setTipoAgrupamento((TipoAgrupamento) comboBox.getSelectedItem());
         }
     }//GEN-LAST:event_cmbTiposAgrupamentoActionPerformed

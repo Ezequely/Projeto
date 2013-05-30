@@ -7,14 +7,13 @@ package br.ufrn.dimap.gui.telas;
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.UsuarioDAO;
 import br.ufrn.dimap.entidades.Usuario;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author leobrizolara
  */
-public class TelaLogin extends javax.swing.JPanel {
+public class TelaLogin extends Tela {
     DatabaseController dataController;
     /**
      * Creates new form TelaLogin
@@ -37,9 +36,7 @@ public class TelaLogin extends javax.swing.JPanel {
             Usuario usuario = usuarioDAO.login(login, password);
             
             if(usuario != null){
-                //TODO: criar navegação
-                
-                JOptionPane.showMessageDialog(this, "Login!");
+                this.fireNavigate("TelaPrincipal");
                 
                 return;
             }

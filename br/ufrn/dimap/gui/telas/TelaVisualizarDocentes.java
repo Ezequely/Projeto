@@ -17,9 +17,8 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarDocentes extends javax.swing.JPanel implements ActionListener {
+public class TelaVisualizarDocentes extends Tela implements ActionListener {
     Collection<? extends Object> docentes;
-    Navigable parent;
     /**
      * Creates new form TelaVisaoDocentes
      */
@@ -32,22 +31,20 @@ public class TelaVisualizarDocentes extends javax.swing.JPanel implements Action
         
         this.lstDocentes.addActionListener(this);
     }
-    
-    public void setNavigableParent(Navigable parent){
-        this.parent = parent;
-    }
-    public Navigable getNavigableParent(){
-        return parent;
-    }
 
     private void showDocente(Docente docente) {
-        if(parent != null){
-            parent.navigate(this, (Container)new TelaVisualizarDadosDocente(docente, null));
-        }
+//        if(parent != null){
+//            parent.navigate(this, (Container)new TelaVisualizarDadosDocente(docente, null));
+//        }
+        
+        //this.fireNavigate("TelaVisualizarDadosDocente");
+        NavigationEvent event = new NavigationEvent(this, "TelaVisualizarDadosDocente");
+        event.addArg("Docente", docente);
+        this.fireNavigate(event);
     }
     public void actionPerformed(ActionEvent ae) {
-        System.out.print(ae.getSource() + " - ");
-        System.out.println(ae.getActionCommand());
+//        System.out.print(ae.getSource() + " - ");
+//        System.out.println(ae.getActionCommand());
         
         if(ae.getSource() instanceof Docente ){
             this.showDocente((Docente)ae.getSource());
@@ -85,6 +82,8 @@ public class TelaVisualizarDocentes extends javax.swing.JPanel implements Action
         lstDocentes = criarListaDeDocentes();
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+
+        scrDocentes.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         lstDocentes.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         scrDocentes.setViewportView(lstDocentes);

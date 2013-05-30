@@ -4,15 +4,12 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 /**
  * @author leobrizolara
@@ -33,23 +30,31 @@ public class ObjectListView extends JList<Object>{
     ListAction listAction;
     
     public ObjectListView(){
-        this(new DefaultObjectViewer());
+        this(new DefaultObjectViewer(), new ArrayList<Object>());
     }
     public ObjectListView(ObjectViewer objViewer){
+        this(objViewer, new ArrayList<Object>());
+    }
+    public ObjectListView(ObjectViewer viewer, Collection<? extends Object> objects){
         super();
         listModel = new DefaultListModel();
         this.setModel(listModel);
         
         listAction = new ListAction(this);
         
-        this.setViewer(objViewer);
-    }
-    public ObjectListView(ObjectViewer viewer, Collection<? extends Object> objects){
-        this(viewer);
+        this.setViewer(viewer);
+        
         this.setCollection(objects);
     }
     
     
+    
+    public String getActionCommand() {
+        return listAction.getActionCommand();
+    }
+    public void setActionCommand(String actionCommand) {
+        this.listAction.setActionCommand(actionCommand);
+    }
     public void addActionListener(ActionListener listener){
         this.listAction.addActionListener(listener);
     }
