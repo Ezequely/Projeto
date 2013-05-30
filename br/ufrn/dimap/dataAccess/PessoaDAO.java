@@ -17,7 +17,7 @@ public class PessoaDAO extends SqlDAO{
     
     public Pessoa Insert(String cpf, String nome, String endereco, String cidade, String uf, String nacionalidade, String naturalidade, String DTNasc, String telefone, String email){
         StringBuilder sqlCmd = new StringBuilder();
-        sqlCmd.append(createSelectCmd());
+        sqlCmd.append(createInsertCmd());
         sqlCmd.append("'(' '");
         sqlCmd.append(cpf);
         sqlCmd.append(",'");
