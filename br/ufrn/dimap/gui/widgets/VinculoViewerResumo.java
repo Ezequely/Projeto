@@ -6,6 +6,7 @@ package br.ufrn.dimap.gui.widgets;
 
 //import org.jdesktop.beansbinding.*;
 
+import br.ufrn.dimap.gui.ObjectViewer;
 import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Pessoa;

@@ -4,6 +4,7 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ObjectViewer;
 import java.awt.Component;
 import javax.swing.JLabel;
 
@@ -23,7 +24,12 @@ public class DefaultObjectViewer extends JLabel implements ObjectViewer{
     }
     public void setObject(Object obj) {
         this.obj = obj;
-        this.setText(obj.toString());
+        if(obj != null){
+            this.setText(obj.toString());
+        }
+        else{
+            this.setText("");
+        }
     }
 
     public Object getObject() {

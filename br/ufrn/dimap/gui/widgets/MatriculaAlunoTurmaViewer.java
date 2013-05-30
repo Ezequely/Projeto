@@ -5,57 +5,59 @@
 package br.ufrn.dimap.gui.widgets;
 
 import br.ufrn.dimap.gui.ObjectViewer;
+import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Turma;
-import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JList;
 
 /**
  *
  * @author leobrizolara
  */
-public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
-    Turma turma;
+public class MatriculaAlunoTurmaViewer extends javax.swing.JPanel implements ObjectViewer{
+    MatriculaAlunoTurma alunoTurma;
     /**
      * Creates new form ViewTurma
      */
-    public TurmaViewer() {
+    public MatriculaAlunoTurmaViewer() {
         initComponents();
     }
     
 
     public void setObject(Object obj) {
-        if(obj instanceof Turma){
-            this.setTurma((Turma)obj);
+        if(obj instanceof MatriculaAlunoTurma){
+            this.setMatriculaAlunoTurma((MatriculaAlunoTurma)obj);
         }
     }
 
     public Object getObject() {
-        return getTurma();
+        return getMatriculaAlunoTurma();
     }
 
     public Class getObjectClass() {
-        return Turma.class;
+        return MatriculaAlunoTurma.class;
     }
     
     public Component getView() {
         return this;
     }
-    public void setTurma(Turma t){
-        this.turma = t;
+    public void setMatriculaAlunoTurma(MatriculaAlunoTurma t){
+        this.alunoTurma = t;
         update();
     }
-    public Turma getTurma(){
-        return turma;
+    public MatriculaAlunoTurma getMatriculaAlunoTurma(){
+        return alunoTurma;
     }
     public void update(){
-        if(turma != null){
-            this.lblDisciplina.setText(this.turma.getDisciplina().getNome());
-            this.lblHorarioDeAula.setText(turma.getCodHorarioDeAula());
-            this.lblLocalDeAula.setText(turma.getLocalDeAula());
-            this.lblNumTurma.setText(Integer.toString(turma.getNumeroTurma()));
-            this.lblSituacaoTurma.setText(turma.getStatus());
-            this.lblPeriodo.setText(turma.getPeriodoLetivo());
+        if(alunoTurma != null){
+            Turma t = this.alunoTurma.getTurma();
+            if(t != null){
+                this.lblNumTurma.setText(Integer.toString(t.getNumeroTurma()));
+                this.lblPeriodo.setText(t.getPeriodoLetivo());
+                this.lblDisciplina.setText(
+                        (t.getDisciplina() != null ? t.getDisciplina().getNome() : "") );
+                
+            }
+            this.lblSituacaoTurma.setText(alunoTurma.getSituacao());
         }
     }
 
@@ -72,8 +74,6 @@ public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
         lblPeriodo = new javax.swing.JLabel();
         lblNumTurma = new javax.swing.JLabel();
         lblSituacaoTurma = new javax.swing.JLabel();
-        lblHorarioDeAula = new javax.swing.JLabel();
-        lblLocalDeAula = new javax.swing.JLabel();
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
@@ -86,22 +86,15 @@ public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
         lblNumTurma.setText("<Num Turma>");
         add(lblNumTurma);
 
-        lblSituacaoTurma.setText("<Situação turma>");
+        lblSituacaoTurma.setText("<Situação Aluno>");
         add(lblSituacaoTurma);
-
-        lblHorarioDeAula.setText("<Horario de aula>");
-        add(lblHorarioDeAula);
-
-        lblLocalDeAula.setText("<Local de aula>");
-        add(lblLocalDeAula);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblDisciplina;
-    private javax.swing.JLabel lblHorarioDeAula;
-    private javax.swing.JLabel lblLocalDeAula;
     private javax.swing.JLabel lblNumTurma;
     private javax.swing.JLabel lblPeriodo;
     private javax.swing.JLabel lblSituacaoTurma;
     // End of variables declaration//GEN-END:variables
+
 }

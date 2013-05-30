@@ -4,7 +4,11 @@
  */
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.Navigable;
 import br.ufrn.dimap.entidades.Turma;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
 import java.awt.event.ActionEvent;
@@ -16,9 +20,8 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarTurmas extends Tela implements ActionListener {
+public class TelaVisualizarTurmas extends Tela implements ItemSelectionListener {
 Collection<? extends Object> turmas;
-    Navigable parent;
     /**
      * Creates new form TelaVisaoTurmas
      */
@@ -29,25 +32,15 @@ Collection<? extends Object> turmas;
         this.turmas = turmas; 
         initComponents();
         
-        this.lstTurmas.addActionListener((ActionListener) this);
+        this.lstTurmas.addItemSelectionListener(this);
     }
     
-    public void setNavigableParent(Navigable parent){
-        this.parent = parent;
-    }
-    public Navigable getNavigableParent(){
-        return parent;
-    }
-
-    private void showTurma(Turma turma) {
-//        if(parent != null){
-//            parent.navigate(this, (Container)new TelaVisualizarDadosTurma(turma));
-//        }
-        this.fireNavigate("TelaVisualizarDadosTurma");
-    }
-    public void actionPerformed(ActionEvent ae) {        
-        if(ae.getSource() instanceof Turma ){
-            this.showTurma((Turma)ae.getSource());
+    public void itemSelected(ItemSelectionEvent event) {
+        if(event.getSource() == this.lstTurmas && event.getSelectedItem() instanceof Turma){
+            NavigationEvent naviEvent = new NavigationEvent(this, "TelaVisualizarDadosTurma");
+            naviEvent.addArg("Turma", (Turma)event.getSelectedItem());
+            
+            this.fireNavigate(naviEvent);
         }
     }
     
@@ -90,4 +83,5 @@ Collection<? extends Object> turmas;
     private javax.swing.JScrollPane jScrollPane1;
     private br.ufrn.dimap.gui.widgets.ObjectListView lstTurmas;
     // End of variables declaration//GEN-END:variables
+
 }

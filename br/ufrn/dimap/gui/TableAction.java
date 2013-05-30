@@ -1,59 +1,59 @@
-package br.ufrn.dimap.gui.widgets;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.ufrn.dimap.gui;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
-/*Adaptado de : http://tips4java.wordpress.com/2008/10/14/list-action/*/
-/*
- *	Add an Action to a JList that can be invoked either by using
- *  the keyboard or a mouse.
- *
- *  By default the Enter will will be used to invoke the Action
- *  from the keyboard although you can specify and KeyStroke you wish.
- *
- *  A double click with the mouse will invoke the same Action.
- *
- *  The Action can be reset at any time.
- */
-public class ListAction  extends AbstractAction implements MouseListener
+public class TableAction  extends AbstractAction implements MouseListener
 {
     private static final KeyStroke ENTER = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
 
-    private JList list;
+    private JTable table;
     private KeyStroke keyStroke;
     private Collection<ActionListener> actionListeners;
 
     private String actionCommand;
     /*
-     *	Add an Action to the JList bound by the default KeyStroke
+     *	Add an Action to the JTable bound by the default KeyStroke
      */
-    public ListAction(JList list)
+    public TableAction(JTable table)
     {
-            this(list, ENTER);
+            this(table, ENTER);
     }
 
     /*
-     *	Add an Action to the JList bound by the specified KeyStroke
+     *	Add an Action to the JTable bound by the specified KeyStroke
      */
-    public ListAction(JList list, KeyStroke keyStroke)
+    public TableAction(JTable table, KeyStroke keyStroke)
     {
         this.actionCommand = "";
         this.actionListeners = new ArrayList<ActionListener>();
         
-        this.list = list;
+        this.table = table;
         this.keyStroke = keyStroke;
 
         //  Add the KeyStroke to the InputMap
-        InputMap im = list.getInputMap();
+        InputMap im = table.getInputMap();
         im.put(keyStroke, keyStroke);
 
         //  Add the Action to the ActionMap
-        list.getActionMap().put(keyStroke, this);
+        table.getActionMap().put(keyStroke, this);
 
         //  Handle mouse double click
-        list.addMouseListener( this );
+        table.addMouseListener( this );
     }
 
     //  Implement MouseListener interface
@@ -62,17 +62,20 @@ public class ListAction  extends AbstractAction implements MouseListener
     {
         if (e.getClickCount() == 2)
         {
-            Action action = list.getActionMap().get(keyStroke);
+            Action action = table.getActionMap().get(keyStroke);
 
             if (action != null)
             {
                 ActionEvent event = new ActionEvent(
-                        list,
+                        table,
                         ActionEvent.ACTION_PERFORMED,
                         actionCommand);
                 action.actionPerformed(event);
             }
         }
+        //define a source como o objeto que foi selecionado
+        //ae.setSource(this.list.getModel().getElementAt(this.list.getSelectedIndex()));
+        
     }
 
     public void mouseEntered(MouseEvent e) {}
@@ -92,9 +95,6 @@ public class ListAction  extends AbstractAction implements MouseListener
     }
         
     public void actionPerformed(ActionEvent ae) {
-        //define a source como o objeto que foi selecionado
-        ae.setSource(this.list.getModel().getElementAt(this.list.getSelectedIndex()));
-        
         for(ActionListener listener : actionListeners){
             listener.actionPerformed(ae);
         }

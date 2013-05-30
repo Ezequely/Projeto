@@ -1,6 +1,9 @@
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.Navigable;
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.dataAccess.AlunoDAO;
+import br.ufrn.dimap.dataAccess.AlunoTurmaDAO;
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.DocenteDAO;
 import br.ufrn.dimap.dataAccess.PublicacaoDAO;
@@ -40,6 +43,9 @@ public class TelaPrincipal extends Tela implements Navigable{
         else if(dest.equals("TelaVisualizarDocentes")){
             tela = navegarTelaVisualizarDocentes(event);
         }
+        else if(dest.equals("TelaVisualizarDadosAluno")){
+            tela = navegarTelaVisualizarDadosAlunos(event);
+        }
         else if(dest.equals("TelaVisualizarDadosDocente")){
             tela = navegarTelaVisualizarDadosDocente(event);
         }
@@ -68,6 +74,30 @@ public class TelaPrincipal extends Tela implements Navigable{
         
         return new TelaVisualizarAlunos();
     }
+    
+    private Tela navegarTelaVisualizarDadosAlunos(NavigationEvent event) {
+        if(dbController != null && event != null && event.getArg("Aluno") != null){
+            Aluno aluno = (Aluno) event.getArg("Aluno");
+
+            AlunoTurmaDAO alunoTurmaDAO = new AlunoTurmaDAO(dbController);
+            Collection<? extends Object> historicoAluno = alunoTurmaDAO.search(aluno);
+
+            TelaVisualizarDadosAluno tela = new TelaVisualizarDadosAluno(aluno);
+            tela.setHistoricoAluno(historicoAluno);
+
+            if(aluno.getPessoa() != null){
+                PublicacaoDAO publicacaoDAO = new PublicacaoDAO(dbController);
+                Collection<? extends Object> publicacoes 
+                        = publicacaoDAO.search(aluno.getPessoa());
+                tela.setPublicacoesAluno(publicacoes);
+            }
+            
+            return tela;
+        }
+        return new TelaVisualizarDadosAluno();
+    }
+
+    
     private Tela navegarTelaVisualizarDocentes(NavigationEvent event) {
         if(dbController != null){
             DocenteDAO docenteDAO = new DocenteDAO(dbController);

@@ -1,4 +1,4 @@
-package br.ufrn.dimap.gui.widgets;
+package br.ufrn.dimap.gui;
 
 import java.awt.Component;
 

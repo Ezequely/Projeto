@@ -6,7 +6,9 @@ package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Agrupamento;
 import br.ufrn.dimap.entidades.Aluno;
-import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
+import br.ufrn.dimap.gui.NavigationEvent;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ enum TipoAgrupamento{
  *
  * @author leobrizolara
  */
-public class TelaVisualizarAlunos extends Tela {
+public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
     Collection<? extends Object> alunos;
     TipoAgrupamento agrupamentoAtual;
     /**
@@ -37,14 +39,24 @@ public class TelaVisualizarAlunos extends Tela {
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.GRAU);
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.LINHADEPESQUISA);
         
-        //this.lstAlunos.setViewer(new VinculoViewerResumo());
-        //this.tableAgrupamentoListViewer1.setElementView(new VinculoViewerResumo());
+        this.tblAgrupamentoAlunosViewer.addItemSelectionListener(this);
     }
     public TelaVisualizarAlunos(Collection<? extends Object> alunos) {
         this();//chama construtor sem parametros
         this.setAlunos(alunos);
     }
 
+    
+    public void itemSelected(ItemSelectionEvent event) {
+        
+        if(event.getSelectedItem() instanceof Aluno){
+            NavigationEvent naviEvent = new NavigationEvent(this, "TelaVisualizarDadosAluno");
+            naviEvent.addArg("Aluno", event.getSelectedItem());
+            
+            this.fireNavigate(naviEvent);
+        }
+    }
+    
     public void setAlunos(Collection<? extends Object> alunos){
         this.alunos = alunos;
         this.agrupamentoAtual = TipoAgrupamento.TODOS;
@@ -89,7 +101,7 @@ public class TelaVisualizarAlunos extends Tela {
             default:
                 throw new AssertionError(agrupamentoAtual.name());
         }
-        this.tableAgrupamentoListViewer1.setAgrupamento(agrupamento);
+        this.tblAgrupamentoAlunosViewer.setAgrupamento(agrupamento);
     }
     private Agrupamento criarAgrupamentoTodos() {
         Agrupamento agrupamento = new Agrupamento("Alunos");
@@ -163,8 +175,8 @@ public class TelaVisualizarAlunos extends Tela {
         jToolBar1 = new javax.swing.JToolBar();
         lblTipoAgrupamento = new javax.swing.JLabel();
         cmbTiposAgrupamento = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableAgrupamentoListViewer1 = new br.ufrn.dimap.gui.widgets.TableAgrupamentoListViewer();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAgrupamentoAlunosViewer = new br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -182,9 +194,9 @@ public class TelaVisualizarAlunos extends Tela {
 
         add(jToolBar1, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane2.setViewportView(tableAgrupamentoListViewer1);
+        jScrollPane1.setViewportView(tblAgrupamentoAlunosViewer);
 
-        add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbTiposAgrupamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTiposAgrupamentoActionPerformed
@@ -196,11 +208,10 @@ public class TelaVisualizarAlunos extends Tela {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cmbTiposAgrupamento;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblTipoAgrupamento;
-    private br.ufrn.dimap.gui.widgets.TableAgrupamentoListViewer tableAgrupamentoListViewer1;
+    private br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer tblAgrupamentoAlunosViewer;
     // End of variables declaration//GEN-END:variables
-
 
 }

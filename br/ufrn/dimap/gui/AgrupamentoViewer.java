@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrn.dimap.gui.widgets;
+package br.ufrn.dimap.gui;
 
 import br.ufrn.dimap.entidades.Agrupamento;
 import java.awt.Component;

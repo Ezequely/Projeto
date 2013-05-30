@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrn.dimap.gui.widgets;
+package br.ufrn.dimap.gui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -16,7 +16,7 @@ import javax.swing.ListCellRenderer;
 public class ListCellObjectRenderer implements ListCellRenderer{
     ObjectViewer viewer;
     
-    ListCellObjectRenderer(ObjectViewer objView){
+    public ListCellObjectRenderer(ObjectViewer objView){
         super();
         this.viewer = objView;
     }

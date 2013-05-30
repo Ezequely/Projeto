@@ -5,7 +5,7 @@
 package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Turma;
-import br.ufrn.dimap.gui.widgets.ObjectViewer;
+import br.ufrn.dimap.gui.ObjectViewer;
 import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
 import java.awt.Component;
 import java.util.Collection;

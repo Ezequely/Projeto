@@ -4,13 +4,20 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ObjectViewer;
+import br.ufrn.dimap.gui.AgrupamentoViewer;
 import br.ufrn.dimap.entidades.Agrupamento;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
+import br.ufrn.dimap.gui.TableAction;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 
@@ -18,21 +25,30 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author leobrizolara
  */
-public class TableAgrupamentoViewer extends JTable implements AgrupamentoViewer{
+public class TableAgrupamentoViewer extends JTable implements AgrupamentoViewer, ActionListener{
     AgrupamentoTableModel agrupamentoModel;
     ObjectViewer elementViewer;
+    TableAction tableAction;
+    Collection<ItemSelectionListener> itemSelectionListeners;
+    
     
     public TableAgrupamentoViewer(){
-        super(new AgrupamentoTableModel());
-        agrupamentoModel = (AgrupamentoTableModel)this.getModel();
+        this(new Agrupamento(""));
     }
     public TableAgrupamentoViewer(Agrupamento agrupamento){
-        super(new AgrupamentoTableModel(agrupamento));
-        agrupamentoModel = (AgrupamentoTableModel)this.getModel();
+        this(agrupamento, new  DefaultObjectViewer());
     }
     public TableAgrupamentoViewer(Agrupamento agrupamento, ObjectViewer elemViewer){
-        this(agrupamento);
-        this.elementViewer = elemViewer;
+        super(new AgrupamentoTableModel(agrupamento));
+        agrupamentoModel = (AgrupamentoTableModel)this.getModel();
+        this.setElementView(elemViewer);
+        this.setCellSelectionEnabled(true);
+        
+        this.setShowHorizontalLines(false);
+        
+        tableAction = new TableAction(this);
+        tableAction.addActionListener(this);
+        itemSelectionListeners = new ArrayList<ItemSelectionListener>();
     }
     
     public void setAgrupamento(Agrupamento agrupamento){
@@ -65,15 +81,40 @@ public class TableAgrupamentoViewer extends JTable implements AgrupamentoViewer{
 
     public void setElementView(ObjectViewer view) {
         this.elementViewer = view;
-        this.setDefaultRenderer(view.getObjectClass(), new TableAgrupamentoRenderer(this));
+        this.setDefaultRenderer(Object.class, new TableAgrupamentoRenderer(view));
     }
-    public void setElementView(ObjectViewer view, Class clss) {
-        this.elementViewer = view;
-        this.setDefaultRenderer(clss, new TableAgrupamentoRenderer(this));
+    
+    //Tratamento de eventos
+    public void actionPerformed(ActionEvent ae) {
+        System.out.println("actionPerformed" + this.getClass());
+        if(ae.getSource() == this){
+            fireItemSelectedEvent();
+        }
+    }
+    public void addItemSelectionListener(ItemSelectionListener listener){
+        this.itemSelectionListeners.add(listener);
+    }
+    public void removeItemSelectionListener(ItemSelectionListener listener){
+        this.itemSelectionListeners.remove(listener);
+    }
+    protected void fireItemSelectedEvent() {
+        ItemSelectionEvent event = new ItemSelectionEvent(this);
+        
+        int selectedRow = this.getSelectionModel().getLeadSelectionIndex();
+        int selectedCol = this.getColumnModel().getSelectionModel().getLeadSelectionIndex();
+        Object selected =  this.getModel().getValueAt(selectedRow, selectedCol);
+        
+        event.setSelectedItem(selected);
+        
+        for(ItemSelectionListener listener : this.itemSelectionListeners ){
+            listener.itemSelected(event);
+        }
     }
 }
 class AgrupamentoTableModel extends AbstractTableModel{
     private Agrupamento agrupamento;
+    int rowCount;
+    int colCount;
     
     public AgrupamentoTableModel(){
         this(new Agrupamento(""));        
@@ -84,17 +125,11 @@ class AgrupamentoTableModel extends AbstractTableModel{
     }
     
     public int getRowCount() {
-        int maxNumItems = 0;
-        for(String nomeCategoria : agrupamento.getNomesCategoria()){
-            int size = agrupamento.count(nomeCategoria);
-            maxNumItems = (size > maxNumItems ? size : maxNumItems);
-        }
-        
-        return maxNumItems;
+        return rowCount;
     }
 
     public int getColumnCount() {
-        return agrupamento.numCategorias();
+        return colCount;
     }
 
     public Object getValueAt(int row, int collum) {
@@ -151,30 +186,104 @@ class AgrupamentoTableModel extends AbstractTableModel{
      */
     public void setAgrupamento(Agrupamento agrupamento) {
         this.agrupamento = agrupamento;
+        rowCount = calcRowCount();
+        colCount = agrupamento.getNomesCategoria().size();
+        this.fireTableStructureChanged();
+    }
+    
+    int calcRowCount(){
+        int maxNumItems = 0;
+        for(String nomeCategoria : agrupamento.getNomesCategoria()){
+//            int size = agrupamento.count(nomeCategoria);
+            int size = agrupamento.getCategoria(nomeCategoria).size();
+            maxNumItems = (size > maxNumItems ? size : maxNumItems);
+        }
+        
+        return maxNumItems;
     }
     
 }
 
-class TableAgrupamentoRenderer extends DefaultTableCellRenderer{
-    AgrupamentoViewer viewer;
-    
-    public TableAgrupamentoRenderer(AgrupamentoViewer v){
+class TableAgrupamentoRenderer implements TableCellRenderer{
+    private ObjectViewer viewer;
+    private Color unselectedBackground;
+    private Color unselectedForeground;
+    private Color selectedBackground;
+    private Color selectedForeground;
+    public TableAgrupamentoRenderer(ObjectViewer v){
         this.viewer = v;
+        JTable tmp = new JTable();
+        selectedBackground = tmp.getSelectionBackground();
+        selectedForeground = tmp.getSelectionForeground();
+        unselectedBackground = tmp.getBackground();
+        unselectedForeground = tmp.getForeground();
+        
     }
     
     public Component getTableCellRendererComponent(
                             JTable table, Object obj,
                             boolean isSelected, boolean hasFocus,
                             int row, int column) {
-        ObjectViewer elementViewer = viewer.getElementView();
+        //ObjectViewer elementViewer = viewer.getElementView();
         
-        elementViewer.setObject(obj);
+        getViewer().setObject(obj);
         
-        //TODO: adicionar coloração
+        int height = (int)(getViewer().getView().getPreferredSize().getHeight() * 1.1);
+        if(table.getRowHeight(row) < height){
+            table.setRowHeight(row, height);
+        }
+
+        int width = (int)(getViewer().getView().getPreferredSize().getWidth() * 1.1);
+        if(table.getColumnModel().getColumn(column).getPreferredWidth() < width){
+            table.getColumnModel().getColumn(column).setPreferredWidth(width);
+        }
+        
+        if(isSelected){
+            getViewer().getView().setForeground(selectedForeground);
+            getViewer().getView().setBackground(selectedBackground);
+        }
+        else{
+            getViewer().getView().setForeground(unselectedForeground);
+            getViewer().getView().setBackground(unselectedBackground);
+        }
         
         
-        
-        return elementViewer.getView();
+        return getViewer().getView();
+    }
+
+    public ObjectViewer getViewer() {
+        return viewer;
+    }
+    public void setViewer(ObjectViewer viewer) {
+        this.viewer = viewer;
+    }
+
+    public Color getUnselectedBackground() {
+        return unselectedBackground;
+    }
+    public void setUnselectedBackground(Color unselectedBackground) {
+        this.unselectedBackground = unselectedBackground;
+    }
+
+    public Color getUnselectedForeground() {
+        return unselectedForeground;
+    }
+    public void setUnselectedForeground(Color unselectedForeground) {
+        this.unselectedForeground = unselectedForeground;
+    }
+
+    public Color getSelectedBackground() {
+        return selectedBackground;
+    }
+    public void setSelectedBackground(Color selectedBackground) {
+        this.selectedBackground = selectedBackground;
+    }
+
+    public Color getSelectedForeground() {
+        return selectedForeground;
+    }
+    public void setSelectedForeground(Color selectedForeground) {
+        this.selectedForeground = selectedForeground;
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ObjectViewer;
 import br.ufrn.dimap.entidades.Publicacao;
 import java.awt.Component;
 

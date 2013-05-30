@@ -1,5 +1,7 @@
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ObjectViewer;
+import br.ufrn.dimap.gui.AgrupamentoViewer;
 import br.ufrn.dimap.entidades.Agrupamento;
 import java.awt.Component;
 import java.util.Collection;
@@ -26,6 +28,7 @@ public class TableAgrupamentoListViewer extends JTable implements AgrupamentoVie
         super(new AgrupamentoTableListModel(agrupamento));
         agrupamentoModel = (AgrupamentoTableListModel)this.getModel();
         this.setElementView(elemViewer);
+        this.setCellSelectionEnabled(true);
     }
     
     public void setAgrupamento(Agrupamento agrupamento){
