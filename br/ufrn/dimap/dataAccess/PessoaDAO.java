@@ -13,6 +13,10 @@ import java.sql.SQLException;
  * @author leobrizolara
  */
 public class PessoaDAO extends SqlDAO{
+    public PessoaDAO(){}
+    public PessoaDAO(DatabaseController dataController) {
+        super(dataController);
+    }
 
     
     public Pessoa Insert(String cpf, String nome, String endereco, String cidade, String uf, String nacionalidade, String naturalidade, String DTNasc, String telefone, String email){

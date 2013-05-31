@@ -13,12 +13,12 @@ import java.awt.Component;
  *
  * @author leobrizolara
  */
-public class MatriculaAlunoTurmaViewer extends javax.swing.JPanel implements ObjectViewer{
+public class TurmaAlunoViewer extends javax.swing.JPanel implements ObjectViewer{
     MatriculaAlunoTurma alunoTurma;
     /**
      * Creates new form ViewTurma
      */
-    public MatriculaAlunoTurmaViewer() {
+    public TurmaAlunoViewer() {
         initComponents();
     }
     

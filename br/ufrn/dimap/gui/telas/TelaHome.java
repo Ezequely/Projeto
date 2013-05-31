@@ -25,8 +25,10 @@ public class TelaHome extends Tela{
         jPanel1 = new javax.swing.JPanel();
         btnAlunos = new javax.swing.JButton();
         btnDocentes = new javax.swing.JButton();
+        btnTurmas = new javax.swing.JButton();
+        btnBancasExaminadoras = new javax.swing.JButton();
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(0, 2));
 
         btnAlunos.setText("Alunos");
         btnAlunos.addActionListener(new java.awt.event.ActionListener() {
@@ -44,21 +46,37 @@ public class TelaHome extends Tela{
         });
         jPanel1.add(btnDocentes);
 
+        btnTurmas.setText("Turmas");
+        btnTurmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTurmasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTurmas);
+
+        btnBancasExaminadoras.setText("Bancas Examinadoras");
+        btnBancasExaminadoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBancasExaminadorasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBancasExaminadoras);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(124, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -70,9 +88,19 @@ public class TelaHome extends Tela{
         this.fireNavigate("TelaVisualizarDocentes");
     }//GEN-LAST:event_btnDocentesActionPerformed
 
+    private void btnTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTurmasActionPerformed
+        this.fireNavigate("TelaVisualizarTurmas");
+    }//GEN-LAST:event_btnTurmasActionPerformed
+
+    private void btnBancasExaminadorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBancasExaminadorasActionPerformed
+        this.fireNavigate("TelaVisualizarBancasExaminadoras");
+    }//GEN-LAST:event_btnBancasExaminadorasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlunos;
+    private javax.swing.JButton btnBancasExaminadoras;
     private javax.swing.JButton btnDocentes;
+    private javax.swing.JButton btnTurmas;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
