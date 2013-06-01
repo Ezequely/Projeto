@@ -4,10 +4,12 @@
  */
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.entidades.Docente;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarDocentes extends Tela implements ActionListener {
+public class TelaVisualizarDocentes extends Tela implements ItemSelectionListener {
     Collection<? extends Object> docentes;
     /**
      * Creates new form TelaVisaoDocentes
@@ -29,26 +31,19 @@ public class TelaVisualizarDocentes extends Tela implements ActionListener {
         this.docentes = docentes; 
         initComponents();
         
-        this.lstDocentes.addActionListener(this);
+        this.lstDocentes.addItemSelectionListener(this);
     }
 
+    
+    public void itemSelected(ItemSelectionEvent event) {
+        if(event.getSelectedItem() instanceof Docente){
+            this.showDocente((Docente) event.getSelectedItem());
+        }
+    }
     private void showDocente(Docente docente) {
-//        if(parent != null){
-//            parent.navigate(this, (Container)new TelaVisualizarDadosDocente(docente, null));
-//        }
-        
-        //this.fireNavigate("TelaVisualizarDadosDocente");
         NavigationEvent event = new NavigationEvent(this, "TelaVisualizarDadosDocente");
         event.addArg("Docente", docente);
         this.fireNavigate(event);
-    }
-    public void actionPerformed(ActionEvent ae) {
-//        System.out.print(ae.getSource() + " - ");
-//        System.out.println(ae.getActionCommand());
-        
-        if(ae.getSource() instanceof Docente ){
-            this.showDocente((Docente)ae.getSource());
-        }
     }
     
     private ObjectListView  criarListaDeDocentes(){

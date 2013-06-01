@@ -4,7 +4,9 @@
  */
 package br.ufrn.dimap.gui.telas;
 
-import java.awt.Container;
+import br.ufrn.dimap.gui.Navigable;
+import br.ufrn.dimap.gui.NavigationEvent;
+import br.ufrn.dimap.gui.Navigator;
 import javax.swing.JPanel;
 
 /**

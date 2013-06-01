@@ -4,6 +4,7 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ObjectViewer;
 import br.ufrn.dimap.entidades.Turma;
 import java.awt.Color;
 import java.awt.Component;
@@ -76,22 +77,22 @@ public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
-        lblDisciplina.setText("Disciplina Valor");
+        lblDisciplina.setText("<Disciplina>");
         add(lblDisciplina);
 
-        lblPeriodo.setText("Periodo Valor");
+        lblPeriodo.setText("<Período>");
         add(lblPeriodo);
 
-        lblNumTurma.setText("Num Turma Valor");
+        lblNumTurma.setText("<Num Turma>");
         add(lblNumTurma);
 
-        lblSituacaoTurma.setText("Situação turma Valor");
+        lblSituacaoTurma.setText("<Situação turma>");
         add(lblSituacaoTurma);
 
-        lblHorarioDeAula.setText("Horario de aula valor");
+        lblHorarioDeAula.setText("<Horario de aula>");
         add(lblHorarioDeAula);
 
-        lblLocalDeAula.setText("Local de aula valor");
+        lblLocalDeAula.setText("<Local de aula>");
         add(lblLocalDeAula);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -103,44 +104,4 @@ public class TurmaViewer extends javax.swing.JPanel implements ObjectViewer{
     private javax.swing.JLabel lblPeriodo;
     private javax.swing.JLabel lblSituacaoTurma;
     // End of variables declaration//GEN-END:variables
-
-    public Component getListCellRendererComponent(
-            JList<? extends Turma> jlist, 
-            Turma e, 
-            int index, 
-            boolean isSelected, 
-            boolean bln1) 
-    {
-        this.setTurma(e);
-        
-        
-         Color background;
-         Color foreground;
-
-         // check if this cell represents the current DnD drop location
-         JList.DropLocation dropLocation = jlist.getDropLocation();
-         if (dropLocation != null
-                 && !dropLocation.isInsert()
-                 && dropLocation.getIndex() == index) {
-
-             background = Color.BLUE;
-             foreground = Color.WHITE;
-
-         // check if this cell is selected
-         } else if (isSelected) {
-             background = Color.RED;
-             foreground = Color.WHITE;
-
-         // unselected, and not the DnD drop location
-         } else {
-             background = Color.WHITE;
-             foreground = Color.BLACK;
-         };
-
-         setBackground(background);
-         setForeground(foreground);
-
-         return this;
-    }
-
 }

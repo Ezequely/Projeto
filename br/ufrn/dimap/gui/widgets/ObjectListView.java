@@ -4,6 +4,12 @@
  */
 package br.ufrn.dimap.gui.widgets;
 
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
+import br.ufrn.dimap.gui.ObjectViewer;
+import br.ufrn.dimap.gui.ListAction;
+import br.ufrn.dimap.gui.ListCellObjectRenderer;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,12 +28,14 @@ import javax.swing.JList;
  * ObjectListViewe permite a um cliente detectar e receber qual elemento foi 
  * selecionado pelo usuario (utilizando um ActionListener).
  */
-public class ObjectListView extends JList<Object>{
+public class ObjectListView extends JList<Object> implements ActionListener{
     DefaultListModel listModel;
     Collection<Object> collection;
     ObjectViewer viewer;
     
     ListAction listAction;
+    final String itemSelectActionCommand = "Selected";
+    Collection<ItemSelectionListener> itemSelectionListeners;
     
     public ObjectListView(){
         this(new DefaultObjectViewer(), new ArrayList<Object>());
@@ -41,26 +49,15 @@ public class ObjectListView extends JList<Object>{
         this.setModel(listModel);
         
         listAction = new ListAction(this);
+        listAction.setActionCommand(itemSelectActionCommand);
+        listAction.addActionListener(this);
+        itemSelectionListeners = new ArrayList<ItemSelectionListener>();
         
         this.setViewer(viewer);
         
         this.setCollection(objects);
     }
     
-    
-    
-    public String getActionCommand() {
-        return listAction.getActionCommand();
-    }
-    public void setActionCommand(String actionCommand) {
-        this.listAction.setActionCommand(actionCommand);
-    }
-    public void addActionListener(ActionListener listener){
-        this.listAction.addActionListener(listener);
-    }
-    public void removeActionListener(ActionListener listener){
-        this.listAction.removeActionListener(listener);
-    }
         
     
     public void setViewer(ObjectViewer objViewer){
@@ -96,5 +93,40 @@ public class ObjectListView extends JList<Object>{
             return this.collection.remove(obj);
         }
         return false;
+    }
+
+    
+//    public String getActionCommand() {
+//        return listAction.getActionCommand();
+//    }
+//    public void setActionCommand(String actionCommand) {
+//        this.listAction.setActionCommand(actionCommand);
+//    }
+//    public void addActionListener(ActionListener listener){
+//        this.listAction.addActionListener(listener);
+//    }
+//    public void removeActionListener(ActionListener listener){
+//        this.listAction.removeActionListener(listener);
+//    }
+    
+    //Tratamento de eventos
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == this && ae.getActionCommand() == this.itemSelectActionCommand){
+            fireItemSelectedEvent();
+        }
+    }
+    public void addItemSelectionListener(ItemSelectionListener listener){
+        this.itemSelectionListeners.add(listener);
+    }
+    public void removeItemSelectionListener(ItemSelectionListener listener){
+        this.itemSelectionListeners.remove(listener);
+    }
+    protected void fireItemSelectedEvent() {
+        ItemSelectionEvent event = new ItemSelectionEvent(this);
+        event.setSelectedItem(this.getSelectedValue());
+        
+        for(ItemSelectionListener listener : this.itemSelectionListeners ){
+            listener.itemSelected(event);
+        }
     }
 }

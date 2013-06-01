@@ -6,13 +6,8 @@ package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.MySqlDatabaseController;
-import br.ufrn.dimap.gui.telas.Navigable;
-import br.ufrn.dimap.gui.telas.NavigationEvent;
-import br.ufrn.dimap.gui.telas.Tela;
-import br.ufrn.dimap.gui.telas.TelaLogin;
-import br.ufrn.dimap.gui.telas.TelaHome;
-import br.ufrn.dimap.gui.telas.TelaPrincipal;
-import java.awt.Component;
+import br.ufrn.dimap.gui.Navigable;
+import br.ufrn.dimap.gui.NavigationEvent;
 import javax.swing.UIManager;
 
 /**

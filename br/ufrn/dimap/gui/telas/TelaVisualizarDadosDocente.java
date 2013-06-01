@@ -4,9 +4,12 @@
  */
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.entidades.Turma;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
 import br.ufrn.dimap.gui.widgets.ObjectListView;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
 import java.awt.event.ActionEvent;
@@ -18,7 +21,7 @@ import java.util.Collection;
  *
  * @author leobrizolara
  */
-public class TelaVisualizarDadosDocente extends Tela implements ActionListener{    
+public class TelaVisualizarDadosDocente extends Tela implements ItemSelectionListener{    
     Docente docente;
     Collection<? extends Object> historicoDeTurmas;
     Collection<? extends Object> publicacoesDocente;
@@ -36,11 +39,8 @@ public class TelaVisualizarDadosDocente extends Tela implements ActionListener{
         this.docente = docente;
         this.setTurmasDocente(turmasMinistradas);
         
-        this.lstTurmasMinistradas.addActionListener(this);
-        this.lstPublicacoes.addActionListener(this);
-        
-        lstTurmasMinistradas.setActionCommand(turmasActionCommand);
-        lstPublicacoes.setActionCommand(publicacoesActionCommand);
+        this.lstTurmasMinistradas.addItemSelectionListener(this);
+        this.lstPublicacoes.addItemSelectionListener(this);
     }
 
     public void setTurmasDocente(Collection<? extends Object> TurmasDocente){
@@ -85,14 +85,14 @@ public class TelaVisualizarDadosDocente extends Tela implements ActionListener{
     }
     
     
-    public void actionPerformed(ActionEvent ae) {
+    public void itemSelected(ItemSelectionEvent event) {
         NavigationEvent naviEvent = new NavigationEvent(this);
-        if(ae.getActionCommand().equals(turmasActionCommand)){
-            naviEvent.addArg("Turma", this.getSelectedTurma());
+        if(event.getSelectedItem() instanceof Turma){
+            naviEvent.addArg("Turma", (Turma)event.getSelectedItem());
             naviEvent.setDestination("TelaVisualizarDadosTurma");
         }
-        else if(ae.getActionCommand().equals(publicacoesActionCommand)){
-            naviEvent.addArg("Publicacao", this.getSelectedPublicacao());
+        else if(event.getSelectedItem() instanceof Publicacao){
+            naviEvent.addArg("Publicacao", (Publicacao)event.getSelectedItem());
             naviEvent.setDestination("TelaVisualizarDadosPublicacao"); //TODO: ainda nao existe
         }
         else{
@@ -259,7 +259,5 @@ public class TelaVisualizarDadosDocente extends Tela implements ActionListener{
     private javax.swing.JScrollPane scrVisualizarDados;
     private br.ufrn.dimap.gui.widgets.ViewDadosPessoais viewDadosPessoais;
     // End of variables declaration//GEN-END:variables
-
-
 
 }

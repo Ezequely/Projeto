@@ -21,32 +21,32 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblDisciplina">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Disciplina Valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Disciplina&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPeriodo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Periodo Valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Per&#xed;odo&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNumTurma">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Num Turma Valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Num Turma&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblSituacaoTurma">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Situa&#xe7;&#xe3;o turma Valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Situa&#xe7;&#xe3;o turma&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblHorarioDeAula">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Horario de aula valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Horario de aula&gt;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLocalDeAula">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Local de aula valor"/>
+        <Property name="text" type="java.lang.String" value="&lt;Local de aula&gt;"/>
       </Properties>
     </Component>
   </SubComponents>

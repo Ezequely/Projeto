@@ -5,54 +5,52 @@
 package br.ufrn.dimap.dataAccess;
 
 import br.ufrn.dimap.entidades.Pessoa;
-import br.ufrn.dimap.entidades.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 
 /**
  *
  * @author leobrizolara
  */
 public class PessoaDAO extends SqlDAO{
-
+    public PessoaDAO(){}
     public PessoaDAO(DatabaseController dataController) {
-        this.dataController = dataController;
+        super(dataController);
     }
+
     
-    public Pessoa Insert(String cpf, String nome, String endereco, String cidade, String uf, String nacionalidade, String naturalidade, String DTNasc, String telefone, String email){
+    public Pessoa Insert(Pessoa p){
         StringBuilder sqlCmd = new StringBuilder();
-        sqlCmd.append(createSelectCmd());
+        sqlCmd.append(createInsertCmd());
         sqlCmd.append("'(' '");
-        sqlCmd.append(cpf);
+        sqlCmd.append(p.getCpf());
         sqlCmd.append(",'");
-        sqlCmd.append(nome);
+        sqlCmd.append(p.getNome());
         sqlCmd.append(",'");
-        sqlCmd.append(endereco);
+        sqlCmd.append(p.getEndereco());
         sqlCmd.append(",'");
-        sqlCmd.append(cidade);
+        sqlCmd.append(p.getCidade());
         sqlCmd.append(",'");
-        sqlCmd.append(uf);
+        sqlCmd.append(p.getUf());
         sqlCmd.append(",'");
-        sqlCmd.append(naturalidade);
+        sqlCmd.append(p.getNaturalidade());
         sqlCmd.append(",'");
-        sqlCmd.append(nacionalidade);
+        sqlCmd.append(p.getNacionalidade());
         sqlCmd.append(",'");
-        sqlCmd.append(DTNasc);
+        sqlCmd.append(p.getDataNascimento().toString());
         sqlCmd.append(",'");
-        sqlCmd.append(email);
+        sqlCmd.append(p.getEmail());
         sqlCmd.append(",'");
-        sqlCmd.append(telefone);
+        sqlCmd.append(p.getTelefone());
         sqlCmd.append(")");
         
-        return null;
+        return p;
     }
     
 
-    @Override
     /*select Login, CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade, DTNasc, E_mail, Telefone from
 	USUARIO natural join PESSOA where Login = ? and PasswordHash = ?;*/
-    protected String createSelectCmd() {
+    protected String createInsertCmd() {
         StringBuilder sqlCmd = new StringBuilder();
         sqlCmd.append("INSERT INTO PESSOA ("); 
         sqlCmd.append("Login, CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade, DTNasc, E_mail, Telefone) ");
@@ -61,6 +59,11 @@ public class PessoaDAO extends SqlDAO{
         return sqlCmd.toString();
     }
     
+    @Override
+    protected String createSelectCmd() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @Override
     protected Object read(ResultSet rs) throws SQLException {
         Pessoa p = new Pessoa();

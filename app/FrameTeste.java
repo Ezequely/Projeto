@@ -12,7 +12,8 @@ import br.ufrn.dimap.dataAccess.PublicacaoDAO;
 import br.ufrn.dimap.dataAccess.TurmaDAO;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
-import br.ufrn.dimap.gui.telas.Navigable;
+import br.ufrn.dimap.gui.Navigable;
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.gui.telas.TelaLogin;
 import br.ufrn.dimap.gui.telas.TelaVisualizarAlunos;
 import br.ufrn.dimap.gui.telas.TelaVisualizarDocentes;
@@ -208,5 +209,10 @@ public class FrameTeste extends javax.swing.JFrame implements Navigable {
     private br.ufrn.dimap.gui.telas.TelaVisualizarDadosTurma telaVisualizarDadosTurma1;
     private br.ufrn.dimap.gui.telas.TelaVisualizarTurmas telaVisualizarTurmas1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void navigate(NavigationEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

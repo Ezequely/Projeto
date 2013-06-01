@@ -193,54 +193,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- BANCAEXAMINADORA
--- -----------------------------------------------------
-DROP TABLE IF EXISTS BANCAEXAMINADORA ;
-
-CREATE  TABLE IF NOT EXISTS BANCAEXAMINADORA (
-  CodigoBanca INT(11) NOT NULL ,
-  DataDeDefesa DATE NULL DEFAULT NULL ,
-  ISSN_Dissertacao INT(11) NOT NULL ,
-  MatriculaAluno VARCHAR(11) NOT NULL ,
-  PRIMARY KEY (CodigoBanca) ,
-  INDEX R_27 (MatriculaAluno ASC) ,
-  CONSTRAINT bancaexaminadora_aluno_fk
-    FOREIGN KEY (MatriculaAluno )
-    REFERENCES ALUNO (MatriculaAluno )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)
-ENGINE = InnoDB,
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- EXAMINADOR
--- -----------------------------------------------------
-DROP TABLE IF EXISTS EXAMINADOR ;
-
-CREATE  TABLE IF NOT EXISTS EXAMINADOR (
-  Nota MEDIUMINT(9) NULL DEFAULT NULL ,
-  CodigoBanca INT(11) NOT NULL ,
-  MatriculaDocente VARCHAR(11) NOT NULL ,
-  PRIMARY KEY (CodigoBanca, MatriculaDocente) ,
-  INDEX R_24 (MatriculaDocente ASC) ,
-  CONSTRAINT examinador_docente_fk
-    FOREIGN KEY (MatriculaDocente )
-    REFERENCES DOCENTE (MatriculaDocente )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT examinador_banca_fk
-    FOREIGN KEY (CodigoBanca )
-    REFERENCES BANCAEXAMINADORA (CodigoBanca )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)
-ENGINE = InnoDB,
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- PUBLICACAO
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS PUBLICACAO ;
@@ -278,6 +230,59 @@ CREATE  TABLE IF NOT EXISTS PESSOA_PUBLICACAO (
   CONSTRAINT pessoapublicacao_pessoa_fk
     FOREIGN KEY (CPF )
     REFERENCES PESSOA (CPF )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB,
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- BANCAEXAMINADORA
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS BANCAEXAMINADORA ;
+
+CREATE  TABLE IF NOT EXISTS BANCAEXAMINADORA (
+  CodigoBanca INT(11) NOT NULL ,
+  DataDeDefesa DATE NULL DEFAULT NULL ,
+  ISSN_Dissertacao VARCHAR(11) NOT NULL ,
+  MatriculaAluno VARCHAR(11) NOT NULL ,
+  PRIMARY KEY (CodigoBanca) ,
+  INDEX R_27 (MatriculaAluno ASC) ,
+  CONSTRAINT bancaexaminadora_aluno_fk
+    FOREIGN KEY (MatriculaAluno )
+    REFERENCES ALUNO (MatriculaAluno )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT bancaexaminadora_dissertacao_fk
+    FOREIGN KEY (ISSN_Dissertacao)
+    REFERENCES PUBLICACAO (ISSN )
+--    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)
+ENGINE = InnoDB,
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- EXAMINADOR
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS EXAMINADOR ;
+
+CREATE  TABLE IF NOT EXISTS EXAMINADOR (
+  Nota MEDIUMINT(9) NULL DEFAULT NULL ,
+  CodigoBanca INT(11) NOT NULL ,
+  MatriculaDocente VARCHAR(11) NOT NULL ,
+  PRIMARY KEY (CodigoBanca, MatriculaDocente) ,
+  INDEX R_24 (MatriculaDocente ASC) ,
+  CONSTRAINT examinador_docente_fk
+    FOREIGN KEY (MatriculaDocente )
+    REFERENCES DOCENTE (MatriculaDocente )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT examinador_banca_fk
+    FOREIGN KEY (CodigoBanca )
+    REFERENCES BANCAEXAMINADORA (CodigoBanca )
     ON DELETE CASCADE
     ON UPDATE CASCADE
 )

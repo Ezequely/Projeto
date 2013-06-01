@@ -71,9 +71,9 @@ public class Agrupamento {
     }
     
     /** @return retorna o numero de elemntos em uma categoria*/
-    public int count(String categoria){
-        if(categorias.containsKey(categoria)){
-            return categoria.length();
+    public int count(String categoriaNome){
+        if(categorias.containsKey(categoriaNome)){
+            return categorias.get(categoriaNome).size();
         }
         return 0;
     }

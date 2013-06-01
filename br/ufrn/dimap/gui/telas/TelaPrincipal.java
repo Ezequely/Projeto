@@ -1,12 +1,18 @@
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.Navigable;
+import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.dataAccess.AlunoDAO;
+import br.ufrn.dimap.dataAccess.AlunoTurmaDAO;
+import br.ufrn.dimap.dataAccess.BancaExaminadoraDAO;
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.DocenteDAO;
 import br.ufrn.dimap.dataAccess.PublicacaoDAO;
 import br.ufrn.dimap.dataAccess.TurmaDAO;
 import br.ufrn.dimap.entidades.Aluno;
+import br.ufrn.dimap.entidades.BancaExaminadora;
 import br.ufrn.dimap.entidades.Docente;
+import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Turma;
 import java.util.Collection;
 
@@ -40,11 +46,23 @@ public class TelaPrincipal extends Tela implements Navigable{
         else if(dest.equals("TelaVisualizarDocentes")){
             tela = navegarTelaVisualizarDocentes(event);
         }
+        else if(dest.equals("TelaVisualizarTurmas")){
+            tela = navegarTelaVisualizarTurmas(event);
+        }
+        else if(dest.equals("TelaVisualizarDadosAluno")){
+            tela = navegarTelaVisualizarDadosAlunos(event);
+        }
         else if(dest.equals("TelaVisualizarDadosDocente")){
             tela = navegarTelaVisualizarDadosDocente(event);
         }
         else if(dest.equals("TelaVisualizarDadosTurma")){
             tela = navegarTelaVisualizarDadosTurma(event);
+        }
+        else if(dest.equals("TelaVisualizarBancasExaminadoras")){
+            tela = navegarTelaVisualizarBancasExaminadoras(event);
+        }
+        else if(dest.equals("TelaVisualizarDadosBancaExaminadora")){
+            tela = navegarTelaVisualizarDadosBancaExaminadora(event);
         }
         else{
             System.err.println("Destino: " + event.getDestination() + " não encontrado!");
@@ -68,6 +86,30 @@ public class TelaPrincipal extends Tela implements Navigable{
         
         return new TelaVisualizarAlunos();
     }
+    
+    private Tela navegarTelaVisualizarDadosAlunos(NavigationEvent event) {
+        if(dbController != null && event != null && event.getArg("Aluno") != null){
+            Aluno aluno = (Aluno) event.getArg("Aluno");
+
+            AlunoTurmaDAO alunoTurmaDAO = new AlunoTurmaDAO(dbController);
+            Collection<? extends Object> historicoAluno = alunoTurmaDAO.search(aluno);
+
+            TelaVisualizarDadosAluno tela = new TelaVisualizarDadosAluno(aluno);
+            tela.setHistoricoAluno(historicoAluno);
+
+            if(aluno.getPessoa() != null){
+                PublicacaoDAO publicacaoDAO = new PublicacaoDAO(dbController);
+                Collection<? extends Object> publicacoes 
+                        = publicacaoDAO.search(aluno.getPessoa());
+                tela.setPublicacoesAluno(publicacoes);
+            }
+            
+            return tela;
+        }
+        return new TelaVisualizarDadosAluno();
+    }
+
+    
     private Tela navegarTelaVisualizarDocentes(NavigationEvent event) {
         if(dbController != null){
             DocenteDAO docenteDAO = new DocenteDAO(dbController);
@@ -101,16 +143,52 @@ public class TelaPrincipal extends Tela implements Navigable{
         return new TelaVisualizarDocentes();
     }
     
+    
+    private Tela navegarTelaVisualizarTurmas(NavigationEvent event) {
+        if(dbController != null){
+            TurmaDAO turmaDAO = new TurmaDAO(dbController);
+            Collection<? extends Object> turmas = turmaDAO.listAll();
+            return new TelaVisualizarTurmas((Collection<Turma>) turmas);
+        }
+        
+        return new TelaVisualizarTurmas();
+    }
     private Tela navegarTelaVisualizarDadosTurma(NavigationEvent event) {
         if(event != null && event.getArg("Turma") != null){
             Turma turma = (Turma) event.getArg("Turma");
 
             TelaVisualizarDadosTurma telaDadosTurma = new TelaVisualizarDadosTurma(turma);
             
+            AlunoTurmaDAO alunoTurmaDAO = new AlunoTurmaDAO(dbController);
+            telaDadosTurma.setAlunosTurma(
+                    (Collection<MatriculaAlunoTurma>) alunoTurmaDAO.search(turma));
+            
             return telaDadosTurma;
         }
         //else
         return new TelaVisualizarTurmas();
+    }
+    
+    private Tela navegarTelaVisualizarBancasExaminadoras(NavigationEvent event) {
+        if(dbController != null){
+            BancaExaminadoraDAO bancaDAO = new BancaExaminadoraDAO(dbController);
+            Collection<? extends Object> bancas = bancaDAO.listAll();
+            return new TelaVisualizarBancasExaminadoras((Collection<BancaExaminadora>) bancas);
+        }        
+        
+        return new TelaVisualizarBancasExaminadoras();
+    }
+    private Tela navegarTelaVisualizarDadosBancaExaminadora(NavigationEvent event) {
+        if(event != null && event.getArg("BancaExaminadora") != null){
+            BancaExaminadora bancaExaminadora = (BancaExaminadora) event.getArg("BancaExaminadora");
+
+            TelaVisualizarDadosBancaExaminadora telaDadosBancaExaminadora = 
+                    new TelaVisualizarDadosBancaExaminadora(bancaExaminadora);
+            
+            return telaDadosBancaExaminadora;
+        }
+        //else
+        return new TelaVisualizarBancasExaminadoras();
     }
     
     private void mudarTela(Tela tela){
@@ -124,7 +202,6 @@ public class TelaPrincipal extends Tela implements Navigable{
             this.repaint();
         }
     }
-    
     
     
     

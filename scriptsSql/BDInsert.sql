@@ -254,6 +254,24 @@ insert into PESSOA_PUBLICACAO (CPF, ISSN) values    ('123456789', '9993-8883'),
                                                     ('6767884444', '0006-6006'),
                                                     ('453453453', '0006-6006');
 
+
+-- -- -- -- -- -- -- -- -- BANCAEXAMINADORA -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+-- Inserir dissertações
+insert into PUBLICACAO (Titulo, Tema, Periodico, Data, Tipo, ISSN, Resumo, URL) values
+	('Desenvolvimento de jogos na plataforma x86', 'Jogos digitais', 'Editora UFRN'
+		, '1979-01-01', 'Dissertacao', '1001-8686', NULL, NULL)
+	,('PNP, NPN e NP completo', 'Teoria da computação', 'Editora UFRN'
+		, '2010-10-23', 'Dissertacao', '3080-7321', NULL, NULL);
+
+-- Inserir bancas examinadoras
+insert into BANCAEXAMINADORA (CodigoBanca, DataDeDefesa, ISSN_Dissertacao, MatriculaAluno) values
+         (1, '1979-01-31', '1001-8686', '1975123456')
+	,(2, '2010-11-10', '3080-7321', '200912345');
+
+
+-- -- -- -- -- -- -- -- -- USUARIO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
 /*Inserir para John Smith Login 'Smith' e senha 12345
 Entrada: 12345 Senha com MD5: 827ccb0eea8a706c4c34a16891f84e7b
 */
