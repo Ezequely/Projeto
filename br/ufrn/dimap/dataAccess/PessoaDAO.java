@@ -17,6 +17,7 @@ public class PessoaDAO extends SqlDAO{
     public PessoaDAO(DatabaseController dataController) {
         super(dataController);
     }
+<<<<<<< HEAD
 
     
     public Pessoa Insert(Pessoa p){
@@ -48,6 +49,39 @@ public class PessoaDAO extends SqlDAO{
     }
     
 
+=======
+
+    
+    public Pessoa Insert(String cpf, String nome, String endereco, String cidade, String uf, String nacionalidade, String naturalidade, String DTNasc, String telefone, String email){
+        StringBuilder sqlCmd = new StringBuilder();
+        sqlCmd.append(createInsertCmd());
+        sqlCmd.append("'(' '");
+        sqlCmd.append(cpf);
+        sqlCmd.append(",'");
+        sqlCmd.append(nome);
+        sqlCmd.append(",'");
+        sqlCmd.append(endereco);
+        sqlCmd.append(",'");
+        sqlCmd.append(cidade);
+        sqlCmd.append(",'");
+        sqlCmd.append(uf);
+        sqlCmd.append(",'");
+        sqlCmd.append(naturalidade);
+        sqlCmd.append(",'");
+        sqlCmd.append(nacionalidade);
+        sqlCmd.append(",'");
+        sqlCmd.append(DTNasc);
+        sqlCmd.append(",'");
+        sqlCmd.append(email);
+        sqlCmd.append(",'");
+        sqlCmd.append(telefone);
+        sqlCmd.append(")");
+        
+        return null;
+    }
+    
+
+>>>>>>> ca4d7616c363d8b5e4e880d247097ff6eb4ba964
     /*select Login, CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade, DTNasc, E_mail, Telefone from
 	USUARIO natural join PESSOA where Login = ? and PasswordHash = ?;*/
     protected String createInsertCmd() {

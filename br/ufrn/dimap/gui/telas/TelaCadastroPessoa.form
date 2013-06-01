@@ -278,9 +278,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="GRAVAR"/>
           </Properties>
+<<<<<<< HEAD
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
+=======
+>>>>>>> ca4d7616c363d8b5e4e880d247097ff6eb4ba964
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
