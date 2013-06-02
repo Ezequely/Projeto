@@ -79,4 +79,11 @@ public class MatriculaAlunoTurma {
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
+    
+    public String toString(){
+        String str = (aluno != null ? aluno.toString() : "");
+        str += (getMedia() != null ? " " + getMedia().toString() : "");
+        str += (getSituacao() != null ? " " + getSituacao() : "");
+        return str;
+    }
 }

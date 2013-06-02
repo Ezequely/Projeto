@@ -5,7 +5,11 @@
 package br.ufrn.dimap.entidades;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -17,6 +21,14 @@ public class BancaExaminadora {
     private Publicacao dissertacao;
     private Aluno aluno;
 
+    private Map<String, Double> notasExaminadores;
+    private Collection<Docente> examinadores;
+    
+    public BancaExaminadora(){
+        examinadores = new ArrayList<Docente>();
+        notasExaminadores = new TreeMap<String, Double>();
+    }
+    
     public int getCodigoBanca() {
         return codigoBanca;
     }
@@ -58,5 +70,30 @@ public class BancaExaminadora {
         str.append(formatter.format(this.dataDeDefesa));
         
         return str.toString();
+    }
+    
+    public void addExaminador(Docente examinador){
+        this.examinadores.add(examinador);
+    }
+    public void removeExaminador(Docente examinador){
+        this.examinadores.remove(examinador);
+        notasExaminadores.remove(examinador.getMatricula());
+    }
+    public void setNota(Docente examinador, Double nota){
+        this.notasExaminadores.put(examinador.getMatricula(), nota);
+    }
+    public Double getNota(Docente examinador){
+        if(notasExaminadores.containsKey(examinador.getMatricula())){
+            return this.notasExaminadores.get(examinador.getMatricula());
+        }
+        return null;
+    }
+    
+    public Collection<Docente> getExaminadores() {
+        return examinadores;
+    }
+
+    public void setExaminadores(Collection<Docente> examinadores) {
+        this.examinadores = examinadores;
     }
 }
