@@ -8,6 +8,7 @@ import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.Disciplina;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,11 +39,11 @@ public class TurmaDAO extends SqlDAO{
         return this.listAll(this.createSelectCmd());
     }
     @Override
-    public Collection<? extends Object> listAll(String selectCommand){
+    public Collection<? extends Object> listAll(String selectCommand, Connection conn){
         System.out.println(selectCommand);//DEBUG
         
         
-        Collection<? extends Object> turmas = super.listAll(selectCommand);
+        Collection<? extends Object> turmas = super.listAll(selectCommand, conn);
         
         DocenteDAO docenteDAO = new DocenteDAO(this.dataController);
         for(Object o : turmas){
@@ -57,12 +58,12 @@ public class TurmaDAO extends SqlDAO{
     /**
      *  @return se obj for um docente, retorna as turmas minsitradas por esse docente.
      */
-    public Collection<? extends Object> search(Object obj) {
+    public Collection<? extends Object> search(Object obj, Connection conn) {
         if(obj instanceof Docente){//buscar turmas de um docente
-            return this.listAll(this.createSelectTurmaDocenteCmd((Docente)obj));
+            return this.listAll(this.createSelectTurmaDocenteCmd((Docente)obj), conn);
         }
         else if(obj instanceof Aluno){
-            return this.listAll(this.createSelectTurmaAlunoCmd((Aluno)obj));
+            return this.listAll(this.createSelectTurmaAlunoCmd((Aluno)obj), conn);
         }
         
         return new ArrayList<Object>();

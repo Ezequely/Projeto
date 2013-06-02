@@ -33,10 +33,10 @@ public class DocenteDAO extends SqlDAO{
     public void remove(Object obj) {
     }
     
-    public Collection<? extends Object> search(Object obj){
+    public Collection<? extends Object> search(Object obj, Connection conn){
         if(obj instanceof Turma){//buscar docentes de uma turma
             String cmdSelectDocentesDaTurma = this.createSelectTurmaDocenteCmd((Turma)obj);
-            return this.listAll(cmdSelectDocentesDaTurma);
+            return this.listAll(cmdSelectDocentesDaTurma, conn);
         }
         
         //else: retorna lista vazia

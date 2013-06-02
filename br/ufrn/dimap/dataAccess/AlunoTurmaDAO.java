@@ -7,6 +7,7 @@ package br.ufrn.dimap.dataAccess;
 import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Turma;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class AlunoTurmaDAO extends SqlDAO{
     }
     
     
-    public Collection<? extends Object> listAll(String cmd) {//TODO: permitir transaction
-        Collection<? extends Object> matriculasAlunoTurma = super.listAll(cmd);
+    public Collection<? extends Object> listAll(String cmd, Connection conn) {//TODO: permitir transaction
+        Collection<? extends Object> matriculasAlunoTurma = super.listAll(cmd, conn);
         AlunoDAO alunoDAO = new AlunoDAO(dataController);
         String selectAlunoCmd = createSelectAlunoCmd(alunoDAO.createSelectCmd());
         
-        Collection<? extends Object> alunos = alunoDAO.listAll(selectAlunoCmd);
+        Collection<? extends Object> alunos = alunoDAO.listAll(selectAlunoCmd, conn);
         
         //para cada turma 'MatriculaAlunoTurma' busca o aluno
         for(Object o : matriculasAlunoTurma){
@@ -45,12 +46,12 @@ public class AlunoTurmaDAO extends SqlDAO{
         return matriculasAlunoTurma;
     }
     
-    public Collection<? extends Object> search(Object obj) {
+    public Collection<? extends Object> search(Object obj, Connection conn) {
         if(obj instanceof Aluno){
-            return this.listAll(this.createSelectAlunoHistoricoCmd((Aluno)obj));
+            return this.listAll(this.createSelectAlunoHistoricoCmd((Aluno)obj), conn);
         }
         else if(obj instanceof Turma){
-            return this.listAll(this.createSelectAlunosTurmaCmd((Turma)obj));
+            return this.listAll(this.createSelectAlunosTurmaCmd((Turma)obj), conn);
         }
         
         return new ArrayList<Object>();

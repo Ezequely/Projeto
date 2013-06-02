@@ -6,6 +6,7 @@ package br.ufrn.dimap.dataAccess;
 
 import br.ufrn.dimap.entidades.Pessoa;
 import br.ufrn.dimap.entidades.Publicacao;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ public class PublicacaoDAO extends SqlDAO{
     }
     
     @Override
-    public Collection<? extends Object> search(Object obj) {
+    public Collection<? extends Object> search(Object obj, Connection conn) {
         if(obj instanceof Pessoa){//buscar publicacoes de alguem
-            return this.listAll(this.createSelectPublicacoesPessoaCmd((Pessoa)obj));
+            return this.listAll(this.createSelectPublicacoesPessoaCmd((Pessoa)obj), conn);
         }
         
         return new ArrayList<Object>();

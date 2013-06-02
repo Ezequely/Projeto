@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,13 +41,45 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         return this.listAll(this.createSelectCmd());
     }
     
-    /**Permite as classes na hierarquia executar comandos de busca especificos*/
-    protected Collection<? extends Object> listAll(String selectCmd){
+    /**Permite as classes na hierarquia executar comandos de busca especificos
+     *  -- utiliza transações por padrão, pois garante que consultas encadeadas 
+     *      (a varios objetos DAO serão executadas de forma consistente).
+     */
+    protected final Collection<? extends Object> listAll(String selectCmd){  
+        //Cria conexão
+        Connection connection = this.dataController.CreateConnection();
+        
+        try {
+            //Inicializa transação
+            dataController.beginTransaction(connection);
+            //Realiza busca
+            Collection<Object> objects = (Collection<Object>) this.listAll(selectCmd, connection);
+            //Commit
+            dataController.commit(connection);
+            //Se conexão ainda estiver aberta, fecha
+            if(connection.isClosed() == false){
+                connection.close();
+            }
+            return objects;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    /**Permite as classes na hierarquia utilizar transações
+     *  -- Se um objeto DAO está em uma transação e deseja realizar uma consulta através de
+     *      outro objeto, deve utilizar este método, passando sua conexão.
+     *  -- Caso necessário, esse método deve ser sobrescrito ao invés dos anteriores
+     */
+    protected Collection<? extends Object> listAll(String selectCmd, Connection connection){
         System.out.println(selectCmd);//DEBUG
         
         try {
-            Connection connection = this.dataController.CreateConnection();
-
             Statement sqlStatement = connection.createStatement();
             ResultSet rs = sqlStatement.executeQuery(selectCmd);
             Collection<Object> objects = new ArrayList<Object>();
@@ -53,7 +87,7 @@ public abstract class SqlDAO implements DatabaseAccessObject{
             while (rs.next()){
                 objects.add(read(rs));
             }
-            connection.close();
+            
             return objects;
         } catch(SQLException e){
             e.printStackTrace();
@@ -66,10 +100,30 @@ public abstract class SqlDAO implements DatabaseAccessObject{
 
     protected abstract Object read(ResultSet rs) throws SQLException;
 
+    /**Para Override utilize search(Object obj, Connection conn) e não este*/
+    public final Collection<? extends Object> search(Object obj) {
+        Connection conn = dataController.CreateConnection();
+        try {
+            dataController.beginTransaction(conn);
+        
+            Collection<? extends Object> objs = this.search(obj, conn);
+
+            dataController.commit(conn);
+            if(conn.isClosed() == false){
+                conn.close();
+            }
+            return objs;
+        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     /**
      *  @return por padrao retorna uma colecao vazia.
      */
-    public Collection<? extends Object> search(Object obj) {
+    public Collection<? extends Object> search(Object obj, Connection conn) {
         return new ArrayList<Object>();
     }
     
