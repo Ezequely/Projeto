@@ -269,6 +269,17 @@ insert into BANCAEXAMINADORA (CodigoBanca, DataDeDefesa, ISSN_Dissertacao, Matri
          (1, '1979-01-31', '1001-8686', '1975123456')
 	,(2, '2010-11-10', '3080-7321', '200912345');
 
+-- -- -- -- -- -- -- -- -- EXAMINADOR -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
+insert into EXAMINADOR (CodigoBanca, MatriculaDocente, Nota) values
+(1, '201345',10.0),
+(1, '161789',7.2),
+(1, '2233445',8.1);
+
+insert into EXAMINADOR (CodigoBanca, MatriculaDocente, Nota) values
+(2, '22222',7.3),
+(2, '197508',6.5),
+(2, '2233445',9.2);
 
 -- -- -- -- -- -- -- -- -- USUARIO -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 
