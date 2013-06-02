@@ -7,7 +7,9 @@ package br.ufrn.dimap.gui.telas;
 import br.ufrn.dimap.dataAccess.DatabaseController;
 import br.ufrn.dimap.dataAccess.PessoaDAO;
 import br.ufrn.dimap.dataAccess.UsuarioDAO;
+import br.ufrn.dimap.entidades.Pessoa;
 import br.ufrn.dimap.entidades.Usuario;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,36 +34,36 @@ public class TelaCadastroPessoa extends javax.swing.JFrame {
     private void cadastroPessoa(){
         if(dataController != null){
             //Pessoa pessoa = new Pessoa(); //TODO: armazenar campos no objeto pessoa
-            String login = this.login.getText();
-            String password = new String(this.senha.getPassword());
-            String nome = this.Nome.getText();
-            String endereco = this.Endereco.getText();
-            String cpf = this.CPF.getText();
-            String cidade = this.Cidade.getText();
-            String uf = this.Estado.getText();
-            String dtnasc = this.DTNasc.getText();
-            String email = this.Email.getText();
-            String naturalidade = this.Naturalidade.getText();
-            String nacionalidade = this.Nacionalidade.getText();
-            String telefone = this.Fone.getText();
+            Pessoa p = new Pessoa();
+            p.setNome(this.Nome.getText());
+            p.setEndereco(this.Endereco.getText());
+            p.setCpf(this.CPF.getText());
+            p.setCidade(this.Cidade.getText());
+            p.setUf(this.Estado.getText());
+            p.setDataNascimento(Date.valueOf(this.DTNasc.getText()));
+            p.setEmail(this.Email.getText());
+            p.setNaturalidade(this.Naturalidade.getText());
+            p.setNacionalidade(this.Nacionalidade.getText());
+            p.setTelefone(this.Fone.getText());
 
             PessoaDAO pessoaDAO = new PessoaDAO(dataController);
             
             //TODO: criar e utilizar metodo em PessoaDAO: pessoaDAO.insert(pessoa); 
-            pessoaDAO.Insert(cpf, nome, endereco, cidade, uf, nacionalidade, naturalidade, dtnasc, telefone, email);
             
             
-            if(pessoaDAO != null){
+            if( pessoaDAO.Insert(p) != null){
                 //TODO: criar navegação
                 
-                JOptionPane.showMessageDialog(this, "Login!");
-                
+                JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
+
                 return;
             }
+            else {
+                JOptionPane.showMessageDialog(this, "Erro!");
+            }
         }
-        JOptionPane.showMessageDialog(this, "Erro!");
+        
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,6 +137,11 @@ public class TelaCadastroPessoa extends javax.swing.JFrame {
         jLabel10.setText("EMAIL");
 
         jButton1.setText("GRAVAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("USUÁRIO");
 
@@ -273,6 +280,10 @@ public class TelaCadastroPessoa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cadastroPessoa();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     /**

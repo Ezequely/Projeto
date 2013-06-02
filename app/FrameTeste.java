@@ -245,5 +245,9 @@ public class FrameTeste extends javax.swing.JFrame{
     private br.ufrn.dimap.gui.telas.TelaVisualizarTurmas telaVisualizarTurmas1;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void navigate(NavigationEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

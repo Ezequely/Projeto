@@ -17,6 +17,39 @@ public class PessoaDAO extends SqlDAO{
     public PessoaDAO(DatabaseController dataController) {
         super(dataController);
     }
+<<<<<<< HEAD
+
+    
+    public Pessoa Insert(Pessoa p){
+        StringBuilder sqlCmd = new StringBuilder();
+        sqlCmd.append(createInsertCmd());
+        sqlCmd.append("'(' '");
+        sqlCmd.append(p.getCpf());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getNome());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getEndereco());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getCidade());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getUf());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getNaturalidade());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getNacionalidade());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getDataNascimento().toString());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getEmail());
+        sqlCmd.append(",'");
+        sqlCmd.append(p.getTelefone());
+        sqlCmd.append(")");
+        
+        return p;
+    }
+    
+
+=======
 
     
     public Pessoa Insert(String cpf, String nome, String endereco, String cidade, String uf, String nacionalidade, String naturalidade, String DTNasc, String telefone, String email){
@@ -48,6 +81,7 @@ public class PessoaDAO extends SqlDAO{
     }
     
 
+>>>>>>> ca4d7616c363d8b5e4e880d247097ff6eb4ba964
     /*select Login, CPF, Nome, Endereco, Cidade, UF, Naturalidade, Nacionalidade, DTNasc, E_mail, Telefone from
 	USUARIO natural join PESSOA where Login = ? and PasswordHash = ?;*/
     protected String createInsertCmd() {
