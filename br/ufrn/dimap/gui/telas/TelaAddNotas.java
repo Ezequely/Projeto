@@ -4,10 +4,8 @@
  */
 package br.ufrn.dimap.gui.telas;
 
-import br.ufrn.dimap.entidades.Aluno_Turma;
-import br.ufrn.dimap.entidades.Turma;
+import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.gui.ObjectViewer;
-import br.ufrn.dimap.gui.telas.TelaVisualizarTurmas;
 import java.awt.Component;
 /**
  *
@@ -18,7 +16,7 @@ public class TelaAddNotas extends javax.swing.JPanel implements ObjectViewer{
     /**
      * Creates new form TelaAddNotas
      */
-    Aluno_Turma alunoTurma;
+    MatriculaAlunoTurma alunoTurma;
     /**
      * Creates new form ViewTurma
      */
@@ -28,41 +26,41 @@ public class TelaAddNotas extends javax.swing.JPanel implements ObjectViewer{
     
 
     public void setObject(Object obj) {
-        if(obj instanceof Aluno_Turma){
-            this.setAluno_Turma((Aluno_Turma)obj);
+        if(obj instanceof MatriculaAlunoTurma){
+            this.setMatriculaAlunoTurma((MatriculaAlunoTurma)obj);
         }
     }
 
     public Object getObject() {
-        return getAluno_Turma();
+        return getMatriculaAlunoTurma();
     }
 
     public Class getObjectClass() {
-        return Aluno_Turma.class;
+        return MatriculaAlunoTurma.class;
     }
     
     public Component getView() {
         return this;
     }
-    public void setAluno_Turma(Aluno_Turma t){
+    public void setMatriculaAlunoTurma(MatriculaAlunoTurma t){
         this.alunoTurma = t;
         update();
     }
-    public Aluno_Turma getAluno_Turma(){
+    public MatriculaAlunoTurma getMatriculaAlunoTurma(){
         return alunoTurma;
     }
     public void update(){
-        if(alunoTurma != null){
-            Turma t = this.alunoTurma.getTurma();
-            if(t != null){
-                this.lblNumTurma.setText(Integer.toString(t.getNumeroTurma()));
-                this.lblPeriodo.setText(t.getPeriodoLetivo());
-                this.lblDisciplina.setText(
-                        (t.getDisciplina() != null ? t.getDisciplina().getNome() : "") );
-                
-            }
-            this.lblSituacaoTurma.setText(alunoTurma.getSituacao());
-        }
+//        if(alunoTurma != null){
+//            Turma t = this.alunoTurma.getTurma();
+//            if(t != null){
+//                this.lblNumTurma.setText(Integer.toString(t.getNumeroTurma()));
+//                this.lblPeriodo.setText(t.getPeriodoLetivo());
+//                this.lblDisciplina.setText(
+//                        (t.getDisciplina() != null ? t.getDisciplina().getNome() : "") );
+//                
+//            }
+//            this.lblSituacaoTurma.setText(alunoTurma.getSituacao());
+//        }
     }
     
     

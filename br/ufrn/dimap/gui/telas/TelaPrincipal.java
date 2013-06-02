@@ -94,6 +94,12 @@ public class TelaPrincipal extends Tela implements Navigable{
             AlunoTurmaDAO alunoTurmaDAO = new AlunoTurmaDAO(dbController);
             Collection<? extends Object> historicoAluno = alunoTurmaDAO.search(aluno);
 
+            System.out.println("Historico aluno: " + historicoAluno.size());
+            for(Object o : historicoAluno){
+                MatriculaAlunoTurma alunoTurma = (MatriculaAlunoTurma)o;
+                System.out.println("\t" + alunoTurma.toString());
+            }
+            
             TelaVisualizarDadosAluno tela = new TelaVisualizarDadosAluno(aluno);
             tela.setHistoricoAluno(historicoAluno);
 
@@ -106,7 +112,9 @@ public class TelaPrincipal extends Tela implements Navigable{
             
             return tela;
         }
-        return new TelaVisualizarDadosAluno();
+        else{
+            return new TelaVisualizarDadosAluno();
+        }
     }
 
     

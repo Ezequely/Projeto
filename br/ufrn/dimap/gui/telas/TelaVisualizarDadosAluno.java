@@ -11,8 +11,6 @@ import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.ItemSelectionEvent;
 import br.ufrn.dimap.gui.ItemSelectionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
