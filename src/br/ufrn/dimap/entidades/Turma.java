@@ -84,4 +84,16 @@ public class Turma {
         }
         return false;
     }
+    
+    @Override
+    public String toString(){
+        String str = new String(disciplina != null ? disciplina.getNome() : "");
+        str.concat(" - ");
+        str.concat(periodoLetivo);
+        str.concat(" - Turma ");
+        str.concat(Integer.toString(numeroTurma));
+        
+        return str;
+    }
+            
 }

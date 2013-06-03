@@ -4,12 +4,14 @@
  */
 package br.ufrn.dimap.dataAccess;
 
+import br.ufrn.dimap.utils.Parameter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -125,6 +127,32 @@ public abstract class SqlDAO implements DatabaseAccessObject{
      */
     public Collection<? extends Object> search(Object obj, Connection conn) {
         return new ArrayList<Object>();
+    }
+    
+    
+    public Collection<? extends Object> search(Parameter param) {
+        return this.listAll(createFilteredSearch(param));
+    }
+    public Collection<? extends Object> search(Parameter param, Connection conn) {
+        return this.listAll(createFilteredSearch(param), conn);
+    }
+    
+    /*  select ...
+        where param.key = param.value*/
+    private String createFilteredSearch(Parameter param) {
+        StringBuilder builder = new StringBuilder(this.createSelectCmd());
+        builder.append(" where ");
+        builder.append(param.getKey());
+        builder.append(" = ");
+        if(!(param.getValue() instanceof String) && ! (param.getValue() instanceof Date)){
+            builder.append(param.getValue().toString());
+        }
+        else{
+            builder.append(" '");
+            builder.append(param.getValue().toString());
+            builder.append("' ");
+        }
+        return builder.toString();
     }
     
 }

@@ -4,6 +4,9 @@
  */
 package br.ufrn.dimap.gui.telas;
 
+import br.ufrn.dimap.gui.NavigationEvent;
+import br.ufrn.dimap.gui.controladores.TurmaCRUD;
+
 /**
  *
  * @author leobrizolara
@@ -27,8 +30,9 @@ public class TelaHome extends Tela{
         btnDocentes = new javax.swing.JButton();
         btnTurmas = new javax.swing.JButton();
         btnBancasExaminadoras = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
-        jPanel1.setLayout(new java.awt.GridLayout(0, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
         btnAlunos.setText("Alunos");
         btnAlunos.addActionListener(new java.awt.event.ActionListener() {
@@ -62,21 +66,29 @@ public class TelaHome extends Tela{
         });
         jPanel1.add(btnBancasExaminadoras);
 
+        jButton1.setText("Gerenciar Turmas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -96,11 +108,18 @@ public class TelaHome extends Tela{
         this.fireNavigate("TelaVisualizarBancasExaminadoras");
     }//GEN-LAST:event_btnBancasExaminadorasActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        NavigationEvent naviEvent = new NavigationEvent(this, "TelaGerenciar");
+        naviEvent.addArg("Controle", new TurmaCRUD());
+        this.fireNavigate(naviEvent);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlunos;
     private javax.swing.JButton btnBancasExaminadoras;
     private javax.swing.JButton btnDocentes;
     private javax.swing.JButton btnTurmas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

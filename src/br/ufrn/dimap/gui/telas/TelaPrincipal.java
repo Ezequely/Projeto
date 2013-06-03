@@ -14,6 +14,7 @@ import br.ufrn.dimap.entidades.BancaExaminadora;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Turma;
+import br.ufrn.dimap.gui.controladores.ControleCRUD;
 import java.util.Collection;
 
 public class TelaPrincipal extends Tela implements Navigable{
@@ -35,6 +36,15 @@ public class TelaPrincipal extends Tela implements Navigable{
         
         System.out.println("Navegar para: " + dest);
         
+        
+        if(dest.equals("TelaGerenciar")){
+            ControleCRUD controlador = (ControleCRUD) event.getArg("Controle");
+            
+            controlador.setDataController(this.dbController);
+            controlador.show(this);
+            
+            return;
+        }
         
         Tela tela = null;
         if(dest.equals("TelaHome")){
@@ -229,5 +239,6 @@ public class TelaPrincipal extends Tela implements Navigable{
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
 
 }

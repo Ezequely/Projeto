@@ -98,7 +98,7 @@ public class TurmaDAO extends SqlDAO{
     protected String createSelectCmd(){
         StringBuilder builder = new StringBuilder();
         builder.append("select * from ");
-        builder.append(" TURMA t");
+        builder.append(" TURMA t ");
         builder.append(" join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina");
         builder.append(" natural join LINHADEPESQUISA");
         

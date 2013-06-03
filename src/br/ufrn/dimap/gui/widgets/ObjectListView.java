@@ -77,8 +77,8 @@ public class ObjectListView extends JList<Object> implements ActionListener{
             listModel.addElement(o);
         }
     }
-    public Iterator<Object> getCollection(){
-        return (Iterator<Object>) collection;
+    public Collection<? extends Object> getCollection(){
+        return collection;
     }
     public boolean addElement(Object obj){
         if(this.collection.contains(obj) == false){

@@ -7,6 +7,7 @@ package br.ufrn.dimap.dataAccess;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.entidades.Vinculo;
+import br.ufrn.dimap.utils.Parameter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,7 +92,5 @@ public class DocenteDAO extends SqlDAO{
         docente.setTitulacao(rs.getString("Titulacao"));
         
         return docente;
-    }
-
-    
+    }    
 }

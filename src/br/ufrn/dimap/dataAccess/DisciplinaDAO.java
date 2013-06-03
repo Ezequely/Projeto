@@ -19,16 +19,15 @@ public class DisciplinaDAO extends SqlDAO{
         super(dbController);
     }
     
-    /*select * from TURMA t 
-	join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina
-	join LINHADEPESQUISA lp on lp.CodigoLinhaDePesquisa = d.CodigoLinhaDePesquisa;*/
+    /*select * from 
+	DISCIPLINA
+	natural join LINHADEPESQUISA;*/
     @Override
     protected String createSelectCmd() {
         StringBuilder builder = new StringBuilder();
         builder.append("select * from ");
-        builder.append("TURMA t");
-        builder.append("join DISCIPLINA d on t.CodigoDisciplina = d.CodigoDisciplina ");
-        builder.append("join LINHADEPESQUISA lp on lp.CodigoLinhaDePesquisa = d.CodigoLinhaDePesquisa");
+        builder.append(" DISCIPLINA d ");
+        builder.append(" natural join LINHADEPESQUISA ");
         
         String cmd = builder.toString();
         
