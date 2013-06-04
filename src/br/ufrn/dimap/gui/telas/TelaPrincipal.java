@@ -33,6 +33,7 @@ public class TelaPrincipal extends Tela implements Navigable{
         stackRefazer = new Stack<NavigationEvent>();
         dbController = controller;
         
+        this.btnUndo.setEnabled(false);
         this.navigate(new NavigationEvent(this,"TelaHome"));
     }
     

@@ -84,7 +84,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtLogin">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;Login&gt;"/>
+            <Property name="text" type="java.lang.String" value="Smith"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblPassword">
@@ -102,7 +102,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPassword">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+            <Property name="text" type="java.lang.String" value="12345"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -61,7 +61,7 @@ public class TelaLogin extends Tela {
 
         lblLogin.setText("Login:");
 
-        txtLogin.setText("<Login>");
+        txtLogin.setText("Smith");
 
         lblPassword.setText("Password:");
 
@@ -72,7 +72,7 @@ public class TelaLogin extends Tela {
             }
         });
 
-        txtPassword.setText("jPasswordField1");
+        txtPassword.setText("12345");
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);

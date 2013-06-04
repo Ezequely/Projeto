@@ -27,8 +27,8 @@ public class AppRoot extends javax.swing.JFrame implements Navigable{
         }
         
         initComponents();
-        //this.navigate(new NavigationEvent(this, "TelaLogin"));
-        this.navigate(new NavigationEvent(this, "TelaPrincipal"));
+        this.navigate(new NavigationEvent(this, "TelaLogin"));
+        //this.navigate(new NavigationEvent(this, "TelaPrincipal"));
     }
 
     public void navigate(NavigationEvent event) {
