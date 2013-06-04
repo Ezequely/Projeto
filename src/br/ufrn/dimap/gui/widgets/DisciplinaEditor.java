@@ -113,7 +113,7 @@ public class DisciplinaEditor extends javax.swing.JPanel implements ObjectViewer
             ++index;
         }
         if(indexLinhaDePesquisa >= 0){
-            cmbLinhaDePesquisa.setSelectedItem(indexLinhaDePesquisa);
+            cmbLinhaDePesquisa.setSelectedIndex(indexLinhaDePesquisa);
         }
         else{
             //Adiciona e seleciona
@@ -124,15 +124,28 @@ public class DisciplinaEditor extends javax.swing.JPanel implements ObjectViewer
     private void setStatus(String status) {
         int index = 0;
         int indexStatus = -1;
+        
+        System.out.print(this.getClass());
+        System.out.print(".setStatus: ");
+        System.out.println(status);
+        
         //evitar item duplicado
         while(index < cmbStatusDisciplina.getItemCount() && indexStatus < 0){
-            if(cmbStatusDisciplina.getItemAt(index).equals(status)){
+            if(cmbStatusDisciplina.getItemAt(index) != null
+                    && cmbStatusDisciplina.getItemAt(index).toString().equals(status)){
                 indexStatus = index;
             }
             ++index;
         }
+        
+        
+        System.out.print("indexStatus: ");
+        System.out.println(indexStatus);
+        
         if(indexStatus >= 0){
-            cmbStatusDisciplina.setSelectedItem(indexStatus);
+            cmbStatusDisciplina.setSelectedIndex(indexStatus);
+            this.revalidate();
+            this.repaint();
         }
         else{
             //Adiciona e seleciona

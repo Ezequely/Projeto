@@ -71,6 +71,7 @@ public class TurmaEditor extends Tela implements ObjectViewer{
     public void setDisciplinasDisponiveis(Collection<Disciplina> disciplinasDisponiveis) {
         this.disciplinasDisponiveis = disciplinasDisponiveis;
         cmbDisciplinas.setModel(new DefaultComboBoxModel(disciplinasDisponiveis.toArray()));
+        
         cmbDisciplinas.revalidate();
         cmbDisciplinas.repaint();
         
@@ -137,7 +138,7 @@ public class TurmaEditor extends Tela implements ObjectViewer{
             ++index;
         }
         if(indexDisciplina >= 0){
-            cmbDisciplinas.setSelectedItem(indexDisciplina);
+            cmbDisciplinas.setSelectedIndex(indexDisciplina);
         }
         else{
             //Adiciona e seleciona disciplina
@@ -154,6 +155,8 @@ public class TurmaEditor extends Tela implements ObjectViewer{
     public Class getObjectClass() {
         return Turma.class;
     }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

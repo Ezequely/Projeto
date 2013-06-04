@@ -71,14 +71,12 @@ public abstract class SqlDAO implements DatabaseAccessObject{
      */
     protected String createInsertCmd(Object obj) {
         StringBuilder cmd = new StringBuilder();
-        if(obj instanceof Turma){
-            cmd.append("insert into ");
-            cmd.append(getTableName());
-            cmd.append(" ");
-            cmd.append(getColumns());
-            cmd.append(" values ");
-            cmd.append(getValues(obj));
-        }
+        cmd.append("insert into ");
+        cmd.append(getTableName());
+        cmd.append(" ");
+        cmd.append(getColumns());
+        cmd.append(" values ");
+        cmd.append(getValues(obj));
         return cmd.toString();
     }
 
