@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,16 +26,7 @@ public class TurmaDAO extends SqlDAO{
         super(dbControl);
     }
     
-    public void update(Object obj) {
-        //this.connection.
-    }
-
-    public void insert(Object obj) {
-    }
-
-    public void remove(Object obj) {
-    }
-    
+    ////SELECIONAR
     
     @Override
     public Collection<? extends Object> listAll(){
@@ -129,4 +123,144 @@ public class TurmaDAO extends SqlDAO{
     }
 
     
+
+    
+    
+
+//    @Override
+//    /**insert into TURMA 
+//     * (NumeroTurma, PeriodoLetivo, CodigoDisciplina, Status, CodHorarioDeAula,LocalDeAula) 
+//     * values 
+//     *   (...);
+//     */
+//    protected String createInsertCmd(Object obj) {
+//        StringBuilder cmd = new StringBuilder();
+//        if(obj instanceof Turma){
+//            cmd.append("insert into TURMA ");
+//            cmd.append(getColumns());
+//            cmd.append(" values ");
+//            cmd.append(getValues((Turma)obj));
+//        }
+//        return cmd.toString();
+//    }
+//
+//    @Override
+//    /**delete from TURMA where CodigoTurma = ?;*/
+//    protected String createDeleteCmd(Object obj) {
+//        StringBuilder cmd = new StringBuilder();
+//        if(obj instanceof Turma){
+//            Turma t = (Turma)obj;
+//            cmd.append("delete from TURMA where CodigoTurma = ");
+//            cmd.append(getIntegerValue(t.getCodigoTurma()));
+//        }
+//        return cmd.toString();
+//    }
+//
+//    @Override
+//    /** update TURMA set 
+//		NumeroTurma = ?, 
+//		PeriodoLetivo = ?, 
+//		CodigoDisciplina = ?, 
+//		Status = 'Consolidada',
+//		CodHorarioDeAula = ?,
+//		LocalDeAula = ?
+//        where TURMA.CodigoTurma=?; */
+//    protected String createUpdateCmd(Object obj) {
+//        StringBuilder cmd = new StringBuilder();
+//        if(obj instanceof Turma){
+//            cmd.append("update TURMA set ");
+//            cmd.append(getColumnsValues((Turma)obj));
+//            cmd.append(" where TURMA.CodigoTurma = ");
+//            cmd.append(getIntegerValue(((Turma)obj).getCodigoTurma()));
+//        }
+//        return cmd.toString();
+//    }
+
+    @Override
+    protected String getTableName() {
+        return "TURMA";
+    }
+
+    @Override
+    protected String getCondicaoDeAtualizacao(Object obj) {
+            return " TURMA.CodigoTurma = "
+                    + getIntegerValue(((Turma)obj).getCodigoTurma());
+    }
+
+    /**
+        NumeroTurma = ?, 
+        PeriodoLetivo = ?, 
+        CodigoDisciplina = ?, 
+        Status = 'Consolidada',
+        CodHorarioDeAula = ?,
+        LocalDeAula = ? */
+    protected String getColumnsValues(Object object) {
+        Turma turma = (Turma)object;
+        StringBuilder columnsValues = new StringBuilder();
+        
+        columnsValues.append(" NumeroTurma = ");
+        columnsValues.append(getIntegerValue(turma.getNumeroTurma()));
+        columnsValues.append(", PeriodoLetivo = ");
+        columnsValues.append(getStringValue(turma.getPeriodoLetivo()));
+        
+        columnsValues.append(", CodigoDisciplina = ");
+        if(turma.getDisciplina() != null){
+            columnsValues.append(getStringValue(turma.getDisciplina().getCodigoDisciplina()));
+        }
+        else{//TODO: disciplina permite valor NULL? gerar exceção?
+            columnsValues.append(getNullValue());            
+        }
+        
+        columnsValues.append(", Status = ");
+        columnsValues.append(getStringValue(turma.getStatus()));
+        columnsValues.append(", CodHorarioDeAula = ");
+        columnsValues.append(getStringValue(turma.getCodHorarioDeAula()));
+        columnsValues.append(", LocalDeAula = ");
+        columnsValues.append(getStringValue(turma.getLocalDeAula()));
+        
+        return columnsValues.toString();
+    }
+    public String getColumns(){
+        StringBuilder columns = new StringBuilder();
+        
+        columns.append(" (");
+        //columns.append("CodigoTurma");
+        columns.append("NumeroTurma");
+        columns.append(", PeriodoLetivo");
+        columns.append(", CodigoDisciplina");
+        columns.append(", Status");
+        columns.append(", CodHorarioDeAula");
+        columns.append(", LocalDeAula");
+        columns.append(") ");
+        
+        return columns.toString();
+    }
+    @Override
+    protected String getValues(Object object){
+        Turma turma = (Turma)object;
+        
+        StringBuilder values = new StringBuilder();
+        values.append("(");
+        //values.append(getIntegerValue(t.getCodigoTurma())); -- codigo turma é gerado automaticamente
+        values.append(getIntegerValue(turma.getNumeroTurma()));
+        values.append(", ");
+        
+        values.append(getStringValue(turma.getPeriodoLetivo()));
+        values.append(", ");
+        if(turma.getDisciplina() != null){
+            values.append(getStringValue(turma.getDisciplina().getCodigoDisciplina()));
+        }
+        else{//TODO: disciplina permite valor NULL? gerar exceção?
+            values.append(getNullValue());            
+        }
+        values.append(", ");
+        values.append(getStringValue(turma.getStatus()));
+        values.append(", ");
+        values.append(getStringValue(turma.getCodHorarioDeAula()));
+        values.append(", ");
+        values.append(getStringValue(turma.getLocalDeAula()));
+        values.append(")");
+        
+        return values.toString();
+    }
 }

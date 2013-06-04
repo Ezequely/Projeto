@@ -15,7 +15,7 @@ import br.ufrn.dimap.gui.telas.Formulario;
 import br.ufrn.dimap.gui.telas.TelaGerenciar;
 import br.ufrn.dimap.gui.widgets.TurmaEditor;
 import br.ufrn.dimap.gui.widgets.TurmaViewer;
-import br.ufrn.dimap.utils.Parameter;
+import br.ufrn.dimap.dataAccess.Parameter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -45,7 +45,8 @@ public class TurmaCRUD extends ControleCRUD{
         
         TelaGerenciar tela = new TelaGerenciar();
         tela.setElementViewer(new TurmaViewer());
-        tela.setCollection(turmaDAO.listAll());
+        tela.setCollection(listItems());
+        //tela.setCollection(turmaDAO.listAll());
         
         return tela;
     }
@@ -102,6 +103,11 @@ public class TurmaCRUD extends ControleCRUD{
     private Collection<Disciplina> listDisciplinasDisponiveis() {
         DisciplinaDAO disciplinaDAO = new DisciplinaDAO(dataController);
         return (Collection<Disciplina>) disciplinaDAO.search(new Parameter("Status", "Ativa"));
+    }
+
+    @Override
+    protected Collection<? extends Object> listItems() {
+        return turmaDAO.listAll();
     }
     
 }

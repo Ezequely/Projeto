@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public interface DatabaseController {
 
-    public Connection CreateConnection(); 
+    public Connection createConnection(); 
     public void beginTransaction(Connection conn) throws SQLException;
     public void commit(Connection conn) throws Exception;
     public void cancelTransaction(Connection conn)throws Exception;

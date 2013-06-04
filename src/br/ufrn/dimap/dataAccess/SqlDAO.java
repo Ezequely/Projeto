@@ -4,7 +4,7 @@
  */
 package br.ufrn.dimap.dataAccess;
 
-import br.ufrn.dimap.utils.Parameter;
+import br.ufrn.dimap.entidades.Turma;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,16 +29,123 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         dataController = dbControl;
     }
     
+    
+
+    //MÉTODOS abstratos
+    
+    /** @return um comando sql para realizar uma seleção*/
+    protected abstract String createSelectCmd();
+
+    /** Lê uma linha de um ResultSet e retorna um objeto com a representação dos dados lidos.
+     *  Encapsula os dados de um registro do banco em um objeto.
+     */
+    protected abstract Object read(ResultSet rs) throws SQLException;
+    
+    
+    
+    protected abstract String getTableName();
+
+    protected abstract String getColumns();
+
+    protected abstract String getValues(Object obj);
+
+    protected abstract String getCondicaoDeAtualizacao(Object obj);
+
+    protected abstract String getColumnsValues(Object object);
+    
+    ///ATUALIZAR
     public void update(Object obj) {
-        //this.connection.
+        executeUpdate(createUpdateCmd(obj));
     }
 
+    ///INSERIR
     public void insert(Object obj) {
+        executeUpdate(createInsertCmd(obj));
     }
-
+    ///REMOVER
     public void remove(Object obj) {
+        executeUpdate(createDeleteCmd(obj));
+    }
+    
+    /**insert into <table>  (<columns>) values  (<values>);
+     */
+    protected String createInsertCmd(Object obj) {
+        StringBuilder cmd = new StringBuilder();
+        if(obj instanceof Turma){
+            cmd.append("insert into ");
+            cmd.append(getTableName());
+            cmd.append(" ");
+            cmd.append(getColumns());
+            cmd.append(" values ");
+            cmd.append(getValues(obj));
+        }
+        return cmd.toString();
     }
 
+    /**delete from <table> where <condicao de exclusao>;*/
+    protected String createDeleteCmd(Object obj) {
+        StringBuilder cmd = new StringBuilder();
+        cmd.append("delete from ");
+        cmd.append(getTableName());
+        cmd.append(" where ");
+        cmd.append(getCondicaoDeAtualizacao(obj));
+        
+        return cmd.toString();
+    }
+
+    /** update <table> set <columnsValues> where <condicaoDeAtualizacao>; */
+    protected String createUpdateCmd(Object obj) {
+        StringBuilder cmd = new StringBuilder();
+        cmd.append("update ");
+        cmd.append(getTableName());
+        cmd.append(" set ");
+        cmd.append(getColumnsValues(obj));
+        cmd.append(" where ");
+        cmd.append(getCondicaoDeAtualizacao(obj));
+        
+        return cmd.toString();
+    }
+    
+    protected void executeUpdate(String updateCmd){  
+        //Cria conexão
+        Connection connection = this.dataController.createConnection();
+        
+        try {
+            //Inicializa transação
+            dataController.beginTransaction(connection);
+            
+            //Realiza inserção
+            this.executeUpdate(updateCmd, connection);
+            
+            //Commit
+            dataController.commit(connection);
+            //Se conexão ainda estiver aberta, fecha
+            if(connection.isClosed() == false){
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    protected void executeUpdate(String cmd, Connection connection){
+        System.out.println(cmd);//DEBUG
+        
+        try {
+            Statement sqlStatement = connection.createStatement();
+            
+            sqlStatement.executeUpdate(cmd);
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        } 
+        
+    }
+    
+    
     public Collection<? extends Object> listAll() {
         return this.listAll(this.createSelectCmd());
     }
@@ -49,7 +156,7 @@ public abstract class SqlDAO implements DatabaseAccessObject{
      */
     protected final Collection<? extends Object> listAll(String selectCmd){  
         //Cria conexão
-        Connection connection = this.dataController.CreateConnection();
+        Connection connection = this.dataController.createConnection();
         
         try {
             //Inicializa transação
@@ -97,14 +204,10 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         return null;
         
     }
-    
-    protected abstract String createSelectCmd();
-
-    protected abstract Object read(ResultSet rs) throws SQLException;
 
     /**Para Override utilize search(Object obj, Connection conn) e não este*/
     public final Collection<? extends Object> search(Object obj) {
-        Connection conn = dataController.CreateConnection();
+        Connection conn = dataController.createConnection();
         try {
             dataController.beginTransaction(conn);
         
@@ -154,5 +257,27 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         }
         return builder.toString();
     }
+    
+    ///AUXILIARES
+    protected String getStringValue(String value){
+        if(value != null){
+            return "'" + value + "'";
+        }
+        else{
+            return getNullValue();
+        }
+    }
+    protected String getIntegerValue(Integer value){
+        if(value != null){
+            return Integer.toString(value);
+        }
+        else{
+            return getNullValue();
+        }
+    }
+    protected String getNullValue(){
+        return "NULL";
+    }
+
     
 }

@@ -7,7 +7,6 @@ package br.ufrn.dimap.dataAccess;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.entidades.Vinculo;
-import br.ufrn.dimap.utils.Parameter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -93,4 +92,32 @@ public class DocenteDAO extends SqlDAO{
         
         return docente;
     }    
+
+    
+    @Override
+    protected String getTableName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getColumns() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getValues(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getCondicaoDeAtualizacao(Object obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getColumnsValues(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

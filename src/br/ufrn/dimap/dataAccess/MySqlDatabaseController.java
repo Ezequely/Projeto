@@ -41,7 +41,7 @@ public class MySqlDatabaseController implements DatabaseController{
      * @throws SQLException
      */
     @Override
-    public Connection CreateConnection(){
+    public Connection createConnection(){
         try{
             return DriverManager.getConnection(url, this.login, this.password); 
         }

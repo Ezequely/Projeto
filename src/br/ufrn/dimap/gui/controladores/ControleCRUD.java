@@ -92,7 +92,10 @@ public abstract class ControleCRUD implements Navigable, ActionListener{
                 if(formState == FormState.CREATING){
                     Object novo = form.getObject();
                     inserir(novo);
-                    tela.addItem(novo);
+                    
+                    //Atualizar items da tela
+                    tela.setCollection(listItems());
+                    //tela.addItem(novo);
                 }
                 else if(formState == FormState.UPDATING){
                     salvar(form.getObject());
@@ -109,5 +112,6 @@ public abstract class ControleCRUD implements Navigable, ActionListener{
     protected abstract void inserir(Object obj);
     protected abstract void salvar(Object obj);
     protected abstract void excluir(Object obj);
+    protected abstract Collection<? extends Object> listItems();
     
 }
