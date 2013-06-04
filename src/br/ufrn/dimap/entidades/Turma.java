@@ -13,6 +13,7 @@ public class Turma {
     private Collection<Docente> docentes;//docentes que ministraram a turma
 
     public Turma(){
+        numeroTurma = 1; //padrão do número da turma é 1
     }
     public Turma(int codigoTurma, int numeroTurma, Disciplina disc) {
         this.codigoTurma = codigoTurma;

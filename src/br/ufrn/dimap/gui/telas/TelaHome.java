@@ -5,6 +5,7 @@
 package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.gui.NavigationEvent;
+import br.ufrn.dimap.gui.controladores.DisciplinaCRUD;
 import br.ufrn.dimap.gui.controladores.TurmaCRUD;
 
 /**
@@ -30,7 +31,8 @@ public class TelaHome extends Tela{
         btnDocentes = new javax.swing.JButton();
         btnTurmas = new javax.swing.JButton();
         btnBancasExaminadoras = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnGerenciarTurmas = new javax.swing.JButton();
+        btnGerenciarDisciplinas = new javax.swing.JButton();
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -66,13 +68,21 @@ public class TelaHome extends Tela{
         });
         jPanel1.add(btnBancasExaminadoras);
 
-        jButton1.setText("Gerenciar Turmas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGerenciarTurmas.setText("Gerenciar Turmas");
+        btnGerenciarTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGerenciarTurmasActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
+        jPanel1.add(btnGerenciarTurmas);
+
+        btnGerenciarDisciplinas.setText("Gerenciar Disciplinas");
+        btnGerenciarDisciplinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerenciarDisciplinasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGerenciarDisciplinas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,18 +118,25 @@ public class TelaHome extends Tela{
         this.fireNavigate("TelaVisualizarBancasExaminadoras");
     }//GEN-LAST:event_btnBancasExaminadorasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGerenciarTurmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarTurmasActionPerformed
         NavigationEvent naviEvent = new NavigationEvent(this, "TelaGerenciar");
         naviEvent.addArg("Controle", new TurmaCRUD());
         this.fireNavigate(naviEvent);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGerenciarTurmasActionPerformed
+
+    private void btnGerenciarDisciplinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciarDisciplinasActionPerformed
+        NavigationEvent naviEvent = new NavigationEvent(this, "TelaGerenciar");
+        naviEvent.addArg("Controle", new DisciplinaCRUD());
+        this.fireNavigate(naviEvent);
+    }//GEN-LAST:event_btnGerenciarDisciplinasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlunos;
     private javax.swing.JButton btnBancasExaminadoras;
     private javax.swing.JButton btnDocentes;
+    private javax.swing.JButton btnGerenciarDisciplinas;
+    private javax.swing.JButton btnGerenciarTurmas;
     private javax.swing.JButton btnTurmas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

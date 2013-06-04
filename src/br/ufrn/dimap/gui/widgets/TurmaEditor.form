@@ -11,7 +11,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-101,0,0,1,-21"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-68,0,0,1,-21"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -66,7 +66,7 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblTurmaNumLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblPeriodoValor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblPeriodoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblHorarioLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblLocalDeAulaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblStatusLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -77,12 +77,16 @@
                                       <Component id="txtPeriodo" max="32767" attributes="0"/>
                                       <Component id="txtHorario" alignment="0" max="32767" attributes="0"/>
                                       <Component id="txtLocalDeAula" max="32767" attributes="0"/>
-                                      <Component id="cmbStatus" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cmbStatus" alignment="0" pref="284" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="lblDisciplinaValor" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                                  <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lblDisciplinaLabel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                   <Component id="cmbDisciplinas" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -94,13 +98,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblDisciplinaValor" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cmbDisciplinas" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDisciplinaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblPeriodoValor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblPeriodoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtPeriodo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -129,24 +135,34 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="lblDisciplinaValor">
+                <Component class="javax.swing.JLabel" name="lblTitulo">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
                       <FontInfo relative="true">
-                        <Font component="lblDisciplinaValor" property="font" relativeSize="true" size="4"/>
+                        <Font component="lblTitulo" property="font" relativeSize="true" size="4"/>
+                      </FontInfo>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Turma:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblDisciplinaLabel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                      <FontInfo relative="true">
+                        <Font component="lblDisciplinaLabel" property="font" relativeSize="true" size="2"/>
                       </FontInfo>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Disciplina:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblPeriodoValor">
+                <Component class="javax.swing.JLabel" name="lblPeriodoLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
                       <FontInfo relative="true">
-                        <Font component="lblPeriodoValor" property="font" relativeSize="true" size="2"/>
+                        <Font component="lblPeriodoLabel" property="font" relativeSize="true" size="2"/>
                       </FontInfo>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Per&#xed;odo"/>
+                    <Property name="text" type="java.lang.String" value="Per&#xed;odo:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTurmaNumLabel">

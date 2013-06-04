@@ -48,7 +48,7 @@ public class LinhaDePesquisa {
 
     @Override
     public String toString() {
-        return codigo;
+        return codigo + " - " + this.tema;
     }
     
 }

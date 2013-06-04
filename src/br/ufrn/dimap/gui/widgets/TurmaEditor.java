@@ -85,10 +85,6 @@ public class TurmaEditor extends Tela implements ObjectViewer{
     public void setDocentesDisponiveis(Collection<Docente> docentesDisponiveis) {
         this.docentesDisponiveis = docentesDisponiveis;
         this.seletorDeDocentes.setItems(docentesDisponiveis);
-        
-        
-        System.out.println(this.toString() + ".setDocentesDisponiveis: ");
-        System.out.println(seletorDeDocentes.getUnselectedItems().size());
     }
 
     
@@ -171,8 +167,9 @@ public class TurmaEditor extends Tela implements ObjectViewer{
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlGlobal = new javax.swing.JPanel();
         pnlDadosTurma = new javax.swing.JPanel();
-        lblDisciplinaValor = new javax.swing.JLabel();
-        lblPeriodoValor = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        lblDisciplinaLabel = new javax.swing.JLabel();
+        lblPeriodoLabel = new javax.swing.JLabel();
         lblTurmaNumLabel = new javax.swing.JLabel();
         lblHorarioLabel = new javax.swing.JLabel();
         lblLocalDeAulaLabel = new javax.swing.JLabel();
@@ -189,11 +186,14 @@ public class TurmaEditor extends Tela implements ObjectViewer{
 
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        lblDisciplinaValor.setFont(lblDisciplinaValor.getFont().deriveFont(lblDisciplinaValor.getFont().getSize()+4f));
-        lblDisciplinaValor.setText("Disciplina:");
+        lblTitulo.setFont(lblTitulo.getFont().deriveFont(lblTitulo.getFont().getSize()+4f));
+        lblTitulo.setText("Turma:");
 
-        lblPeriodoValor.setFont(lblPeriodoValor.getFont().deriveFont(lblPeriodoValor.getFont().getSize()+2f));
-        lblPeriodoValor.setText("Período");
+        lblDisciplinaLabel.setFont(lblDisciplinaLabel.getFont().deriveFont(lblDisciplinaLabel.getFont().getSize()+2f));
+        lblDisciplinaLabel.setText("Disciplina:");
+
+        lblPeriodoLabel.setFont(lblPeriodoLabel.getFont().deriveFont(lblPeriodoLabel.getFont().getSize()+2f));
+        lblPeriodoLabel.setText("Período:");
 
         lblTurmaNumLabel.setText("Número da Turma:");
 
@@ -213,7 +213,7 @@ public class TurmaEditor extends Tela implements ObjectViewer{
                     .addGroup(pnlDadosTurmaLayout.createSequentialGroup()
                         .addGroup(pnlDadosTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTurmaNumLabel)
-                            .addComponent(lblPeriodoValor)
+                            .addComponent(lblPeriodoLabel)
                             .addComponent(lblHorarioLabel)
                             .addComponent(lblLocalDeAulaLabel)
                             .addComponent(lblStatusLabel))
@@ -223,10 +223,13 @@ public class TurmaEditor extends Tela implements ObjectViewer{
                             .addComponent(txtPeriodo)
                             .addComponent(txtHorario)
                             .addComponent(txtLocalDeAula)
-                            .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cmbStatus, 0, 284, Short.MAX_VALUE)))
                     .addGroup(pnlDadosTurmaLayout.createSequentialGroup()
-                        .addComponent(lblDisciplinaValor)
-                        .addGap(55, 55, 55)
+                        .addComponent(lblTitulo)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlDadosTurmaLayout.createSequentialGroup()
+                        .addComponent(lblDisciplinaLabel)
+                        .addGap(66, 66, 66)
                         .addComponent(cmbDisciplinas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -234,12 +237,14 @@ public class TurmaEditor extends Tela implements ObjectViewer{
             pnlDadosTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDadosTurmaLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lblTitulo)
+                .addGap(10, 10, 10)
                 .addGroup(pnlDadosTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDisciplinaValor)
-                    .addComponent(cmbDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDisciplinaLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDadosTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPeriodoValor)
+                    .addComponent(lblPeriodoLabel)
                     .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDadosTurmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -288,11 +293,12 @@ public class TurmaEditor extends Tela implements ObjectViewer{
     private javax.swing.JComboBox cmbDisciplinas;
     private javax.swing.JComboBox cmbStatus;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDisciplinaValor;
+    private javax.swing.JLabel lblDisciplinaLabel;
     private javax.swing.JLabel lblHorarioLabel;
     private javax.swing.JLabel lblLocalDeAulaLabel;
-    private javax.swing.JLabel lblPeriodoValor;
+    private javax.swing.JLabel lblPeriodoLabel;
     private javax.swing.JLabel lblStatusLabel;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTurmaNumLabel;
     private javax.swing.JPanel pnlDadosTurma;
     private javax.swing.JPanel pnlGlobal;

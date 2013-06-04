@@ -5,6 +5,8 @@
 package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Agrupamento;
+import br.ufrn.dimap.gui.ItemSelectionEvent;
+import br.ufrn.dimap.gui.ItemSelectionListener;
 import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.gui.ObjectViewer;
 import java.util.Collection;
@@ -14,11 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author leobrizolara
  */
-public class TelaGerenciar extends Tela {
+public class TelaGerenciar extends Tela implements ItemSelectionListener{
     private Collection<? extends Object> collection;
     
     public TelaGerenciar() {
         initComponents();
+        
+        this.objectListView1.addItemSelectionListener(this);
     }
     
     public Collection<? extends Object> getCollection() {
@@ -68,6 +72,14 @@ public class TelaGerenciar extends Tela {
         }
     }
 
+    @Override
+    public void itemSelected(ItemSelectionEvent event) {
+        if(event.getSelectedItem() != null && event.getSource() == this.objectListView1){
+            //TODO: garantir q este é o item selecionado
+            
+            this.editar();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,4 +162,5 @@ public class TelaGerenciar extends Tela {
     private javax.swing.JToolBar jToolBar1;
     private br.ufrn.dimap.gui.widgets.ObjectListView objectListView1;
     // End of variables declaration//GEN-END:variables
+
 }

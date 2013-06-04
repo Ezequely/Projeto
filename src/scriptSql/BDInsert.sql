@@ -1,4 +1,4 @@
-use dbPosGraduacao;
+Tuse dbPosGraduacao;
 
 -- DELETE ALL
 

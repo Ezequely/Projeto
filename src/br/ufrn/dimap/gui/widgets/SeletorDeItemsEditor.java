@@ -125,14 +125,38 @@ public class SeletorDeItemsEditor extends javax.swing.JPanel {
             System.out.print("Desselecionados: ");
             System.out.println(itemsDesselecionados.size());
             
-            Object selected = JOptionPane.showInputDialog(
+            Object items[] = itemsDesselecionados.toArray();
+            String names[] = new String[items.length];
+            for(int i = 0; i < items.length; ++i){
+                names[i] = items[i].toString();
+            }
+            //TODO: GAMBIARRA! Problema com seleção na combobox
+            
+            Object selectedName = JOptionPane.showInputDialog(
                     this, 
                     "Escolha um item: ", 
                     "", 
                     JOptionPane.PLAIN_MESSAGE, 
                     null, 
-                    itemsDesselecionados.toArray(), 
-                    itemsDesselecionados.toArray()[0]);
+                    names, 
+                    (names.length > 0 ? names[0] : null));
+            
+            Object selected = null;
+            for(int i = 0; i < items.length; ++i){
+                if(items[i].toString().equals(selectedName)){
+                    selected = items[i];
+                    break;
+                }
+            }
+            
+//            Object selected = JOptionPane.showInputDialog(
+//                    this, 
+//                    "Escolha um item: ", 
+//                    "", 
+//                    JOptionPane.PLAIN_MESSAGE, 
+//                    null, 
+//                    items, 
+//                    (items.length > 0 ? items[0] : null));
 
             if(selected != null){
                 lstSelecionados.addElement(selected);

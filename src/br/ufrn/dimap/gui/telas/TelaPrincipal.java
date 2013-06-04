@@ -16,38 +16,46 @@ import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.controladores.ControleCRUD;
 import java.util.Collection;
+import java.util.Stack;
 
 public class TelaPrincipal extends Tela implements Navigable{
     private Tela telaAtual;
     private DatabaseController dbController;
+    private Stack<NavigationEvent> stackDesfazer;
+    private Stack<NavigationEvent> stackRefazer;
     
     public TelaPrincipal() {
-        initComponents();
+        this(null);
     }
     public TelaPrincipal(DatabaseController controller) {
         initComponents();
+        stackDesfazer = new Stack<NavigationEvent>();
+        stackRefazer = new Stack<NavigationEvent>();
         dbController = controller;
         
         this.navigate(new NavigationEvent(this,"TelaHome"));
     }
     
     public void navigate(NavigationEvent event) {
+        if(this.naviTo(event)){            
+            this.stackDesfazer.add(event);
+            if(stackDesfazer.size() > 1){
+                this.btnUndo.setEnabled(true);
+            }
+        }
+        System.out.println("Navegou para: " + event.getDestination());
+    }
+    
+    protected boolean naviTo(NavigationEvent event){
+        System.out.println("Navegar para: " + event.getDestination());
         String dest = event.getDestination();
         
-        System.out.println("Navegar para: " + dest);
-        
-        
-        if(dest.equals("TelaGerenciar")){
-            ControleCRUD controlador = (ControleCRUD) event.getArg("Controle");
-            
-            controlador.setDataController(this.dbController);
-            controlador.show(this);
-            
-            return;
-        }
-        
         Tela tela = null;
-        if(dest.equals("TelaHome")){
+        if(dest.equals("TelaGerenciar")){
+            this.mudarTela((ControleCRUD)event.getArg("Controle"));
+            return true;
+        }
+        else if(dest.equals("TelaHome")){
             tela = navegarTelaHome(event);
         }
         else if(dest.equals("TelaVisualizarAlunos")){
@@ -76,12 +84,14 @@ public class TelaPrincipal extends Tela implements Navigable{
         }
         else{
             System.err.println("Destino: " + event.getDestination() + " não encontrado!");
-            return;
+            return false;
         }
         
-        if(tela != null){   
+        if(tela != null){               
             this.mudarTela(tela);
-        }
+            return true;
+        }        
+        return false;
     }
    
     private Tela navegarTelaHome(NavigationEvent event) {
@@ -214,14 +224,23 @@ public class TelaPrincipal extends Tela implements Navigable{
             tela.setNavigableParent(this);
             telaAtual = tela;
                         
-            this.removeAll();
-            this.add(telaAtual);
+            this.pnlTela.removeAll();
+            this.pnlTela.add(telaAtual);
             this.revalidate();
             this.repaint();
         }
     }
     
-    
+    /**Retorna para a tela na ultima navegação*/
+    private void undo() {
+        if(this.stackDesfazer.size() > 1){
+            stackRefazer.add(stackDesfazer.pop());
+            this.naviTo(stackDesfazer.peek());
+            if(this.stackDesfazer.size() == 1){//so tem o atual
+                this.btnUndo.setEnabled(false);
+            }
+        }
+    }
     
     
     
@@ -235,10 +254,44 @@ public class TelaPrincipal extends Tela implements Navigable{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
+        btnUndo = new javax.swing.JButton();
+        pnlTela = new javax.swing.JPanel();
+
         setLayout(new java.awt.BorderLayout());
+
+        jToolBar1.setRollover(true);
+
+        btnUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/undoIcon32x32.png"))); // NOI18N
+        btnUndo.setFocusable(false);
+        btnUndo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUndo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnUndo);
+
+        add(jToolBar1, java.awt.BorderLayout.NORTH);
+
+        pnlTela.setLayout(new java.awt.BorderLayout());
+        add(pnlTela, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
+        this.undo();
+    }//GEN-LAST:event_btnUndoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUndo;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JPanel pnlTela;
     // End of variables declaration//GEN-END:variables
 
+    private void mudarTela(ControleCRUD controlador) {            
+        controlador.setDataController(this.dbController);
+        controlador.show(this.pnlTela);
+    }
 
 }
