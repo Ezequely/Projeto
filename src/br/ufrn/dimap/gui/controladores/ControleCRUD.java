@@ -13,6 +13,7 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,7 +64,7 @@ public abstract class ControleCRUD implements Navigable, ActionListener{
             abrirFormulario(event.getArg("Item"));
         }
         else if (command == "Excluir"){
-            excluir(event.getArg("Item"));
+            executarCommand(Operation.EXCLUIR, event.getArg("Item"));
             
         }
         else{//error!
@@ -90,28 +91,56 @@ public abstract class ControleCRUD implements Navigable, ActionListener{
             Formulario form = (Formulario)ae.getSource();
             if(form.isResult()){
                 if(formState == FormState.CREATING){
-                    Object novo = form.getObject();
-                    inserir(novo);
-                    
-                    //Atualizar items da tela
-                    tela.setCollection(listItems());
-                    //tela.addItem(novo);
+                    executarCommand(Operation.INSERIR, form.getObject());
                 }
                 else if(formState == FormState.UPDATING){
-                    salvar(form.getObject());
+                    executarCommand(Operation.ATUALIZAR, form.getObject());
                 }
             }
             formState = FormState.NONE;
         }
     }
     
+    enum Operation{
+        INSERIR, ATUALIZAR, EXCLUIR
+    }
+    private boolean executarCommand(Operation op, Object object){
+        int updatedRows = -1;
+        switch(op){
+            case INSERIR:
+                updatedRows = inserir(object);
+                break;
+            case ATUALIZAR:
+                updatedRows = salvar(object);
+                break;
+            case EXCLUIR:
+                updatedRows = excluir(object);
+                break;
+            default:
+                throw new AssertionError(op.name());            
+        }
+        
+        if(updatedRows > 0){
+            //Atualizar items da tela
+            tela.setCollection(listItems());
+        }
+        else if(updatedRows < 0){
+            JOptionPane.showMessageDialog(null, "Um erro inesperado ocorreu!", "", JOptionPane.ERROR_MESSAGE);
+        }
+        else{ // if(updatedRows == 0){
+            JOptionPane.showMessageDialog(null, "Nenhum item foi alterado.", "", JOptionPane.WARNING_MESSAGE);                    
+        }
+        
+        return (updatedRows > 0);
+    }
+    
     
 
     protected abstract TelaGerenciar createTelaGerenciar();
     protected abstract Formulario createFormulario();
-    protected abstract void inserir(Object obj);
-    protected abstract void salvar(Object obj);
-    protected abstract void excluir(Object obj);
+    protected abstract int inserir(Object obj);
+    protected abstract int salvar(Object obj);
+    protected abstract int excluir(Object obj);
     protected abstract Collection<? extends Object> listItems();
     
 }

@@ -7,13 +7,17 @@ package br.ufrn.dimap.dataAccess;
 import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.BancaExaminadora;
 import br.ufrn.dimap.entidades.Docente;
+import br.ufrn.dimap.entidades.Examinador;
 import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
 import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.entidades.Turma;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
     
 /**
@@ -32,38 +36,41 @@ public class BancaExaminadoraDAO extends SqlDAO{
     
     @Override
     public Collection<? extends Object> listAll(String cmd, Connection conn) {//TODO: permitir transaction        
+        System.out.print(this);
+        System.out.println("listAll: ");
+        
         //Lista todas as bancas
         Collection<? extends Object> bancasExaminadoras = super.listAll(cmd, conn);
         
         //buscar examinadores das bancas
-        DocenteDAO docenteDAO = new DocenteDAO(dataController);
+        ExaminadorDAO examinadorDAO = new ExaminadorDAO(dataController);
+        Collection<? extends Object> examinadores = examinadorDAO.listAll(conn);
         
-        //para cada banca examinadora obtem examinadores
-        for(Object o : bancasExaminadoras){
-            BancaExaminadora banca = (BancaExaminadora) o;
-            //buscar examinador
-            String selectExaminadorCmd 
-                    = createSelectExaminadoresCmd(docenteDAO.createSelectCmd(), banca);
-            Collection<? extends Object> examinadores 
-                    = docenteDAO.listAll(selectExaminadorCmd, conn);
+        //Cria tabela hash com bancas para tornar sua busca mais rápida
+        Map<Integer, BancaExaminadora> bancasMap = new HashMap<Integer, BancaExaminadora>();
+        
+        for(Object o: bancasExaminadoras){
+            BancaExaminadora banca = (BancaExaminadora)o;
+            bancasMap.put(banca.getCodigoBanca(), banca);
+        }
+        
+        //Cada examinador possui o codigo para sua banca
+        for(Object o : examinadores){
+            Examinador exam = (Examinador)o;
             
-            banca.setExaminadores((Collection<Docente>) examinadores);
+            BancaExaminadora banca = bancasMap.get(exam.getCodigoBanca());
+            banca.addExaminador(exam);
+            
+            System.out.print("add examinador ");
+            System.out.print(exam);
+            System.out.print(" to ");
+            System.out.println(banca);
+            
         }
         
         return bancasExaminadoras;
     }
         
-
-    private String createSelectExaminadoresCmd(String createSelectCmd, BancaExaminadora banca) {    
-        StringBuilder builder = new StringBuilder();
-        builder.append(createSelectCmd);
-        builder.append(" natural join BANCAEXAMINADORA ");
-        builder.append(" join PUBLICACAO on ISSN = ISSN_Dissertacao ");
-        
-        String cmd = builder.toString();
-        
-        return cmd;
-    }
         
     @Override
     /*select * from ALUNO 
@@ -92,8 +99,6 @@ public class BancaExaminadoraDAO extends SqlDAO{
         bancaExaminadora.setDataDeDefesa(rs.getDate("DataDeDefesa"));
         bancaExaminadora.setAluno((Aluno) alunoDAO.read(rs));
         bancaExaminadora.setDissertacao((Publicacao) publicacaoDAO.read(rs));
-        
-        
         
         return bancaExaminadora;    
     }

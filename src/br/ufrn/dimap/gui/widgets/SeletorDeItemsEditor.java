@@ -111,8 +111,12 @@ public class SeletorDeItemsEditor extends javax.swing.JPanel {
     //MÉTODOS AUXILIARES
     
     private void removerItem() {
+        //TODO: averiguar erro em remover e adicionar item
         if(lstSelecionados.isSelectionEmpty() == false){
             Object selected = lstSelecionados.getSelectedValue();
+            
+            System.out.println("Selecionado:  " + selected.toString());
+            
             ((Collection<Object>)itemsDesselecionados).add(selected);
             lstSelecionados.removeElement(selected);
         }
@@ -148,15 +152,6 @@ public class SeletorDeItemsEditor extends javax.swing.JPanel {
                     break;
                 }
             }
-            
-//            Object selected = JOptionPane.showInputDialog(
-//                    this, 
-//                    "Escolha um item: ", 
-//                    "", 
-//                    JOptionPane.PLAIN_MESSAGE, 
-//                    null, 
-//                    items, 
-//                    (items.length > 0 ? items[0] : null));
 
             if(selected != null){
                 lstSelecionados.addElement(selected);

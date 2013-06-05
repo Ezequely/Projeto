@@ -77,6 +77,6 @@ public class Disciplina {
     
     @Override
     public String toString(){
-        return this.nome;
+        return this.codigoDisciplina + " - "+ this.nome;
     }
 }

@@ -61,37 +61,24 @@ public class TurmaCRUD extends ControleCRUD{
         editor.setDisciplinasDisponiveis(listDisciplinasDisponiveis());                
         editor.setDocentesDisponiveis(listDocentesDisponiveis());
         
-        
-        System.out.print("Disciplinas disponiveis: ");
-        System.out.println(editor.getDisciplinasDisponiveis());
-        System.out.print("Docentes disponiveis: ");
-        System.out.println(editor.getDocentesDisponiveis());
-        
-        
         formularioEditarTurmas.setViewer(editor);
         
         return formularioEditarTurmas;
     }
 
     @Override
-    protected void inserir(Object obj) {
-        if(obj instanceof Turma){
-            turmaDAO.insert(obj);
-        }
+    protected int inserir(Object obj) {
+        return turmaDAO.insert(obj);
     }
 
     @Override
-    protected void salvar(Object obj) {
-        if(obj instanceof Turma){
-            turmaDAO.update(obj);
-        }
+    protected int salvar(Object obj) {
+        return turmaDAO.update(obj);
     }
 
     @Override
-    protected void excluir(Object obj) {
-        if(obj instanceof Turma){
-            turmaDAO.remove(obj);
-        }
+    protected int excluir(Object obj) {
+        return turmaDAO.remove(obj);
     }
 
     private Collection<Docente> listDocentesDisponiveis() {

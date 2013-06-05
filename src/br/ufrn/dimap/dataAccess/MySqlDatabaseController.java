@@ -57,6 +57,7 @@ public class MySqlDatabaseController implements DatabaseController{
         if(connOnTransactionCount.containsKey(conn) == false 
                 || connOnTransactionCount.get(conn) == 0){//nao esta em transacao
             conn.setAutoCommit(false);
+        System.out.println("Begin transaction!");
         }
         else{
             count = connOnTransactionCount.get(conn);
@@ -85,8 +86,11 @@ public class MySqlDatabaseController implements DatabaseController{
     }
 
     public void cancelTransaction(Connection conn)throws Exception{
+        System.out.print(this.getClass());
+        System.out.println("Cancel transaction!");
         if(connOnTransactionCount.containsKey(conn)){
             //cancelar transacao
+        System.out.println("roll back!");
             conn.rollback();
             conn.close();
             connOnTransactionCount.remove(conn);

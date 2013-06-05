@@ -22,7 +22,6 @@ public class DisciplinaCRUD extends ControleCRUD{
 DisciplinaDAO disciplinaDAO;
     
     public DisciplinaCRUD() {
-        System.out.println("Build DisciplinaCRUD");
     }
     public DisciplinaCRUD(DatabaseController dbController){
         setDataController(dbController);
@@ -62,24 +61,18 @@ DisciplinaDAO disciplinaDAO;
     }
 
     @Override
-    protected void inserir(Object obj) {
-        if(obj instanceof Disciplina){
-            disciplinaDAO.insert(obj);
-        }
+    protected int inserir(Object obj) {
+        return disciplinaDAO.insert(obj);
     }
 
     @Override
-    protected void salvar(Object obj) {
-        if(obj instanceof Disciplina){
-            disciplinaDAO.update(obj);
-        }
+    protected int salvar(Object obj) {
+        return disciplinaDAO.update(obj);
     }
 
     @Override
-    protected void excluir(Object obj) {
-        if(obj instanceof Disciplina){
-            disciplinaDAO.remove(obj);
-        }
+    protected int excluir(Object obj) {
+        return disciplinaDAO.remove(obj);
     }
 
 

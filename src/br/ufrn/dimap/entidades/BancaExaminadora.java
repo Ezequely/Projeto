@@ -21,12 +21,12 @@ public class BancaExaminadora {
     private Publicacao dissertacao;
     private Aluno aluno;
 
-    private Map<String, Double> notasExaminadores;
-    private Collection<Docente> examinadores;
+//    private Map<String, Double> notasExaminadores;
+    private Collection<Examinador> examinadores;
     
     public BancaExaminadora(){
-        examinadores = new ArrayList<Docente>();
-        notasExaminadores = new TreeMap<String, Double>();
+        examinadores = new ArrayList<Examinador>();
+//        notasExaminadores = new TreeMap<String, Double>();
     }
     
     public int getCodigoBanca() {
@@ -72,28 +72,29 @@ public class BancaExaminadora {
         return str.toString();
     }
     
-    public void addExaminador(Docente examinador){
+    public void addExaminador(Examinador examinador){
         this.examinadores.add(examinador);
     }
-    public void removeExaminador(Docente examinador){
+    public void removeExaminador(Examinador examinador){
         this.examinadores.remove(examinador);
-        notasExaminadores.remove(examinador.getMatricula());
+        //notasExaminadores.remove(examinador.getMatricula());
     }
-    public void setNota(Docente examinador, Double nota){
-        this.notasExaminadores.put(examinador.getMatricula(), nota);
-    }
-    public Double getNota(Docente examinador){
-        if(notasExaminadores.containsKey(examinador.getMatricula())){
-            return this.notasExaminadores.get(examinador.getMatricula());
-        }
-        return null;
-    }
+//    public void setNota(Examinador examinador, Double nota){
+//        
+//        //this.notasExaminadores.put(examinador.getMatricula(), nota);
+//    }
+//    public Double getNota(Examinador examinador){
+//        if(notasExaminadores.containsKey(examinador.getMatricula())){
+//            return this.notasExaminadores.get(examinador.getMatricula());
+//        }
+//        return null;
+//    }
     
-    public Collection<Docente> getExaminadores() {
+    public Collection<Examinador> getExaminadores() {
         return examinadores;
     }
 
-    public void setExaminadores(Collection<Docente> examinadores) {
+    public void setExaminadores(Collection<Examinador> examinadores) {
         this.examinadores = examinadores;
     }
 }

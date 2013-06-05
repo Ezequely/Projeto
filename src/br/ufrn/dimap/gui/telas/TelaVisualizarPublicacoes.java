@@ -6,6 +6,7 @@ package br.ufrn.dimap.gui.telas;
 
 import br.ufrn.dimap.entidades.Agrupamento;
 import br.ufrn.dimap.entidades.Aluno;
+import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.gui.ItemSelectionEvent;
 import br.ufrn.dimap.gui.ItemSelectionListener;
 import br.ufrn.dimap.gui.NavigationEvent;
@@ -14,58 +15,64 @@ import java.util.Collection;
 import javax.swing.JComboBox;
 
 
+
+
+
+
 /**
  *
  * @author leobrizolara
  */
-public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
-    enum TipoAgrupamento{
-        TODOS, ANO, ATIVO, GRAU, LINHADEPESQUISA
-    }
+public class TelaVisualizarPublicacoes extends Tela implements ItemSelectionListener{
 
-    Collection<? extends Object> alunos;
+    
+    enum TipoAgrupamento{
+    TODOS, ANO, PERIODICO, TEMA, TIPO
+    }
+    
+    Collection<? extends Object> publicacoes;
     TipoAgrupamento agrupamentoAtual;
     /**
-     * Creates new form TelaVisualizarAlunos
+     * Creates new form TelaVisualizarPublicacoes
      */
-    public TelaVisualizarAlunos() {
+    public TelaVisualizarPublicacoes() {
         initComponents();
         agrupamentoAtual = TipoAgrupamento.TODOS;
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.TODOS);
         this.cmbTiposAgrupamento.addItem(TipoAgrupamento.ANO);
-        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.ATIVO);
-        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.GRAU);
-        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.LINHADEPESQUISA);
+        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.PERIODICO);
+        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.TEMA);
+        this.cmbTiposAgrupamento.addItem(TipoAgrupamento.TIPO);
         
-        this.tblAgrupamentoAlunosViewer.addItemSelectionListener(this);
+        this.tblAgrupamentoPublicacoesViewer.addItemSelectionListener(this);
     }
-    public TelaVisualizarAlunos(Collection<? extends Object> alunos) {
+    public TelaVisualizarPublicacoes(Collection<? extends Object> publicacoes) {
         this();//chama construtor sem parametros
-        this.setAlunos(alunos);
+        this.setPublicacoes(publicacoes);
     }
 
     
     public void itemSelected(ItemSelectionEvent event) {
         
-        if(event.getSelectedItem() instanceof Aluno){
-            NavigationEvent naviEvent = new NavigationEvent(this, "TelaVisualizarDadosAluno");
-            naviEvent.addArg("Aluno", event.getSelectedItem());
+        if(event.getSelectedItem() instanceof Publicacao){
+            NavigationEvent naviEvent = new NavigationEvent(this, "TelaVisualizarDadosPublicacao");
+            naviEvent.addArg("Publicacao", event.getSelectedItem());
             
             this.fireNavigate(naviEvent);
         }
     }
     
-    public void setAlunos(Collection<? extends Object> alunos){
-        this.alunos = alunos;
+    public void setPublicacoes(Collection<? extends Object> publicacoes){
+        this.publicacoes = publicacoes;
         this.agrupamentoAtual = TipoAgrupamento.TODOS;
         this.agrupar();
         
         //this.setTipoAgrupamento(TipoAgrupamento.TODOS);
         //this.tableAgrupamentoListViewer1.setAgrupamento(criarAgrupamentoTodos());
-        //this.lstAlunos.setCollection(alunos);
+        //this.lstPublicacoes.setCollection(publicacoes);
     }
-    public Collection<? extends Object> getAlunos(){
-        return this.alunos;
+    public Collection<? extends Object> getPublicacoes(){
+        return this.publicacoes;
     }
     
     
@@ -87,79 +94,75 @@ public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
             case ANO:
                 agrupamento = criarAgrupamentoPorAno();
                 break;
-            case ATIVO:
-                agrupamento = criarAgrupamentoPorAtividade();
+            case PERIODICO:
+                agrupamento = criarAgrupamentoPorPeriodico();
                 break;
-            case GRAU:
-                agrupamento = criarAgrupamentoPorGrau();
+            case TEMA:
+                agrupamento = criarAgrupamentoPorTema();
                 break;
-            case LINHADEPESQUISA:
-                agrupamento = criarAgrupamentoPorLinhaDePesquisa();
+            case TIPO:
+                agrupamento = criarAgrupamentoPorTipo();
                 break;
             default:
                 throw new AssertionError(agrupamentoAtual.name());
         }
-        this.tblAgrupamentoAlunosViewer.setAgrupamento(agrupamento);
+        this.tblAgrupamentoPublicacoesViewer.setAgrupamento(agrupamento);
     }
     private Agrupamento criarAgrupamentoTodos() {
-        Agrupamento agrupamento = new Agrupamento("Alunos");
-        agrupamento.setCategoria("Alunos", alunos);
+        Agrupamento agrupamento = new Agrupamento("Publicações");
+        agrupamento.setCategoria("Publicações", publicacoes);
         
         return agrupamento;
     }
     private Agrupamento criarAgrupamentoPorAno() {
-        Agrupamento agrupamento = new Agrupamento("Alunos por ano de entrada");
+        Agrupamento agrupamento = new Agrupamento("Publicações por ano de publicação");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
         
-        for(Object o : alunos){
-            if(o instanceof Aluno){
-                Aluno aluno = (Aluno)o;
-                agrupamento.addItem(formatter.format(aluno.getDataDeMatricula()), o);
+        for(Object o : publicacoes){
+            if(o instanceof Publicacao){
+                Publicacao publicacao = (Publicacao)o;
+                agrupamento.addItem(formatter.format(publicacao.getData()), o);
             }
         }
         
         return agrupamento;    
     }
-    private Agrupamento criarAgrupamentoPorAtividade() {
-        Agrupamento agrupamento = new Agrupamento("Alunos por estado do vínculo");
+    private Agrupamento criarAgrupamentoPorPeriodico() {
+        Agrupamento agrupamento = new Agrupamento("Publicações por periódico");
         
-        for(Object o : alunos){
-            if(o instanceof Aluno){
-                Aluno aluno = (Aluno)o;
-                agrupamento.addItem((aluno.getAtivo() ? "Ativo" : "Inativo"), o);
-            }
-        }
-        
-        return agrupamento;    
-    }
-    private Agrupamento criarAgrupamentoPorGrau() {
-        Agrupamento agrupamento = new Agrupamento("Alunos por grau");
-        
-        for(Object o : alunos){
-            if(o instanceof Aluno){
-                Aluno aluno = (Aluno)o;
-                agrupamento.addItem(aluno.getGrau(), o);
+        for(Object o : publicacoes){
+            if(o instanceof Publicacao){
+                Publicacao publicacao = (Publicacao)o;
+                agrupamento.addItem(publicacao.getPeriodico(), o);
             }
         }
         
         return agrupamento;       
     }
-    private Agrupamento criarAgrupamentoPorLinhaDePesquisa() {
-        Agrupamento agrupamento = new Agrupamento("Alunos por linha de pesquisa");
+    private Agrupamento criarAgrupamentoPorTema() {
+        Agrupamento agrupamento = new Agrupamento("Publicações por tema");
         
-        for(Object o : alunos){
-            if(o instanceof Aluno){
-                Aluno aluno = (Aluno)o;
-                if(aluno.getLinhaDePesquisa() != null && aluno.getLinhaDePesquisa().getTema() != null){
-                    agrupamento.addItem(aluno.getLinhaDePesquisa().getTema(), o);
-                }
-                else{
-                    agrupamento.addItem("none", o);
-                }
+        for(Object o : publicacoes){
+            if(o instanceof Publicacao){
+                Publicacao publicacao = (Publicacao)o;
+                agrupamento.addItem(publicacao.getTema(), o);
             }
         }
         
         return agrupamento;       
+    }
+    
+    private Agrupamento criarAgrupamentoPorTipo() {
+        Agrupamento agrupamento = new Agrupamento("Publicações por tipo");
+        
+        for(Object o : publicacoes){
+            if(o instanceof Publicacao){
+                Publicacao publicacao = (Publicacao)o;
+                agrupamento.addItem(publicacao.getTipo(), o);
+            }
+        }
+        
+        return agrupamento;   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -174,7 +177,7 @@ public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
         lblTipoAgrupamento = new javax.swing.JLabel();
         cmbTiposAgrupamento = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblAgrupamentoAlunosViewer = new br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer();
+        tblAgrupamentoPublicacoesViewer = new br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -192,7 +195,7 @@ public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
 
         add(jToolBar1, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane1.setViewportView(tblAgrupamentoAlunosViewer);
+        jScrollPane1.setViewportView(tblAgrupamentoPublicacoesViewer);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -209,7 +212,7 @@ public class TelaVisualizarAlunos extends Tela implements ItemSelectionListener{
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblTipoAgrupamento;
-    private br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer tblAgrupamentoAlunosViewer;
+    private br.ufrn.dimap.gui.widgets.TableAgrupamentoViewer tblAgrupamentoPublicacoesViewer;
     // End of variables declaration//GEN-END:variables
 
 }

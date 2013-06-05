@@ -56,9 +56,6 @@ public class TurmaDAO extends SqlDAO{
         if(obj instanceof Docente){//buscar turmas de um docente
             return this.listAll(this.createSelectTurmaDocenteCmd((Docente)obj), conn);
         }
-        else if(obj instanceof Aluno){
-            return this.listAll(this.createSelectTurmaAlunoCmd((Aluno)obj), conn);
-        }
         
         return new ArrayList<Object>();
     }
@@ -79,9 +76,6 @@ public class TurmaDAO extends SqlDAO{
         builder.append( "' )");
         
         return builder.toString();
-    }
-    private String createSelectTurmaAlunoCmd(Aluno aluno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
@@ -123,58 +117,95 @@ public class TurmaDAO extends SqlDAO{
     }
 
     
-
+    
+    ///INSERIR
+    @Override
+    public int insert(Object obj) {
+        int changedRows = -1;
+        
+        Connection connection = this.initTransaction();
+        if(connection != null){
+            changedRows = executeUpdate(createInsertCmd(obj), connection);//insere turma
+            Turma turma = (Turma)obj;
+            //Se turma foi inserida e há docentes, tenta inserir docentes
+            if(changedRows > 0 && turma.getDocentes() != null && turma.getDocentes().size() > 0){
+                //insere docentes na ultima turma criada (pois turma não possui um codigo valido)
+                changedRows += executeUpdate(createInsertLastTurmaDocenteCmd(turma), connection);
+            }
+            this.commitTransaction(connection);
+        }
+        
+        return changedRows;
+        
+    }
     
     
+    
 
-//    @Override
-//    /**insert into TURMA 
-//     * (NumeroTurma, PeriodoLetivo, CodigoDisciplina, Status, CodHorarioDeAula,LocalDeAula) 
-//     * values 
-//     *   (...);
-//     */
-//    protected String createInsertCmd(Object obj) {
-//        StringBuilder cmd = new StringBuilder();
-//        if(obj instanceof Turma){
-//            cmd.append("insert into TURMA ");
-//            cmd.append(getColumns());
-//            cmd.append(" values ");
-//            cmd.append(getValues((Turma)obj));
-//        }
-//        return cmd.toString();
-//    }
-//
-//    @Override
-//    /**delete from TURMA where CodigoTurma = ?;*/
-//    protected String createDeleteCmd(Object obj) {
-//        StringBuilder cmd = new StringBuilder();
-//        if(obj instanceof Turma){
-//            Turma t = (Turma)obj;
-//            cmd.append("delete from TURMA where CodigoTurma = ");
-//            cmd.append(getIntegerValue(t.getCodigoTurma()));
-//        }
-//        return cmd.toString();
-//    }
-//
-//    @Override
-//    /** update TURMA set 
-//		NumeroTurma = ?, 
-//		PeriodoLetivo = ?, 
-//		CodigoDisciplina = ?, 
-//		Status = 'Consolidada',
-//		CodHorarioDeAula = ?,
-//		LocalDeAula = ?
-//        where TURMA.CodigoTurma=?; */
-//    protected String createUpdateCmd(Object obj) {
-//        StringBuilder cmd = new StringBuilder();
-//        if(obj instanceof Turma){
-//            cmd.append("update TURMA set ");
-//            cmd.append(getColumnsValues((Turma)obj));
-//            cmd.append(" where TURMA.CodigoTurma = ");
-//            cmd.append(getIntegerValue(((Turma)obj).getCodigoTurma()));
-//        }
-//        return cmd.toString();
-//    }
+    /* Inserir docentes na ultima turma criada
+     * insert into TURMA_DOCENTE values ((select MAX(CodigoTurma) from TURMA), ?);*/
+    private String createInsertLastTurmaDocenteCmd(Turma t) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("insert into TURMA_DOCENTE values ");
+        boolean first = true;
+        for(Docente d : t.getDocentes()){
+            builder.append((first? " (" : " ,("));
+            //builder.append(this.getIntegerValue(t.getCodigoTurma()));
+            builder.append(" (select MAX(CodigoTurma) from TURMA) ");
+            builder.append(" , ");
+            builder.append(this.getStringValue(d.getMatricula()));
+            builder.append(") ");
+            first = false;
+        }
+        
+        return builder.toString();
+    }
+    
+    
+    private String createInsertTurmaDocenteCmd(Turma t) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("insert into TURMA_DOCENTE values ");
+        boolean first = true;
+        for(Docente d : t.getDocentes()){
+            builder.append((first? " (" : " ,("));
+            builder.append(this.getIntegerValue(t.getCodigoTurma()));
+            builder.append(" , ");
+            builder.append(this.getStringValue(d.getMatricula()));
+            builder.append(") ");
+            first = false;
+        }
+        
+        return builder.toString();
+    }
+    ///ATUALIZAR
+    @Override
+    public int update(Object obj) {
+        int changedRows = -1;
+        
+        Connection connection = this.initTransaction();
+        if(connection != null){
+            changedRows = executeUpdate(createUpdateCmd(obj), connection);//insere turma
+            Turma turma = (Turma)obj;
+            //Se turma foi atualizada e há docentes, tenta atualizar referencia a docentes
+            if(changedRows > 0 && turma.getDocentes() != null && turma.getDocentes().size() > 0){
+                //deleta referencias anteriores
+                executeUpdate(createDeleteTurmaDocenteCmd(turma), connection);
+                //insere novas
+                return changedRows + executeUpdate(createInsertTurmaDocenteCmd(turma), connection);
+            }
+            this.commitTransaction(connection);
+        }
+        
+        return changedRows;
+    }
+    
+    private String createDeleteTurmaDocenteCmd(Turma t) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("delete from TURMA_DOCENTE where CodigoTurma = ");
+        builder.append(getIntegerValue(t.getCodigoTurma()));
+        
+        return builder.toString();
+    }
 
     @Override
     protected String getTableName() {
@@ -263,4 +294,5 @@ public class TurmaDAO extends SqlDAO{
         
         return values.toString();
     }
+
 }

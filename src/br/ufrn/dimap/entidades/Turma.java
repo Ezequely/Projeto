@@ -21,7 +21,7 @@ public class Turma {
         this.disciplina = disc;
     }
 
-    public Iterable<Docente> getDocentes() {
+    public Collection<Docente> getDocentes() {
         return docentes;
     }
     public void setDocentes(Collection<Docente> docentes) {

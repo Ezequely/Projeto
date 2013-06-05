@@ -54,17 +54,17 @@ public abstract class SqlDAO implements DatabaseAccessObject{
     protected abstract String getColumnsValues(Object object);
     
     ///ATUALIZAR
-    public void update(Object obj) {
-        executeUpdate(createUpdateCmd(obj));
+    public int update(Object obj) {
+        return executeUpdate(createUpdateCmd(obj));
     }
 
     ///INSERIR
-    public void insert(Object obj) {
-        executeUpdate(createInsertCmd(obj));
+    public int insert(Object obj) {
+        return executeUpdate(createInsertCmd(obj));
     }
     ///REMOVER
-    public void remove(Object obj) {
-        executeUpdate(createDeleteCmd(obj));
+    public int remove(Object obj) {
+        return executeUpdate(createDeleteCmd(obj));
     }
     
     /**insert into <table>  (<columns>) values  (<values>);
@@ -104,43 +104,92 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         return cmd.toString();
     }
     
-    protected void executeUpdate(String updateCmd){  
+    protected int executeUpdate(String updateCmd){  
+        int rowsUpdated = -1;
         //Cria conexão
-        Connection connection = this.dataController.createConnection();
-        
-        try {
-            //Inicializa transação
-            dataController.beginTransaction(connection);
-            
-            //Realiza inserção
-            this.executeUpdate(updateCmd, connection);
-            
-            //Commit
-            dataController.commit(connection);
-            //Se conexão ainda estiver aberta, fecha
-            if(connection.isClosed() == false){
-                connection.close();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+        Connection connection = this.initTransaction();
+        if(connection != null){
+            rowsUpdated = this.executeUpdate(updateCmd, connection);
+
+            this.commitTransaction(connection);
         }
+        
+        return rowsUpdated;
+    }
+    
+    
+    protected int executeUpdate(String cmd, Connection connection){
+        System.out.println(cmd);//DEBUG  
+        int rowsUpdated = -1;
+        
+        if(connection != null){
+            try {
+                Statement sqlStatement = connection.createStatement();
+
+                return sqlStatement.executeUpdate(cmd);
+            } catch (Exception ex) {
+                System.err.println("Erro na execução do comando!");
+                Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+
+                rowsUpdated = -1;
+                cancelTransaction(connection);
+            } 
+        }
+        
+        return rowsUpdated;
+        
+        
         
     }
     
-    protected void executeUpdate(String cmd, Connection connection){
-        System.out.println(cmd);//DEBUG
+    Connection initTransaction(){
         
         try {
-            Statement sqlStatement = connection.createStatement();
+            //Cria conexão
+            Connection connection = this.dataController.createConnection();
+
+            //Inicializa transação
+            dataController.beginTransaction(connection);
+
+            return connection;
             
-            sqlStatement.executeUpdate(cmd);
+        } catch (Exception ex) {
+            System.err.println("Exception!");
             
-        } catch(SQLException e){
-            e.printStackTrace();
-        } 
-        
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    void commitTransaction(Connection connection){
+        try {
+            //Commit
+            dataController.commit(connection);
+           //Se conexão ainda estiver aberta, fecha
+           if(connection.isClosed() == false){
+               connection.close();
+           }
+        } catch (Exception ex) {
+            System.err.println("Exception!");
+            
+            cancelTransaction(connection);
+            
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+    }
+    
+    void cancelTransaction(Connection connection){
+        try {//tenta cancelar transação
+            if(connection != null && connection.isClosed() == false){
+                System.out.println("Cancel transaction!");
+                dataController.cancelTransaction(connection);
+            }
+        } catch (Exception ex) {//Aqui não há mais o que fazer
+            Logger.getLogger(SqlDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
     }
     
     
@@ -176,6 +225,10 @@ public abstract class SqlDAO implements DatabaseAccessObject{
         }
         
         return null;
+    }
+    
+    public Collection<? extends Object> listAll(Connection conn) {
+        return this.listAll(this.createSelectCmd(), conn);
     }
     
     /**Permite as classes na hierarquia utilizar transações

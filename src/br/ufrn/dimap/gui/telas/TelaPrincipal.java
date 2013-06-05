@@ -13,6 +13,7 @@ import br.ufrn.dimap.entidades.Aluno;
 import br.ufrn.dimap.entidades.BancaExaminadora;
 import br.ufrn.dimap.entidades.Docente;
 import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
+import br.ufrn.dimap.entidades.Publicacao;
 import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.controladores.ControleCRUD;
 import java.util.Collection;
@@ -82,6 +83,12 @@ public class TelaPrincipal extends Tela implements Navigable{
         }
         else if(dest.equals("TelaVisualizarDadosBancaExaminadora")){
             tela = navegarTelaVisualizarDadosBancaExaminadora(event);
+        }
+        else if(dest.equals("TelaVisualizarPublicacoes")){
+            tela = navegarTelaVisualizarPublicacoes(event);
+        }
+        else if(dest.equals("TelaVisualizarDadosPublicacao")){
+            tela = navegarTelaVisualizarDadosPublicacao(event);
         }
         else{
             System.err.println("Destino: " + event.getDestination() + " não encontrado!");
@@ -220,6 +227,33 @@ public class TelaPrincipal extends Tela implements Navigable{
         return new TelaVisualizarBancasExaminadoras();
     }
     
+    private Tela navegarTelaVisualizarPublicacoes(NavigationEvent event) {
+        if(dbController != null){
+            PublicacaoDAO publicacaoDAO = new PublicacaoDAO(dbController);
+            Collection<? extends Object> publicacoes = publicacaoDAO.listAll();
+            return new TelaVisualizarPublicacoes((Collection<Publicacao>) publicacoes);
+        }
+        
+        return new TelaVisualizarPublicacoes();
+    }
+    private Tela navegarTelaVisualizarDadosPublicacao(NavigationEvent event) {
+        if(event != null && event.getArg("Publicacao") != null){
+            Publicacao publicacao = (Publicacao) event.getArg("Publicacao");
+
+            TelaVisualizarDadosPublicacao telaDadosPublicacao = 
+                    new TelaVisualizarDadosPublicacao(publicacao);
+            
+            return telaDadosPublicacao;
+        }
+        
+        return new TelaVisualizarDadosPublicacao();
+    }
+    
+    private void mudarTela(ControleCRUD controlador) {            
+        controlador.setDataController(this.dbController);
+        controlador.show(this.pnlTela);
+    }
+
     private void mudarTela(Tela tela){
         if(tela != telaAtual){
             tela.setNavigableParent(this);
@@ -290,9 +324,5 @@ public class TelaPrincipal extends Tela implements Navigable{
     private javax.swing.JPanel pnlTela;
     // End of variables declaration//GEN-END:variables
 
-    private void mudarTela(ControleCRUD controlador) {            
-        controlador.setDataController(this.dbController);
-        controlador.show(this.pnlTela);
-    }
 
 }

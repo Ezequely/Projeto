@@ -11,9 +11,9 @@ import java.util.Collection;
  * @author leobrizolara
  */
 public interface DatabaseAccessObject {
-	 public void update(Object obj);
-	 public void insert(Object obj);
-	 public void remove(Object obj);
+	 public int update(Object obj);
+	 public int insert(Object obj);
+	 public int remove(Object obj);
          /** 
           * @param obj um objeto contendo a partir do qual podem ser obtidos os parâmetros
           * de busca da tabela relacionada

@@ -4,22 +4,13 @@
  */
 package br.ufrn.dimap.gui.telas;
 
-import br.ufrn.dimap.entidades.Agrupamento;
 import br.ufrn.dimap.entidades.BancaExaminadora;
 import br.ufrn.dimap.entidades.Docente;
-import br.ufrn.dimap.entidades.MatriculaAlunoTurma;
-import br.ufrn.dimap.entidades.Turma;
 import br.ufrn.dimap.gui.ItemSelectionEvent;
 import br.ufrn.dimap.gui.ItemSelectionListener;
-import br.ufrn.dimap.gui.NavigationEvent;
 import br.ufrn.dimap.gui.ObjectViewer;
-import br.ufrn.dimap.gui.widgets.AlunoTurmaViewer;
-import br.ufrn.dimap.gui.widgets.TurmaAlunoViewer;
-import br.ufrn.dimap.gui.widgets.VinculoViewerResumo;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  *
@@ -35,7 +26,8 @@ public class TelaVisualizarDadosBancaExaminadora extends Tela implements ObjectV
     TelaVisualizarDadosBancaExaminadora(BancaExaminadora banca) {
         initComponents();
         
-        this.lstExaminadores.setViewer(new VinculoViewerResumo());
+        //this.lstExaminadores.setViewer(new VinculoViewerResumo());
+        //this.lstExaminadores.setViewer(new ExaminadorViewer());
         
         this.setObject(banca);
     }
@@ -69,6 +61,12 @@ public class TelaVisualizarDadosBancaExaminadora extends Tela implements ObjectV
             }
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             this.lblDataValor.setText(formatter.format(banca.getDataDeDefesa()));
+            
+            if(banca.getExaminadores() != null){
+                this.lstExaminadores.setCollection(banca.getExaminadores());
+            }
+            
+            this.updateGui();
         }
     }
 
@@ -102,6 +100,11 @@ public class TelaVisualizarDadosBancaExaminadora extends Tela implements ObjectV
 //            eventNavi.addArg("Aluno", ((MatriculaAlunoTurma)event.getSelectedItem()).getAluno());
 //            this.fireNavigate(eventNavi);
 //        }
+    }
+    
+    private void updateGui() {
+        this.revalidate();
+        this.repaint();
     }
     
     /**
@@ -275,5 +278,6 @@ public class TelaVisualizarDadosBancaExaminadora extends Tela implements ObjectV
     private javax.swing.JPanel pnlGlobal;
     private javax.swing.JScrollPane scpDocentes;
     // End of variables declaration//GEN-END:variables
+
 
 }

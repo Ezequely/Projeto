@@ -19,19 +19,8 @@ public class DocenteDAO extends SqlDAO{
     public DocenteDAO(DatabaseController dbControl){
         super(dbControl);
     }
-    
-    @Override
-    public void update(Object obj) {
-        //this.connection.
-    }
 
-    @Override
-    public void insert(Object obj) {
-    }
-
-    @Override
-    public void remove(Object obj) {
-    }
+    DocenteDAO() {}
     
     public Collection<? extends Object> search(Object obj, Connection conn){
         if(obj instanceof Turma){//buscar docentes de uma turma

@@ -31,6 +31,7 @@ public class TelaHome extends Tela{
         btnDocentes = new javax.swing.JButton();
         btnTurmas = new javax.swing.JButton();
         btnBancasExaminadoras = new javax.swing.JButton();
+        btnPublicacoes = new javax.swing.JButton();
         btnGerenciarTurmas = new javax.swing.JButton();
         btnGerenciarDisciplinas = new javax.swing.JButton();
 
@@ -68,6 +69,14 @@ public class TelaHome extends Tela{
         });
         jPanel1.add(btnBancasExaminadoras);
 
+        btnPublicacoes.setText("Publicações");
+        btnPublicacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublicacoesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnPublicacoes);
+
         btnGerenciarTurmas.setText("Gerenciar Turmas");
         btnGerenciarTurmas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,7 +100,7 @@ public class TelaHome extends Tela{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,12 +139,17 @@ public class TelaHome extends Tela{
         this.fireNavigate(naviEvent);
     }//GEN-LAST:event_btnGerenciarDisciplinasActionPerformed
 
+    private void btnPublicacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublicacoesActionPerformed
+        this.fireNavigate("TelaVisualizarPublicacoes");
+    }//GEN-LAST:event_btnPublicacoesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlunos;
     private javax.swing.JButton btnBancasExaminadoras;
     private javax.swing.JButton btnDocentes;
     private javax.swing.JButton btnGerenciarDisciplinas;
     private javax.swing.JButton btnGerenciarTurmas;
+    private javax.swing.JButton btnPublicacoes;
     private javax.swing.JButton btnTurmas;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
