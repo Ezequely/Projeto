@@ -124,11 +124,8 @@ public abstract class ControleCRUD implements Navigable, ActionListener{
             //Atualizar items da tela
             tela.setCollection(listItems());
         }
-        else if(updatedRows < 0){
+        else if(updatedRows <= 0){
             JOptionPane.showMessageDialog(null, "Um erro inesperado ocorreu!", "", JOptionPane.ERROR_MESSAGE);
-        }
-        else{ // if(updatedRows == 0){
-            JOptionPane.showMessageDialog(null, "Nenhum item foi alterado.", "", JOptionPane.WARNING_MESSAGE);                    
         }
         
         return (updatedRows > 0);
