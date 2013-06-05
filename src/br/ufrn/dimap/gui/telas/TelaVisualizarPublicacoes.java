@@ -131,9 +131,15 @@ public class TelaVisualizarPublicacoes extends Tela implements ItemSelectionList
         Agrupamento agrupamento = new Agrupamento("Publicações por periódico");
         
         for(Object o : publicacoes){
-            if(o instanceof Publicacao){
+            if(o instanceof Publicacao ){
                 Publicacao publicacao = (Publicacao)o;
-                agrupamento.addItem(publicacao.getPeriodico(), o);
+                if(publicacao.getPeriodico() != null){
+                    agrupamento.addItem(publicacao.getPeriodico(), o);
+                }
+                else{
+                    
+                    agrupamento.addItem("none", o);
+                }
             }
         }
         
